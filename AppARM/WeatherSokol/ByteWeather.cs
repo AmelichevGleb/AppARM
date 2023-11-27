@@ -3,12 +3,15 @@ using System.Collections.Generic;
 using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
+using System.Windows.Media.Imaging;
 using AppARM.WeatherSokol;
 
 namespace AppARM.WeatherSokol
 {
     public class ByteWeather
     {
+        public string ip_adress;
+        public string port;
         public string adress;
         public string command;
         public string registerNumber;
@@ -87,8 +90,10 @@ namespace AppARM.WeatherSokol
         public ByteWeather(string _ip, string _ipSend, int _portSend, string _location, string _longitude,string _lagatitude, byte _adress, byte _command, byte _registerNumber, byte _firmware_1, byte _firemware_2, byte _orderUnixTime_1, byte _orderUnixTime_2,
             byte _juniorUnixTime_1, byte _juniorUnixTime_2, byte _temperature_1, byte _temperature_2, byte _pressure_1, byte _pressure_2, byte _relativePumidity_1, byte _relativePumidity_2,
             byte _windSpeed_1, byte _windSpeed_2, byte _directionWind_1, byte _directionWind_2, byte _precipitationLevel_1, byte _precipitationLevel_2, byte UVlevel_1, byte UVlevel_2, byte lightLevel_1,
-            byte lightLevel_2, byte ultrasonicAnemometerWindspeed_1, byte ultrasonicAnemometerWindspeed_2, byte ultrasonicAnemometerWindDirection_1, byte ultrasonicAnemometerWindDirection_2)
+            byte lightLevel_2, byte ultrasonicAnemometerWindspeed_1, byte ultrasonicAnemometerWindspeed_2, byte ultrasonicAnemometerWindDirection_1, byte ultrasonicAnemometerWindDirection_2, bool flag)
         {
+            this.ip_adress = _ip;
+            this.port = Convert.ToString(_portSend);
             this.adress = Convert.ToString(_adress, 16);
             this.command = Convert.ToString(_command, 16);
             this.registerNumber = Convert.ToString(_registerNumber, 16);
@@ -120,10 +125,15 @@ namespace AppARM.WeatherSokol
             this.ultrasonicAnemometerWindDirection = Convert.ToInt32(temp, 16);
             Console.WriteLine("adr = {0} cm = {1} , regN = {2} , F1 {3} F2 {4} UNtime1 {5} UnTime2 {6} Температура {7} Давлениие {8} Па Влажность {9}", adress, command, registerNumber, firmware_1, firmware_2, orderUnixTime_1, orderUnixTime_2, temperature, pressure, relativeРumidity);
             Console.WriteLine("Направление ветра {0} , Уровень осадков {1} , Утрафиоле {2} ,уровень света {3}, скорость ветра {4} , направление ветра {5} ", directionWind, precipitationLevel, UVlevel, lightLevel, UVlevel, ultrasonicAnemometerWindDirection);
-            if (_ip != null)
+            if (flag == true)
             {
                 createJsonRequest.CreatJSON(_ip, _ipSend, _portSend, _location, _longitude, _lagatitude, Convert.ToString(temperature), Convert.ToString(windSpeed), Convert.ToString(directionWind), "null");
             }
+        }
+
+        public Tuple<string, string, string, string, string> ReturnPartWeater() 
+        {
+            return Tuple.Create(ip_adress, port, Convert.ToString(temperature), Convert.ToString(windSpeed), Convert.ToString(directionWind));
         }
     }
 }

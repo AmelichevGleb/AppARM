@@ -270,8 +270,8 @@ namespace AppARM
             // apu.Ip = TB_IP.Text;
             //  apu.Port =TB_Port.Text;
             //apu.PortServer = TB_ServerPort.Text;
-            apu.Value2 = null;
-            Console.WriteLine("Ip = {0}, Port = {1}, Value1 = {2}, Value2 = {3}", apu.Ip, apu.Port, apu.PortServer, apu.Value2);
+            //apu.Value2 = null;
+            Console.WriteLine("Ip = {0}, Port = {1}, Value1 = {2}", apu.Ip, apu.Port, apu.PortServer);
 
             script.ParserElement("dsd");
         }

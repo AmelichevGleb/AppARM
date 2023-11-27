@@ -46,18 +46,13 @@ namespace AppARM.CheckMeteos
         private double windSpeed; 
         private int directionWind;
    
+
         public CheckeMeteo()
         {
             InitializeComponent();
-
         }
 
-        private string CorrectString()
-        {
-            string str = null;
-            str = Convert.ToString(DateTime.Now) + " -";
-            return str;
-        }
+        //____________________________ОСНОВНЫЕ_КНОПКИ_______________________________________________
 
         private void Button_Click_Ok(object sender, RoutedEventArgs e)
         {
@@ -69,36 +64,7 @@ namespace AppARM.CheckMeteos
             this.Close();
         }
 
-        private void Gkg()
-        {
-            try
-            {
-                TcpClient tcpClient = new TcpClient();
-                // Test.Text += "Проверка по " + ipAdress + ":" + port + '\n'; 
-                tcpClient.Connect(ipAdress, Convert.ToInt32(port));
-                NetworkStream stream = tcpClient.GetStream();
-                stream.Write(Message, 0, Message.Length);
 
-                byte[] bytes = new byte[tcpClient.ReceiveBufferSize];
-                int bytesRead = stream.Read(bytes, 0, tcpClient.ReceiveBufferSize);
-
-                ByteWeather byteWeather = new ByteWeather(null, null, 0, null, null, null, bytes[0], bytes[1], bytes[2], bytes[3], bytes[4], bytes[5], bytes[6], bytes[7], bytes[8],
-                        bytes[9], bytes[10], bytes[11], bytes[12], bytes[13], bytes[14], bytes[15], bytes[16], bytes[17], bytes[18], bytes[19], bytes[20], bytes[21], bytes[22], bytes[23],
-                        bytes[24], bytes[25], bytes[26], bytes[27], bytes[28]);
-
-                temperature = byteWeather.temperature;
-                windSpeed = byteWeather.windSpeed;
-                directionWind = byteWeather.directionWind;
-
-                Thread.Sleep(10);
-
-                tcpClient.Close();
-            }
-            catch (Exception ex) {
-                Dispatcher.Invoke((Action)(() => Test.Text += Convert.ToString(ex) + '\n'));
-            }    
-
-        }
         private async void B_Send_Click(object sender, RoutedEventArgs e)
         {
 
@@ -113,29 +79,63 @@ namespace AppARM.CheckMeteos
                     Dispatcher.Invoke((Action)(() => Test.Text += "Проверка по " + ipAdress + ":" + port + '\n'));
                     if ((ipAdress != "") && (port != ""))
                     {
-                        //   await ConnectAsync();
-
-                        Gkg();
-                       
-                        // await Dispatcher.BeginInvoke((Action)(() => Test.Text += CorrectString() + ("Ответное сообщение: ") + returnData + '\n'));
-                        Dispatcher.Invoke((Action)(() => Test.Text += CorrectString() + "температура: " + temperature + '\n' + "Скорость ветра: " + windSpeed + '\n' + "направление ветра: " + directionWind + '\n'));
+                        GetWeather();
+                       Dispatcher.Invoke((Action)(() => Test.Text += CorrectString() +'\n' + "температура: " + temperature + '\n' + "Скорость ветра: " + windSpeed + '\n' + "направление ветра: " + directionWind + '\n'));
                         Thread.Sleep(10);
-
-
-                        //Test.Text += CorrectString() + "отправка " + str + '\n';
-                        // Application.Current.Dispatcher.Invoke(DispatcherPriority.Background, new Action(delegate { this.UpdateLayout(); }));
                     }
                 });
                 B_Send.IsEnabled = true;
             }
             catch (Exception ex)
             {
-                //  Test.Text += CorrectString() + (ex.Message) + "1\n";
-                //    B_Send.IsEnabled = true;
+                  Test.Text += CorrectString() + (ex.Message) + "\n";
+                   B_Send.IsEnabled = true;
             }
 
         }
 
+        //__________________________________________________________________________________________
+
+        //cоздание строки с временем
+        private string CorrectString()
+        {
+            string str = null;
+            str = Convert.ToString(DateTime.Now) + " -";
+            return str;
+        }
+
+        //Проверка подключенной станции
+        private void GetWeather()
+        {
+            try
+            {
+                TcpClient tcpClient = new TcpClient();
+                // Test.Text += "Проверка по " + ipAdress + ":" + port + '\n'; 
+                tcpClient.Connect(ipAdress, Convert.ToInt32(port));
+                NetworkStream stream = tcpClient.GetStream();
+                stream.Write(Message, 0, Message.Length);
+
+                byte[] bytes = new byte[tcpClient.ReceiveBufferSize];
+                int bytesRead = stream.Read(bytes, 0, tcpClient.ReceiveBufferSize);
+
+                ByteWeather byteWeather = new ByteWeather(null, null, 0, null, null, null, bytes[0], bytes[1], bytes[2], bytes[3], bytes[4], bytes[5], bytes[6], bytes[7], bytes[8],
+                        bytes[9], bytes[10], bytes[11], bytes[12], bytes[13], bytes[14], bytes[15], bytes[16], bytes[17], bytes[18], bytes[19], bytes[20], bytes[21], bytes[22], bytes[23],
+                        bytes[24], bytes[25], bytes[26], bytes[27], bytes[28], false);
+
+                temperature = byteWeather.temperature;
+                windSpeed = byteWeather.windSpeed;
+                directionWind = byteWeather.directionWind;
+
+                Thread.Sleep(10);
+
+                tcpClient.Close();
+            }
+            catch (Exception ex)
+            {
+                Dispatcher.Invoke((Action)(() => Test.Text += Convert.ToString(ex) + '\n'));
+            }
+
+        }
 
         private void TB_text_Scroll(object sender, System.Windows.Controls.Primitives.ScrollEventArgs e)
         {

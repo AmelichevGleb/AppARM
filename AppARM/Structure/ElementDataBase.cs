@@ -13,23 +13,24 @@ namespace AppARM.Structure
 {
     public class ElementDataBase
     {
-
         private string id;
         private string ip_device;
+        private string port;
         private string location;
         private string longitude;
         private string lagatitude;
         private string description;
 
-
-        public ElementDataBase(string _id, string _ip_device, string _location, string _longitude, string _lagatitude, string _description)
+        public ElementDataBase(string _id, string _ip_device, string port, string _location, string _longitude, string _lagatitude, string _description)
         {
             this.id = _id;
             this.ip_device = _ip_device;
+            this.port = port;
             this.location = _location;
             this.longitude = _longitude;
             this.lagatitude = _lagatitude;
             this.description = _description;
+
         }
 
         public string Id
@@ -41,6 +42,12 @@ namespace AppARM.Structure
         {
             get { return ip_device; }
             set { ip_device = value; }
+        }
+
+        public string Port
+        {
+            get { return port; }
+            set { port = value; }
         }
         public string Location
         {
@@ -62,16 +69,18 @@ namespace AppARM.Structure
             get { return description; }
             set { description = value; }
         }
+
+
         public class WorkElementDB
         {
             private Files files = new Files();
 
             //добавление элемента в список
-            public bool AddNewElement(List<ElementDataBase> _element, string _id, string _ip_device, string _location, string _longitude, string _lagatitude, string _description)
+            public bool AddNewElement(List<ElementDataBase> _element, string _id, string _ip_device, string _port, string _location, string _longitude, string _lagatitude, string _description)
             {
                 try
                 {
-                    _element.Add(new ElementDataBase(_id, _ip_device, _location, _longitude, _lagatitude, _description));
+                    _element.Add(new ElementDataBase(_id, _ip_device, _port, _location, _longitude, _lagatitude, _description));
                     Console.WriteLine(_element.Count);
                     return true;
                 }
@@ -103,7 +112,7 @@ namespace AppARM.Structure
                 var result = _element.Exists(x => x.IP == _ip);
                 return result;
             }
-            
+
             //Проверка элемента по Локации
             public bool ExistByLocation(List<ElementDataBase> _element, string _location)
             {
@@ -133,10 +142,11 @@ namespace AppARM.Structure
             }
 
             //Вернуть элемент по ID
-            public Tuple<string, string, string, string, string, string> SearchById(List<ElementDataBase> _element, string _id)
+            public Tuple<string, string, string, string, string, string, string> SearchById(List<ElementDataBase> _element, string _id)
             {
                 string id = null;
                 string ip_device = null;
+                string port = null;
                 string location = null;
                 string longitude = null;
                 string lagatitude = null;
@@ -150,6 +160,7 @@ namespace AppARM.Structure
                         {
                             id = x.Id;
                             ip_device = x.IP;
+                            port = x.Port;
                             location = x.Location;
                             longitude = x.Longitude;
                             lagatitude = x.Lagatitude;
@@ -158,20 +169,20 @@ namespace AppARM.Structure
                         }
                     }
                 }
-                return Tuple.Create(id, ip_device, location, longitude, lagatitude, description);
+                return Tuple.Create(id, ip_device, port, location, longitude, lagatitude, description);
             }
 
             //Вернуть элемент по IP
-            public Tuple<string, string, string, string, string, string> SearchByIP(List<ElementDataBase> _element, string _ip)
+            public Tuple<string, string, string, string, string, string, string> SearchByIP(List<ElementDataBase> _element, string _ip)
             {
 
                 string id = null;
                 string ip_device = null;
+                string port = null;
                 string location = null;
                 string longitude = null;
                 string lagatitude = null;
-                string description = null; 
-                
+                string description = null;
 
                 if (ExistByIP(_element, _ip))
                 {
@@ -181,27 +192,31 @@ namespace AppARM.Structure
                         {
                             id = x.Id;
                             ip_device = x.IP;
+                            port = x.Port;
                             location = x.Location;
                             longitude = x.Longitude;
                             lagatitude = x.Lagatitude;
                             description = x.Description;
+                           
                             break;
                         }
                     }
                 }
-                return Tuple.Create(id, ip_device, location, longitude, lagatitude, description);
+                return Tuple.Create(id, ip_device, port, location, longitude, lagatitude, description);
             }
-            
+
             //Вернуть элемент по Локации
-            public Tuple<string, string, string, string, string, string> SearchByLocation(List<ElementDataBase> _element, string _location)
+            public Tuple<string, string, string, string, string, string, string> SearchByLocation(List<ElementDataBase> _element, string _location)
             {
 
                 string id = null;
                 string ip_device = null;
+                string port = null;
                 string location = null;
                 string longitude = null;
                 string lagatitude = null;
                 string description = null;
+              
 
                 if (ExistByLocation(_element, _location))
                 {
@@ -211,6 +226,7 @@ namespace AppARM.Structure
                         {
                             id = x.Id;
                             ip_device = x.IP;
+                            port = x.Port;
                             location = x.Location;
                             longitude = x.Longitude;
                             lagatitude = x.Lagatitude;
@@ -219,7 +235,7 @@ namespace AppARM.Structure
                         }
                     }
                 }
-                return Tuple.Create(id, ip_device, location, longitude, lagatitude, description);
+                return Tuple.Create(id, ip_device, port, location, longitude, lagatitude, description);
             }
 
             //Удалить элемент из списка по ID
@@ -228,8 +244,6 @@ namespace AppARM.Structure
                 _element.RemoveAt(int.Parse(_id) - 1);
 
             }
-
         }
     }
 }
-

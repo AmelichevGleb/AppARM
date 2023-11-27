@@ -20,6 +20,7 @@
                 <DataGrid.Columns>
                     <DataGridTextColumn Binding="{Binding Id, UpdateSourceTrigger=PropertyChanged}" IsReadOnly="True" Header="Id"/>
                     <DataGridTextColumn Binding="{Binding IP_device, UpdateSourceTrigger=PropertyChanged}" Header="IP_device"/>
+                    <DataGridTextColumn Binding="{Binding Port, UpdateSourceTrigger=PropertyChanged}" Header="Port"/>
                     <DataGridTextColumn Binding="{Binding Location, UpdateSourceTrigger=PropertyChanged}" Header="Location"/>
                     <DataGridTextColumn Binding="{Binding Longitude, UpdateSourceTrigger=PropertyChanged}" Header="Longitude"/>
                     <DataGridTextColumn Binding="{Binding Lagatitude, UpdateSourceTrigger=PropertyChanged}" Header="Lagatitude"/>

@@ -41,16 +41,20 @@ namespace AppARM.PostgresSQL
             conn = new NpgsqlConnection(connStr);
         }
         
-        //Создание таблицы
-        public bool CreateTable(string _nametable)
+        //Создание таблицы Девайсов
+        public bool CreateTableApy(string _nametable)
         {
             string sqlStr = "CREATE TABLE " + _nametable +
                 "(  id serial,\r\n" +
                 "ip_device   text,\r\n" +
+                "port text,\r\n" +
                 "location   text,\r\n" +
                 "longitude   text,\r\n" +
                 "lagatitude   text,\r\n" +
-                "description  text\r\n)";
+                "description  text,\r\n" +
+                "temperature text,\r\n" +
+                "windSpeed text,\r\n" +
+                "directionWind text \r\n)";
             try
             {
                 conn.Open();
@@ -106,14 +110,15 @@ namespace AppARM.PostgresSQL
         }
 
         //Добавление данных в таблицу
-        public bool InsertDataBase(string _nametable, string ipDevice, string location,string longitude , string lagatitude,string description)
+        public bool InsertDataBase(string _nametable, string _ipDevice,string _port, string _location,string _longitude , string _lagatitude,string _description , string _temperature, string _windspeed ,string _directionwind)
         {
-            string sqlStr = "INSERT INTO " + _nametable  + " (ip_device ,location ,longitude ,lagatitude,description )  " +
+            string sqlStr = "INSERT INTO " + _nametable  + " (ip_device ,port,location ,longitude ,lagatitude,description,temperature, windspeed,directionwind) " +
                 "VALUES(";
             try
             {
+                
                 conn.Open();
-                sqlStr = sqlStr + ipDevice + "," + location + "," + longitude + "," + lagatitude + "," + description + ")";
+                sqlStr = sqlStr + _ipDevice + ","+ _port + "," + _location + "," + _longitude + "," + _lagatitude + "," + _description+ "," + _temperature + "," + _windspeed + "," + _directionwind + ")";
                 NpgsqlCommand sqlCommand = new NpgsqlCommand(sqlStr, conn);
                 Console.WriteLine(sqlStr);
                 sqlCommand.ExecuteNonQuery();

@@ -22,6 +22,12 @@ using AppARM.Structure;
 using MessageBox = System.Windows.MessageBox;
 using System.Reflection.Emit;
 using static AppARM.Structure.ElementDataBase;
+using AppARM.Weather;
+using AppARM.WeatherSokol;
+using System.Net.Sockets;
+using System.Net;
+using System.Runtime.Remoting.Messaging;
+using System.Threading;
 
 namespace AppARM.Device_Database
 {
@@ -72,19 +78,26 @@ namespace AppARM.Device_Database
         private void Load()
         {
             var t = db.GetDataBase(tableName);
-            if (t != null)
+            try
             {
-                while (t.Read())
+                if (t != null)
                 {
-                    deviceList.Add(new StructList(Convert.ToInt32(t.GetInt32(0)), Convert.ToString(t.GetString(1)),
-                        Convert.ToString(t.GetString(2)), Convert.ToString(t.GetString(3)), Convert.ToString(t.GetString(4)), Convert.ToString(t.GetString(5))));
-                    Console.WriteLine("{0} {1} {2} {3} {4} {5}", t.GetInt32(0), t.GetString(1), t.GetString(2), t.GetString(3), t.GetString(4), t.GetString(5));
+                    while (t.Read())
+                    {
+                  //      deviceList.Add(new StructList(Convert.ToInt32(t.GetInt32(0)), Convert.ToString(t.GetString(1)),
+                //            Convert.ToInt32(t.GetString(2)), Convert.ToString(t.GetString(3)), Convert.ToString(t.GetString(4)), Convert.ToString(t.GetString(5)), Convert.ToString(t.GetString(6))));
+                        Console.WriteLine("{0} {1} {2} {3} {4} {5}", t.GetInt32(0), t.GetString(1), t.GetString(2), t.GetString(3), t.GetString(4), t.GetString(5));
+                    }
+                }
+                else
+                {
+
+                    db.CreateTableApy(tableName);
                 }
             }
-            else
+            catch (Exception ex)
             {
-                
-                db.CreateTable(tableName);
+                Console.WriteLine(ex.ToString());   
             }
         }
 
@@ -168,9 +181,9 @@ namespace AppARM.Device_Database
         //вывод информации о записи
         private void MenuItem_Click_Add(object sender,RoutedEventArgs e) 
         {
-            db.InsertDataBase(tableName, "'127.0.0.1'", "'Kaluga'", "54.5293", "36.2754", "'Inform'");
+            db.InsertDataBase(tableName, "'127.0.0.1'","2020", "'Kaluga'", "54.5293", "36.2754", "'Inform'","test","test","test");
             var id = db.GetLastID(tableName);
-            deviceList.Add(new StructList(id, "127.0.0.1", "Kaluga", "54.5293", "36.2754", "Inform"));
+           // deviceList.Add(new StructList(id, "127.0.0.1", "Kaluga", "54.5293", "36.2754", "Inform"));
             DG_device.ItemsSource = deviceList.ToList();
         }
           
@@ -198,5 +211,39 @@ namespace AppARM.Device_Database
             }
         }
         //__________________________________________________________________________________________
-    }
+
+        /*
+        private void GetWeather()
+        {
+            try
+            {
+                TcpClient tcpClient = new TcpClient();
+                // Test.Text += "Проверка по " + ipAdress + ":" + port + '\n'; 
+                tcpClient.Connect(ipAdress, Convert.ToInt32(port));
+                NetworkStream stream = tcpClient.GetStream();
+                stream.Write(Message, 0, Message.Length);
+
+                byte[] bytes = new byte[tcpClient.ReceiveBufferSize];
+                int bytesRead = stream.Read(bytes, 0, tcpClient.ReceiveBufferSize);
+
+                ByteWeather byteWeather = new ByteWeather(null, null, 0, null, null, null, bytes[0], bytes[1], bytes[2], bytes[3], bytes[4], bytes[5], bytes[6], bytes[7], bytes[8],
+                        bytes[9], bytes[10], bytes[11], bytes[12], bytes[13], bytes[14], bytes[15], bytes[16], bytes[17], bytes[18], bytes[19], bytes[20], bytes[21], bytes[22], bytes[23],
+                        bytes[24], bytes[25], bytes[26], bytes[27], bytes[28], false);
+
+                temperature = byteWeather.temperature;
+                windSpeed = byteWeather.windSpeed;
+                directionWind = byteWeather.directionWind;
+
+                Thread.Sleep(10);
+
+                tcpClient.Close();
+            }
+            catch (Exception ex)
+            {
+                Dispatcher.Invoke((Action)(() => Test.Text += Convert.ToString(ex) + '\n'));
+            }
+
+*/
+        }
+
 }
