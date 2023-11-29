@@ -292,7 +292,7 @@ namespace AppARM.PostgresSQL
                 using NpgsqlDataReader rdr = cmd.ExecuteReader();
                 while (rdr.Read())
                 {
-                    Console.WriteLine("{0} - last id ", rdr.GetData(0));
+                    Console.WriteLine("{0} - last id ", rdr.GetInt32(0));
                     lastId = rdr.GetInt32(0);
                 }
                 conn.Close();
