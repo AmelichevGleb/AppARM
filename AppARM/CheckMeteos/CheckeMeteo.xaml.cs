@@ -26,6 +26,7 @@ using System.IO;
 using System.Collections.ObjectModel;
 using System.Windows.Interop;
 using AppARM.WeatherSokol;
+using AppARM.TestXML;
 
 namespace AppARM.CheckMeteos
 {
@@ -35,9 +36,9 @@ namespace AppARM.CheckMeteos
     public partial class CheckeMeteo : Window
     {
 
-        private static string ipAdress;
-        private static  string port;
+
         private DateTime dateTime = new DateTime();
+        private Files files = new Files();
 
         // комманда опроса
         private byte[] Message = new byte[] { 0x01, 0x03, 0x00, 0x00, 0x00, 0x5A, 0xC5, 0xF1 };
@@ -45,7 +46,8 @@ namespace AppARM.CheckMeteos
         private double temperature; 
         private double windSpeed; 
         private int directionWind;
-   
+        private static string ipAdress;
+        private static string port;
 
         public CheckeMeteo()
         {
@@ -61,7 +63,7 @@ namespace AppARM.CheckMeteos
 
         private void Button_Click_Cancel(object sender, RoutedEventArgs e)
         {
-            this.Close();
+            Test.Text = string.Empty;
         }
 
 
@@ -88,8 +90,9 @@ namespace AppARM.CheckMeteos
             }
             catch (Exception ex)
             {
-                  Test.Text += CorrectString() + (ex.Message) + "\n";
-                   B_Send.IsEnabled = true;
+                Test.Text += CorrectString() + (ex.Message) + "\n";
+                files.ReadExeption(ex);
+                B_Send.IsEnabled = true;
             }
 
         }
@@ -132,7 +135,8 @@ namespace AppARM.CheckMeteos
             }
             catch (Exception ex)
             {
-                Dispatcher.Invoke((Action)(() => Test.Text += Convert.ToString(ex) + '\n'));
+                Dispatcher.Invoke((Action)(() => Test.Text += Convert.ToString("Ошибка подключения") + '\n'));
+                files.ReadExeption(ex);
             }
 
         }

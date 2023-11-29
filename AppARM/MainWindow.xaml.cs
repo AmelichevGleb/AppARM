@@ -125,7 +125,7 @@ namespace AppARM
             //getWeather.ConnectMeteo(server, port, Properties.Settings.Default.IP_adress, Properties.Settings.Default.Port);
             //// вывести все ip из бд
 
-            var t = dataBase.GetDataBase("Arm");
+            var t = dataBase.GetDataBaseShort("Arm");
             if (t != null)
             {
                 while (t.Read())

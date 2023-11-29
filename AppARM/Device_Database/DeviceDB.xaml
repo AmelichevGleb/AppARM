@@ -5,7 +5,8 @@
         xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
         xmlns:local="clr-namespace:AppARM.Device_Database"
         mc:Ignorable="d"
-        Title="DeviceDB" Height="420" Width="800">
+        Title="DeviceDB" Height="420" Width="800"
+         ResizeMode="NoResize">
 
     <Grid   Margin="0,0,0,0" Background="#659DBD" Height="384" VerticalAlignment="Top">
         <Grid.RowDefinitions>
@@ -13,7 +14,7 @@
             </RowDefinition>
             <RowDefinition Height="auto"></RowDefinition>
         </Grid.RowDefinitions>
-        <Grid Margin="5,5,5,5" Background="AliceBlue">
+        <Grid Margin="5,5,5,5" Background="#659DBD">
         </Grid>
         <Grid Margin="5,5,5,5" Background="Gray">
             <DataGrid x:Name="DG_device" AutoGenerateColumns="False" MouseUp="grid_MouseUp" CellEditEnding="dataGrid_CellEditEnding" SelectionChanged="DG_device_SelectionChanged" Height="341" VerticalAlignment="Center" HorizontalAlignment="Left" Width="790" >
@@ -40,8 +41,8 @@
             </DataGrid>
         </Grid>
         <StackPanel Grid.Row="1" Orientation="Horizontal" HorizontalAlignment="Right">
-            <Button x:Name="B_OK" Margin="0,0,0,5" Padding="5" Click="BC_Ok">OK</Button>
-            <Button x:Name="B_Cancel" Margin="5,0,5,5" Padding="5" Click="BC_Cancel">Cancel</Button>
+            <Button x:Name="B_OK" Background="#0C5DA5" Margin="0,0,0,5" Padding="5" Click="BC_Ok">OK</Button>
+            <Button x:Name="B_Cancel" Background="#0C5DA5" Margin="5,0,5,5" Padding="5" Click="BC_Cancel">Cancel</Button>
         </StackPanel>
     </Grid>
 </Window>

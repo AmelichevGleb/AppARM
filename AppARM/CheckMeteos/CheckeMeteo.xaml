@@ -6,15 +6,16 @@
         xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
         xmlns:local="clr-namespace:AppARM.CheckMeteos"
         mc:Ignorable="d"
+        ResizeMode="NoResize"
         Title="CheckeMeteo" Height="450" Width="800">
 
-    <Grid Background="White">
+    <Grid Background="#659DBD">
         <Grid.RowDefinitions>
             <RowDefinition>
             </RowDefinition>
             <RowDefinition Height="auto"></RowDefinition>
         </Grid.RowDefinitions>
-        <Grid Margin="5,5,5,5" Background="AliceBlue">
+        <Grid Margin="5,5,5,5" Background="#659DBD">
 
             <Grid.ColumnDefinitions>
                 <ColumnDefinition></ColumnDefinition>
@@ -34,21 +35,21 @@
                 <TextBox x:Name="TB_adress" Margin="5,5,5,5"  ToolTip=" для теста 127.0.0.1 " Grid.Row="1" Grid.Column="0"></TextBox>
                 <Label Margin="5,5,5,5" Grid.Row="2" Grid.Column="0">Порт</Label>
                 <TextBox x:Name="TB_port"  Margin="5,5,5,5" ToolTip=" для теста 11000 " Grid.Row="3" Grid.Column="0"></TextBox>
-                <Button x:Name="B_Send" Margin="5,5,5,-54" Grid.Row="4" Grid.Column="0" Click="B_Send_Click"></Button>
+                <Button x:Name="B_Send"  Background="#0C5DA5" Margin="5,5,5,-54" Grid.Row="4" Grid.Column="0" Click="B_Send_Click">Проверка</Button>
 
                 <TextBlock />
             </Grid>
             <Grid Grid.Column="1">
                 <ScrollViewer>
-                    <TextBlock x:Name="Test"/>
+                    <TextBlock x:Name="Test" Background="White"/>
                 </ScrollViewer>
             </Grid>
         </Grid>
 
 
         <StackPanel Grid.Row="1" Orientation="Horizontal" HorizontalAlignment="Right">
-            <Button x:Name="B_OK" Margin="0,0,0,5" Padding="5" Click="Button_Click_Ok">OK</Button>
-            <Button x:Name="B_Cancel" Margin="5,0,5,5" Padding="5" Click="Button_Click_Cancel">Cancel</Button>
+            <Button x:Name="B_OK" Background="#0C5DA5" Margin="0,0,0,5" Padding="5" Click="Button_Click_Ok">OK</Button>
+            <Button x:Name="B_Cancel" Background="#0C5DA5" Margin="5,0,5,5" Padding="5" Click="Button_Click_Cancel">Cancel</Button>
         </StackPanel>
 
     </Grid>

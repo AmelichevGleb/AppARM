@@ -5,6 +5,7 @@
         xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
         xmlns:local="clr-namespace:AppARM.SettingApp"
         mc:Ignorable="d"
+        ResizeMode="NoResize"
         Title="SettingForm" Height="450" Width="352">
     <Grid Background="#659DBD">
         <Grid.RowDefinitions>

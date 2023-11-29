@@ -49,6 +49,12 @@ namespace AppARM.Device_Database
         private DataBase db;
         private string tableName = "Arm"; // Название таблицы для PostgreSQL
 
+        private byte[] Message = new byte[] { 0x01, 0x03, 0x00, 0x00, 0x00, 0x5A, 0xC5, 0xF1 };
+
+        private double temperature;
+        private double windSpeed;
+        private int directionWind;
+
         public DeviceDB(DataBase _dataBase)
         {
             db = _dataBase; 
@@ -64,7 +70,6 @@ namespace AppARM.Device_Database
         {
             this.Close();
         }
-
         //Кнопка Cancel
         private void BC_Cancel(object sender, RoutedEventArgs e)
         {
@@ -77,15 +82,16 @@ namespace AppARM.Device_Database
         //загрузка и заполнение базы данных
         private void Load()
         {
-            var t = db.GetDataBase(tableName);
+            var t = db.GetDataBaseShort(tableName);
             try
             {
                 if (t != null)
                 {
                     while (t.Read())
                     {
-                  //      deviceList.Add(new StructList(Convert.ToInt32(t.GetInt32(0)), Convert.ToString(t.GetString(1)),
-                //            Convert.ToInt32(t.GetString(2)), Convert.ToString(t.GetString(3)), Convert.ToString(t.GetString(4)), Convert.ToString(t.GetString(5)), Convert.ToString(t.GetString(6))));
+                        deviceList.Add(new StructList(Convert.ToInt32(t.GetInt32(0)), Convert.ToString(t.GetString(1)),
+                            Convert.ToString(t.GetString(2)), Convert.ToString(t.GetString(3)), Convert.ToString(t.GetString(4)), Convert.ToString(t.GetString(5)),
+                            Convert.ToString(t.GetString(6))));
                         Console.WriteLine("{0} {1} {2} {3} {4} {5}", t.GetInt32(0), t.GetString(1), t.GetString(2), t.GetString(3), t.GetString(4), t.GetString(5));
                     }
                 }
@@ -100,9 +106,42 @@ namespace AppARM.Device_Database
                 Console.WriteLine(ex.ToString());   
             }
         }
+        private void GetWeather(string _ip, string port)
+        {
+            this.temperature = 0;
+            this.windSpeed = 0; 
+            this.directionWind = 0;
+            try
+            {
+                TcpClient tcpClient = new TcpClient();
+                // Test.Text += "Проверка по " + ipAdress + ":" + port + '\n'; 
+                tcpClient.Connect(_ip, Convert.ToInt32(port));
+                NetworkStream stream = tcpClient.GetStream();
+                stream.Write(Message, 0, Message.Length);
 
-        //поиск индекса в списке
-        public int FindIndexsList(List<StructList> deviceList, int id)
+                byte[] bytes = new byte[tcpClient.ReceiveBufferSize];
+                int bytesRead = stream.Read(bytes, 0, tcpClient.ReceiveBufferSize);
+
+                ByteWeather byteWeather = new ByteWeather(null, null, 0, null, null, null, bytes[0], bytes[1], bytes[2], bytes[3], bytes[4], bytes[5], bytes[6], bytes[7], bytes[8],
+                        bytes[9], bytes[10], bytes[11], bytes[12], bytes[13], bytes[14], bytes[15], bytes[16], bytes[17], bytes[18], bytes[19], bytes[20], bytes[21], bytes[22], bytes[23],
+                        bytes[24], bytes[25], bytes[26], bytes[27], bytes[28], false);
+
+                this.temperature = byteWeather.temperature;
+                this.windSpeed = byteWeather.windSpeed;
+                this.directionWind = byteWeather.directionWind;
+
+                Thread.Sleep(10);
+
+                tcpClient.Close();
+            }
+            catch (Exception ex)
+            {
+              
+            }
+        }
+
+            //поиск индекса в списке
+            public int FindIndexsList(List<StructList> deviceList, int id)
         {
             int index = deviceList.FindIndex(
                      delegate (StructList structList)
@@ -135,10 +174,14 @@ namespace AppARM.Device_Database
         private void dataGrid_CellEditEnding(object sender, DataGridCellEditEndingEventArgs e)
         {
             StructList p = e.Row.Item as StructList;
-            MessageBox.Show($"{p.Id} {p.IP_device} {p.Location} {p.Longitude} {p.Lagatitude} {p.Description}");
+            MessageBox.Show($"{p.Id} {p.IP_device} {p.Port} {p.Location} {p.Longitude} {p.Lagatitude} {p.Description}");
             //вызов обновления базы данных 
-            db.UpdateElementDataBase(tableName, Convert.ToString(p.Id), p.IP_device, p.Location, p.Longitude,p.Lagatitude,p.Description);
-           /* Console.WriteLine(Convert.ToString(p.Id)," ", Convert.ToString(p.Name), p.Age);
+            GetWeather(p.IP_device, p.Port);
+           
+            db.UpdateElementDataBase(tableName, Convert.ToString(p.Id), p.IP_device,Convert.ToString(p.Port), p.Location, p.Longitude,p.Lagatitude,p.Description,Convert.ToString(temperature), Convert.ToString(windSpeed), Convert.ToString(directionWind));
+            db.UpdateElementDataBase(tableName, Convert.ToString(p.Id), null, null, null, null, null, null, Convert.ToString(temperature), Convert.ToString(windSpeed), Convert.ToString(directionWind));
+
+            /* Console.WriteLine(Convert.ToString(p.Id)," ", Convert.ToString(p.Name), p.Age);
             if (flagfix)
             {
                 int numRow = e.Row.GetIndex();
@@ -151,6 +194,33 @@ namespace AppARM.Device_Database
                 flagfix = true;
                 DG_device.Items.Refresh();
             }
+
+
+             ipAdress = TB_adress.Text;
+            port = TB_port.Text;
+            B_Send.IsEnabled = false;
+            Console.WriteLine(ipAdress + " " + port);
+            try
+            {
+                await Task.Run(() =>
+                {
+                    Dispatcher.Invoke((Action)(() => Test.Text += "Проверка по " + ipAdress + ":" + port + '\n'));
+                    if ((ipAdress != "") && (port != ""))
+                    {
+                        GetWeather();
+                       Dispatcher.Invoke((Action)(() => Test.Text += CorrectString() +'\n' + "температура: " + temperature + '\n' + "Скорость ветра: " + windSpeed + '\n' + "направление ветра: " + directionWind + '\n'));
+                        Thread.Sleep(10);
+                    }
+                });
+                B_Send.IsEnabled = true;
+            }
+            catch (Exception ex)
+            {
+                  Test.Text += CorrectString() + (ex.Message) + "\n";
+                   B_Send.IsEnabled = true;
+            }
+            
+
            */
         }
 
@@ -181,9 +251,9 @@ namespace AppARM.Device_Database
         //вывод информации о записи
         private void MenuItem_Click_Add(object sender,RoutedEventArgs e) 
         {
-            db.InsertDataBase(tableName, "'127.0.0.1'","2020", "'Kaluga'", "54.5293", "36.2754", "'Inform'","test","test","test");
+            db.InsertDataBase(tableName, "'127.0.0.1'","11000", "'Kaluga'", "54.5293", "36.2754", "'Inform'","'test'","'test'","'test'");
             var id = db.GetLastID(tableName);
-           // deviceList.Add(new StructList(id, "127.0.0.1", "Kaluga", "54.5293", "36.2754", "Inform"));
+            deviceList.Add(new StructList(id, "127.0.0.1", "11000", "Kaluga", "54.5293", "36.2754", "Inform"));
             DG_device.ItemsSource = deviceList.ToList();
         }
           
