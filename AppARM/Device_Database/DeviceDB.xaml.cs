@@ -178,7 +178,7 @@ namespace AppARM.Device_Database
             //вызов обновления базы данных 
             GetWeather(p.IP_device, p.Port);
            
-            db.UpdateElementDataBase(tableName, Convert.ToString(p.Id), p.IP_device,Convert.ToString(p.Port), p.Location, p.Longitude,p.Lagatitude,p.Description,Convert.ToString(temperature), Convert.ToString(windSpeed), Convert.ToString(directionWind));
+            db.UpdateElementDataBase(tableName, Convert.ToString(p.Id), p.IP_device,Convert.ToString(p.Port), p.Location, p.Longitude,p.Lagatitude,p.Description, Convert.ToString(temperature), Convert.ToString(windSpeed), Convert.ToString(directionWind));
             db.UpdateElementDataBase(tableName, Convert.ToString(p.Id), null, null, null, null, null, null, Convert.ToString(temperature), Convert.ToString(windSpeed), Convert.ToString(directionWind));
 
             /* Console.WriteLine(Convert.ToString(p.Id)," ", Convert.ToString(p.Name), p.Age);

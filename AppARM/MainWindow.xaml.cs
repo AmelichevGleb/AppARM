@@ -24,10 +24,12 @@ using AppARM.Scenario;
 using System.Data.SqlClient;
 using static System.Net.Mime.MediaTypeNames;
 using AppARM.Test;
+using AppARM.WeatherSokol;
 using static AppARM.Test.Experiment;
 using AppARM.Weather;
 using AppARM.WeatherSokol;
 using AppARM.CheckMeteos;
+using Newtonsoft.Json;
 
 namespace AppARM
 { 
@@ -36,8 +38,7 @@ namespace AppARM
     {
 
 
-      
-
+        private DataBase db;
         private static TcpClient newClient;
         private GetWeather getWeather = new GetWeather();
         private NetworkStream tcpStream;
@@ -146,10 +147,98 @@ namespace AppARM
             settingApp.Show();
         }
 
+
+        CreateJsonRequest create =  new CreateJsonRequest();
+
+        /*
+
+            {
+        "Name":"22",
+        "Device_ip":"12",
+        "Longitude":"32.22",
+        "Latitude":"12.24",
+        "Weather":
+        {
+            "Temperature":"22",
+            "Wind_speed":"22",
+            "Direction":"22",
+            "Parameter": ""
+        }
+        */
+        private string tableName = "Arm";
+
         //Для тестовых проверок 
         private void Button_Click_2(object sender, RoutedEventArgs e)
         {
-           
+
+            string serverBD = Convert.ToString(Properties.Settings.Default.IP_adress);
+            string portBD = Convert.ToString(Properties.Settings.Default.Port);
+            string userBD = Convert.ToString(Properties.Settings.Default.Login_BD);
+            string passwordBD = Convert.ToString(Properties.Settings.Default.Password_BD);
+
+            DataBase dataBase = new DataBase(serverBD, portBD, userBD, passwordBD);
+
+            string t = "[";
+            var ts = dataBase.GetDataBaseLong(tableName);
+
+            try
+            {
+                int count = Convert.ToInt32(dataBase.CountDataInBD(tableName));
+                if (ts != null)
+                {
+                    while (ts.Read())
+                    {
+                        Console.WriteLine("{0} {1} {2} {3} {4} {5} {6} {7} ", ts.GetInt32(0), ts.GetString(1), ts.GetString(2), ts.GetString(3), ts.GetString(4), ts.GetString(5), ts.GetString(6), ts.GetString(7));
+
+                        Console.WriteLine(t);
+                        t += create.CreatJSON(ts.GetString(3), ts.GetString(1), ts.GetString(4), ts.GetString(5), ts.GetString(7), ts.GetString(8), ts.GetString(9), ts.GetString(6));
+
+                        if (count != 1)
+                        {
+                            t += ",";
+                        }
+                        count--;
+                        Console.WriteLine(t);
+                    }
+                }
+                
+                else
+                {
+
+                    dataBase.CreateTableApy(tableName);
+                }
+            }
+            catch (Exception ex)
+            {
+                Console.WriteLine(ex.ToString());
+            }
+
+
+            //var t ="[" +create.CreatJSON("12", "232", 123, "22", "22.24", "45.24", "22", "22", "22", "22");
+            // t = t + "," + create.CreatJSON("12", "232", 123, "22", "25.24", "35.24", "22", "22", "22", "22") + "]";
+            Console.WriteLine(t);
+            t +="]";
+            Console.WriteLine(t);
+            var url = "http://" + "127.0.0.1" + ":" + Convert.ToString(8000) + "/set_stations/";
+            var httpRequest = (HttpWebRequest)WebRequest.Create(url);
+            httpRequest.Method = "POST";
+            httpRequest.Accept = "application/json";
+            httpRequest.ContentType = "application/json";
+            using (var streamWriter = new StreamWriter(httpRequest.GetRequestStream()))
+            {
+                streamWriter.Write(t);
+            }
+            var httpResponse = (HttpWebResponse)httpRequest.GetResponse();
+            using (var streamReader = new StreamReader(httpResponse.GetResponseStream()))
+            {
+                var result = streamReader.ReadToEnd();
+            }
+            var status = httpResponse.StatusCode.ToString();
+            if (status == "OK") { 
+                //сообщение
+                                  
+            }
+
         }
 
         //__________________________________________________________________________________________

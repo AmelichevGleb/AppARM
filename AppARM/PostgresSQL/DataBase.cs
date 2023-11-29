@@ -1,4 +1,5 @@
 ﻿using System;
+
 using System.Collections.Generic;
 using System.Linq;
 using System.Reflection.Emit;
@@ -201,7 +202,33 @@ namespace AppARM.PostgresSQL
                 return null;
             }
         }
-        
+        //кол-во записей в БД
+        public string CountDataInBD(string _nametable)
+        {
+            string count = null;
+            //select count(*) from arm
+            try
+            {
+                string sqlStr = "select count(*) from " + _nametable;
+                conn.Open();
+                using var cmd = new NpgsqlCommand(sqlStr, conn);
+                Console.WriteLine(sqlStr);
+                using NpgsqlDataReader rdr = cmd.ExecuteReader();
+                while (rdr.Read())
+                {
+                    Console.WriteLine("{0} - last id ",Convert.ToString( rdr.GetInt64(0)));
+                    count = Convert.ToString(rdr.GetInt64(0));
+                }
+                conn.Close();
+                return count;
+            }
+            catch (Exception _ex)
+            {
+                conn.Close();
+                files.ReadExeption(_ex);
+                return null;
+            }
+        }
         //Очистка таблицы
         public bool ClearTable(string _nametable)
         {
@@ -265,7 +292,7 @@ namespace AppARM.PostgresSQL
                 using NpgsqlDataReader rdr = cmd.ExecuteReader();
                 while (rdr.Read())
                 {
-                    Console.WriteLine("{0} - last id ", rdr.GetInt32(0));
+                    Console.WriteLine("{0} - last id ", rdr.GetData(0));
                     lastId = rdr.GetInt32(0);
                 }
                 conn.Close();
@@ -283,6 +310,8 @@ namespace AppARM.PostgresSQL
         //(string _nametable, string _ipDevice,string _port, string _location,string _longitude , string _lagatitude,string _description , string _temperature, string _windspeed ,string _directionwind)
         public bool UpdateElementDataBase(string _nametable, string _id, string _ipDevice, string _port, string _location, string _longitude, string _lagatitude, string _description, string _temperature, string _windspeed, string _directionwind)
         {
+            System.Threading.Thread.CurrentThread.CurrentCulture = new System.Globalization.CultureInfo("en-US");
+            Console.WriteLine(_temperature);
             
             string sqlStr = "Update " + _nametable + " set ";
             string sqlStrWhere = " where id = " + _id;

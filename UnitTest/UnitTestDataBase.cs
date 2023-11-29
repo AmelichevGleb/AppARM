@@ -67,10 +67,9 @@ namespace UnitTest
         {
             string testName = "UnitTest";
             DataBase db = new DataBase(serverBD, portBD, userBD, passwordBD);
-        //    var result = db.CreateTable(testName);
-         //   Assert.AreEqual(true, result);
+            var result = db.CreateTableApy(testName);
+            Assert.AreEqual(true, result);
             db.DeleteTable(testName);
-
         }
         
         [TestMethod]
@@ -78,7 +77,7 @@ namespace UnitTest
         {
             string testName = "UnitTest";
             DataBase db = new DataBase(serverBD, portBD, userBD, passwordBD);
-         //  db.CreateTable(testName);          
+            db.CreateTableApy(testName);          
             db.DeleteTable(testName);
             var result = db.DeleteTable(testName);
             Assert.AreEqual(false, result);
@@ -88,7 +87,7 @@ namespace UnitTest
         public void TestGetTable() {
             //база данных не существует
             DataBase db = new DataBase(serverBD, portBD, userBD, passwordBD);
-            var t = db.GetDataBase("test144");
+            var t = db.GetDataBaseShort("test144");
             Assert.IsNull(t);           
         }
 
@@ -98,7 +97,7 @@ namespace UnitTest
             
             //база данных существует
             DataBase db = new DataBase(serverBD, portBD, userBD, passwordBD);
-            var t = db.GetDataBase("test1");
+            var t = db.GetDataBaseShort("test1");
             Assert.IsNotNull(t);
         }
         
@@ -109,12 +108,11 @@ namespace UnitTest
             WorkElementDB wDB = new WorkElementDB();
             DataBase db = new DataBase(serverBD, portBD, userBD, passwordBD);
             List<ElementDataBase> element = new List<ElementDataBase>();
-            var t = db.GetDataBase("test1");
+            var t = db.GetDataBaseShort("test1");
             while (t.Read())
             {
-            //    wDB.AddNewElement(element, Convert.ToString(t.GetInt32(0)), Convert.ToString(t.GetString(1)), Convert.ToString(t.GetString(2)), Convert.ToString(t.GetString(3)),
-              //      Convert.ToString(t.GetString(4)), Convert.ToString(t.GetString(5)));
-                Console.WriteLine("{0} {1} {2} {3} {4} {5}", t.GetInt32(0), t.GetString(1), t.GetString(2), t.GetString(3), t.GetString(4), t.GetString(5));
+                wDB.AddNewElement(element, Convert.ToString(t.GetInt32(0)), Convert.ToString(t.GetString(1)), Convert.ToString(t.GetString(2)), Convert.ToString(t.GetString(3)), Convert.ToString(t.GetString(4)), Convert.ToString(t.GetString(5)), Convert.ToString(t.GetString(6)));
+                Console.WriteLine("{0} {1} {2} {3} {4} {5} {6}", t.GetInt32(0), t.GetString(1), t.GetString(2), t.GetString(3), t.GetString(4), t.GetString(5), t.GetString(6));
             }
             Assert.AreEqual(0,element.Count);
         }
@@ -127,15 +125,14 @@ namespace UnitTest
             WorkElementDB wDB = new WorkElementDB();
             DataBase db = new DataBase(serverBD, portBD, userBD, passwordBD);
             List<ElementDataBase> element = new List<ElementDataBase>();
-           //       db.CreateTable("Test_2");
-          //  db.InsertDataBase("Test_2", "12", "13", "14", "15", "16");
-         //   db.InsertDataBase("Test_2", "21", "22", "23", "24", "25");
-            var t = db.GetDataBase("Test_2");
+            db.CreateTableApy("Test_2");
+            db.InsertDataBase("Test_2", "'192.168.1.1'", "8080", "'kaluga'", "15.12", "26.12" , "'null'", "'null'","'null'", "'null'");
+            db.InsertDataBase("Test_2", "'192.168.1.1'", "8080", "'kaluga'", "15.12", "26.12", "'null'", "'null'", "'null'", "'null'");
+            var t = db.GetDataBaseShort("Test_2");
             while (t.Read())
             {
-            //    wDB.AddNewElement(element, Convert.ToString(t.GetInt32(0)), Convert.ToString(t.GetString(1)), Convert.ToString(t.GetString(2)), Convert.ToString(t.GetString(3)),
-               //      Convert.ToString(t.GetString(4)), Convert.ToString(t.GetString(5)));
-                Console.WriteLine("{0} {1} {2} {3} {4} {5}", t.GetInt32(0), t.GetString(1), t.GetString(2), t.GetString(3), t.GetString(4), t.GetString(5));
+                wDB.AddNewElement(element, Convert.ToString(t.GetInt32(0)), Convert.ToString(t.GetString(1)), Convert.ToString(t.GetString(2)), Convert.ToString(t.GetString(3)), Convert.ToString(t.GetString(4)), Convert.ToString(t.GetString(5)), Convert.ToString(t.GetString(6)));
+                Console.WriteLine("{0} {1} {2} {3} {4} {5} {6}", t.GetInt32(0), t.GetString(1), t.GetString(2), t.GetString(3), t.GetString(4), t.GetString(5), t.GetString(6));
             }
             Assert.AreEqual(2, element.Count);
             db.DeleteTable("Test_2");
@@ -148,7 +145,7 @@ namespace UnitTest
             WorkElementDB wDB = new WorkElementDB();
             DataBase db = new DataBase(serverBD, portBD, userBD, passwordBD);
             List<ElementDataBase> element = new List<ElementDataBase>();
-           // Assert.IsTrue(db.CreateTable("Toster"));
+            Assert.IsTrue(db.CreateTableApy("Toster"));
             Assert.IsTrue(db.DropTable("Toster"));
         }
 
@@ -168,14 +165,13 @@ namespace UnitTest
             WorkElementDB wDB = new WorkElementDB();
             DataBase db = new DataBase(serverBD, portBD, userBD, passwordBD);
             List<ElementDataBase> element = new List<ElementDataBase>();
-          //  db.CreateTable("Test5");
-          //  db.InsertDataBase("Test5", "22", "22", "22", "22", "22");
-            var t = db.GetDataBase("Test5");
+            db.CreateTableApy("Test5");
+            db.InsertDataBase("Test5", "'192.168.1.1'", "8080", "'kaluga'", "15.12", "26.12", "'null'", "'null'", "'null'", "'null'");
+            var t = db.GetDataBaseShort("Test5");
             while (t.Read())
             {
-            //    wDB.AddNewElement(element, Convert.ToString(t.GetInt32(0)), Convert.ToString(t.GetString(1)), Convert.ToString(t.GetString(2)), Convert.ToString(t.GetString(3)), 
-              //      Convert.ToString(t.GetString(4)), Convert.ToString(t.GetString(5)));
-                Console.WriteLine("{0} {1} {2} {3} {4} {5}", t.GetInt32(0), t.GetString(1), t.GetString(2), t.GetString(3), t.GetString(4), t.GetString(5));
+                wDB.AddNewElement(element, Convert.ToString(t.GetInt32(0)), Convert.ToString(t.GetString(1)), Convert.ToString(t.GetString(2)), Convert.ToString(t.GetString(3)), Convert.ToString(t.GetString(4)), Convert.ToString(t.GetString(5)), Convert.ToString(t.GetString(6)));
+                Console.WriteLine("{0} {1} {2} {3} {4} {5} {6}", t.GetInt32(0), t.GetString(1), t.GetString(2), t.GetString(3), t.GetString(4), t.GetString(5), t.GetString(6));
             }
             Assert.AreEqual(1, element.Count);
             Assert.IsTrue(db.DeleteTable("Test5"));
@@ -187,15 +183,14 @@ namespace UnitTest
             WorkElementDB wDB = new WorkElementDB();
             DataBase db = new DataBase(serverBD, portBD, userBD, passwordBD);
             List<ElementDataBase> element = new List<ElementDataBase>();
-         //   db.CreateTable("Test12");
-         //   db.InsertDataBase("Test12", "22", "22", "22", "22", "22");
+            db.CreateTableApy("Test12");
+            db.InsertDataBase("Test12", "'192.168.1.1'", "8080", "'kaluga'", "15.12", "26.12", "'null'", "'null'", "'null'", "'null'"); 
             Assert.AreEqual(true, db.ClearTable("Test12"));
-            var t = db.GetDataBase("Test12");
+            var t = db.GetDataBaseShort("Test12");
             while (t.Read())
             {
-          //      wDB.AddNewElement(element, Convert.ToString(t.GetInt32(0)), Convert.ToString(t.GetString(1)), Convert.ToString(t.GetString(2)), Convert.ToString(t.GetString(3)),
-   //  Convert.ToString(t.GetString(4)), Convert.ToString(t.GetString(5)));
-                Console.WriteLine("{0} {1} {2} {3} {4} {5}", t.GetInt32(0), t.GetString(1), t.GetString(2), t.GetString(3), t.GetString(4), t.GetString(5));
+                wDB.AddNewElement(element, Convert.ToString(t.GetInt32(0)), Convert.ToString(t.GetString(1)), Convert.ToString(t.GetString(2)), Convert.ToString(t.GetString(3)), Convert.ToString(t.GetString(4)), Convert.ToString(t.GetString(5)), Convert.ToString(t.GetString(6)));
+                Console.WriteLine("{0} {1} {2} {3} {4} {5} {6}", t.GetInt32(0), t.GetString(1), t.GetString(2), t.GetString(3), t.GetString(4), t.GetString(5), t.GetString(6));
             }
             Assert.AreEqual(0, element.Count);
             Assert.IsTrue(db.DeleteTable("Test12"));
@@ -209,16 +204,15 @@ namespace UnitTest
             DataBase db = new DataBase(serverBD, portBD, userBD, passwordBD);
             List<ElementDataBase> element = new List<ElementDataBase>();
             db.DeleteTable("Test124");
-          //  db.CreateTable("Test124");
-          //  db.InsertDataBase("Test124", "22", "22", "22", "22", "22");
-         //   db.InsertDataBase("Test124", "23", "23", "23", "23", "23");
+            db.CreateTableApy("Test124");
+            db.InsertDataBase("Test124", "'192.168.1.1'", "8080", "'kaluga'", "15.12", "26.12", "'null'", "'null'", "'null'", "'null'");
+            db.InsertDataBase("Test124", "'192.168.1.1'", "8080", "'kaluga'", "15.12", "26.12", "'null'", "'null'", "'null'", "'null'");
             db.DeleteValueDB("Test124", 1);
-            var t = db.GetDataBase("Test124");
+            var t = db.GetDataBaseShort("Test124");
             while (t.Read())
             {
-             //   wDB.AddNewElement(element, Convert.ToString(t.GetInt32(0)), Convert.ToString(t.GetString(1)), Convert.ToString(t.GetString(2)), Convert.ToString(t.GetString(3)),
-    // Convert.ToString(t.GetString(4)), Convert.ToString(t.GetString(5)));
-                Console.WriteLine("{0} {1} {2} {3} {4} {5}", t.GetInt32(0), t.GetString(1), t.GetString(2), t.GetString(3), t.GetString(4), t.GetString(5));
+                wDB.AddNewElement(element, Convert.ToString(t.GetInt32(0)), Convert.ToString(t.GetString(1)), Convert.ToString(t.GetString(2)), Convert.ToString(t.GetString(3)), Convert.ToString(t.GetString(4)), Convert.ToString(t.GetString(5)), Convert.ToString(t.GetString(6)));
+                Console.WriteLine("{0} {1} {2} {3} {4} {5} {6}", t.GetInt32(0), t.GetString(1), t.GetString(2), t.GetString(3), t.GetString(4), t.GetString(5), t.GetString(6));
             }
             Assert.AreEqual(1, element.Count);
             Assert.IsTrue(db.DeleteTable("Test124"));
@@ -227,11 +221,11 @@ namespace UnitTest
         [TestMethod]
         public void TestUpdate_1()
         {
-            //пустые входные параметры
+            //пустые входные параметры ВОПРОС
             DataBase db = new DataBase(serverBD, portBD, userBD, passwordBD);
-           // db.CreateTable("Test1234");
-         //   db.InsertDataBase("Test1234", "22", "22", "22", "22", "22");
-          //  Assert.IsFalse(db.UpdateElementDataBase("Test1234", "1", null, null));
+            db.CreateTableApy("Test1234");
+            db.InsertDataBase("Test124", "'192.168.1.1'", "8080", "'kaluga'", "15.12", "26.12", "'null'", "'null'", "'null'", "'null'");
+            Assert.IsFalse(db.UpdateElementDataBase("Test1234", "1", null, null,null,null,null,null, null, null,null));
             db.DeleteTable("Test1234");
         }
         
@@ -242,14 +236,14 @@ namespace UnitTest
             WorkElementDB wDB = new WorkElementDB();
             List<ElementDataBase> element = new List<ElementDataBase>();
             DataBase db = new DataBase(serverBD, portBD, userBD, passwordBD);
-           // db.CreateTable("Test1234");
-         //   db.InsertDataBase("Test1234", "22", "22", "22", "22", "22");
-           // Assert.IsTrue(db.UpdateElementDataBase("Test1234", "1", "23", null));
-            var t = db.GetDataBase("Test1234");
+            db.CreateTableApy("Test1234");
+            db.InsertDataBase("Test124", "'192.168.1.1'", "8080", "'kaluga'", "15.12", "26.12", "'null'", "'null'", "'null'", "'null'");
+            Assert.IsTrue(db.UpdateElementDataBase("Test124","1" ,"'192.168.1.1'", "8080", "'kaluga'", "15.12", "26.12", "'null'", "'null'", "'null'", "'null'"));
+            var t = db.GetDataBaseShort("Test1234");
             while (t.Read())
             {
-          //      wDB.AddNewElement(element, Convert.ToString(t.GetInt32(0)), Convert.ToString(t.GetString(1)), Convert.ToString(t.GetString(2)), Convert.ToString(t.GetString(3)),
-  //   Convert.ToString(t.GetString(4)), Convert.ToString(t.GetString(5)));
+                wDB.AddNewElement(element, Convert.ToString(t.GetInt32(0)), Convert.ToString(t.GetString(1)), Convert.ToString(t.GetString(2)), Convert.ToString(t.GetString(3)), Convert.ToString(t.GetString(4)),
+                Convert.ToString(t.GetString(5)), Convert.ToString(t.GetString(6)));
                 Console.WriteLine("{0} {1} {2} {3} {4} {5}", t.GetInt32(0), t.GetString(1), t.GetString(2), t.GetString(3), t.GetString(4), t.GetString(5));
             }
             var t1 = wDB.SearchById(element, "1");
@@ -267,7 +261,7 @@ namespace UnitTest
           //  db.CreateTable("Test1234");
           //  db.InsertDataBase("Test1234", "192.168.1.24", "Kaluga", "22.1", "33.2", "text");
         //    Assert.IsTrue(db.UpdateElementDataBase("Test1234", "1", null, "33")); ;
-            var t = db.GetDataBase("Test1234");
+            var t = db.GetDataBaseShort("Test1234");
             while (t.Read())
             {
             //    wDB.AddNewElement(element, Convert.ToString(t.GetInt32(0)), Convert.ToString(t.GetString(1)), Convert.ToString(t.GetString(2)), Convert.ToString(t.GetString(3)),
@@ -289,7 +283,7 @@ namespace UnitTest
           //  db.CreateTable("Test1234");
           // db.InsertDataBase("Test1234", "22", "22", "22", "22", "22");
          //   Assert.IsTrue(db.UpdateElementDataBase("Test1234", "1", "22", "33")); ;
-            var t = db.GetDataBase("Test1234");
+            var t = db.GetDataBaseShort("Test1234");
             while (t.Read())
            {
             //    wDB.AddNewElement(element, Convert.ToString(t.GetInt32(0)), Convert.ToString(t.GetString(1)), Convert.ToString(t.GetString(2)), Convert.ToString(t.GetString(3)),

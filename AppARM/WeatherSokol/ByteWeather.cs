@@ -127,7 +127,7 @@ namespace AppARM.WeatherSokol
             Console.WriteLine("Направление ветра {0} , Уровень осадков {1} , Утрафиоле {2} ,уровень света {3}, скорость ветра {4} , направление ветра {5} ", directionWind, precipitationLevel, UVlevel, lightLevel, UVlevel, ultrasonicAnemometerWindDirection);
             if (flag == true)
             {
-                createJsonRequest.CreatJSON(_ip, _ipSend, _portSend, _location, _longitude, _lagatitude, Convert.ToString(temperature), Convert.ToString(windSpeed), Convert.ToString(directionWind), "null");
+                createJsonRequest.CreatJSON(_ip, _location, _longitude, _lagatitude, Convert.ToString(temperature), Convert.ToString(windSpeed), Convert.ToString(directionWind), "null");
             }
         }
 
