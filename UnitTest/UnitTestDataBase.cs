@@ -97,6 +97,7 @@ namespace UnitTest
             
             //база данных существует
             DataBase db = new DataBase(serverBD, portBD, userBD, passwordBD);
+            db.CreateTableApy("test1");
             var t = db.GetDataBaseShort("test1");
             Assert.IsNotNull(t);
         }
@@ -108,6 +109,7 @@ namespace UnitTest
             WorkElementDB wDB = new WorkElementDB();
             DataBase db = new DataBase(serverBD, portBD, userBD, passwordBD);
             List<ElementDataBase> element = new List<ElementDataBase>();
+            db.ClearTable("test1");
             var t = db.GetDataBaseShort("test1");
             while (t.Read())
             {
@@ -223,6 +225,7 @@ namespace UnitTest
         {
             //пустые входные параметры ВОПРОС
             DataBase db = new DataBase(serverBD, portBD, userBD, passwordBD);
+            db.DeleteTable("Test1234");
             db.CreateTableApy("Test1234");
             db.InsertDataBase("Test124", "'192.168.1.1'", "8080", "'kaluga'", "15.12", "26.12", "'null'", "'null'", "'null'", "'null'");
             Assert.IsFalse(db.UpdateElementDataBase("Test1234", "1", null, null,null,null,null,null, null, null,null));
@@ -232,44 +235,45 @@ namespace UnitTest
         [TestMethod]
         public void TestUpdate_2()
         {
-            //поменять только values
+
+            //поменять только IP
+
             WorkElementDB wDB = new WorkElementDB();
             List<ElementDataBase> element = new List<ElementDataBase>();
             DataBase db = new DataBase(serverBD, portBD, userBD, passwordBD);
+            db.DeleteTable("Test1234");
             db.CreateTableApy("Test1234");
-            db.InsertDataBase("Test124", "'192.168.1.1'", "8080", "'kaluga'", "15.12", "26.12", "'null'", "'null'", "'null'", "'null'");
-            Assert.IsTrue(db.UpdateElementDataBase("Test124","1" ,"'192.168.1.1'", "8080", "'kaluga'", "15.12", "26.12", "'null'", "'null'", "'null'", "'null'"));
+            db.InsertDataBase("Test1234", "'192.168.1.1'", "8080", "'kaluga'", "15.12", "26.12", "'null'", "'null'", "'null'", "'null'");
+            Assert.IsTrue(db.UpdateElementDataBase("Test1234", "1" ,"192.168.1.2", "8080", "kaluga", "15.12", "26.12", "null", "null", "null", "null"));
             var t = db.GetDataBaseShort("Test1234");
             while (t.Read())
             {
-                wDB.AddNewElement(element, Convert.ToString(t.GetInt32(0)), Convert.ToString(t.GetString(1)), Convert.ToString(t.GetString(2)), Convert.ToString(t.GetString(3)), Convert.ToString(t.GetString(4)),
-                Convert.ToString(t.GetString(5)), Convert.ToString(t.GetString(6)));
-                Console.WriteLine("{0} {1} {2} {3} {4} {5}", t.GetInt32(0), t.GetString(1), t.GetString(2), t.GetString(3), t.GetString(4), t.GetString(5));
+                wDB.AddNewElement(element, Convert.ToString(t.GetInt32(0)), Convert.ToString(t.GetString(1)), Convert.ToString(t.GetString(2)), Convert.ToString(t.GetString(3)), Convert.ToString(t.GetString(4)), Convert.ToString(t.GetString(5)), Convert.ToString(t.GetString(6)));
+                Console.WriteLine("{0} {1} {2} {3} {4} {5} {6}", t.GetInt32(0), t.GetString(1), t.GetString(2), t.GetString(3), t.GetString(4), t.GetString(5), t.GetString(6));
             }
             var t1 = wDB.SearchById(element, "1");
-            Assert.AreEqual("23",t1.Item2);
+            Assert.AreEqual("192.168.1.2", t1.Item2);
             db.DeleteTable("Test1234");
         }
         
         [TestMethod]
         public void TestUpdate_3()
         {
-            //поменять только values
+            //поменять только Port
             WorkElementDB wDB = new WorkElementDB();
             List<ElementDataBase> element = new List<ElementDataBase>();
             DataBase db = new DataBase(serverBD, portBD, userBD, passwordBD);
-          //  db.CreateTable("Test1234");
-          //  db.InsertDataBase("Test1234", "192.168.1.24", "Kaluga", "22.1", "33.2", "text");
-        //    Assert.IsTrue(db.UpdateElementDataBase("Test1234", "1", null, "33")); ;
+            db.CreateTableApy("Test1234");
+            db.InsertDataBase("Test1234", "'192.168.1.1'", "8080", "'kaluga'", "15.12", "26.12", "'null'", "'null'", "'null'", "'null'");
+            Assert.IsTrue(db.UpdateElementDataBase("Test1234", "1", "192.168.1.1", "8081", "kaluga", "15.12", "26.12", "null", "null", "null", "null"));
             var t = db.GetDataBaseShort("Test1234");
             while (t.Read())
             {
-            //    wDB.AddNewElement(element, Convert.ToString(t.GetInt32(0)), Convert.ToString(t.GetString(1)), Convert.ToString(t.GetString(2)), Convert.ToString(t.GetString(3)),
-  //  Convert.ToString(t.GetString(4)), Convert.ToString(t.GetString(5)));
-                Console.WriteLine("{0} {1} {2} {3} {4} {5}", t.GetInt32(0), t.GetString(1), t.GetString(2), t.GetString(3), t.GetString(4), t.GetString(5));
+                wDB.AddNewElement(element, Convert.ToString(t.GetInt32(0)), Convert.ToString(t.GetString(1)), Convert.ToString(t.GetString(2)), Convert.ToString(t.GetString(3)), Convert.ToString(t.GetString(4)), Convert.ToString(t.GetString(5)), Convert.ToString(t.GetString(6)));
+                Console.WriteLine("{0} {1} {2} {3} {4} {5} {6}", t.GetInt32(0), t.GetString(1), t.GetString(2), t.GetString(3), t.GetString(4), t.GetString(5), t.GetString(6));
             }
             var t1 = wDB.SearchById(element, "1");
-            Assert.AreEqual("33", t1.Item3);
+            Assert.AreEqual("8081", t1.Item3);
             db.DeleteTable("Test1234");
         }
         
@@ -280,19 +284,18 @@ namespace UnitTest
             WorkElementDB wDB = new WorkElementDB();
             List<ElementDataBase> element = new List<ElementDataBase>();
             DataBase db = new DataBase(serverBD, portBD, userBD, passwordBD);
-          //  db.CreateTable("Test1234");
-          // db.InsertDataBase("Test1234", "22", "22", "22", "22", "22");
-         //   Assert.IsTrue(db.UpdateElementDataBase("Test1234", "1", "22", "33")); ;
+            db.CreateTableApy("Test1234");
+            db.InsertDataBase("Test1234", "'192.168.1.1'", "8080", "'kaluga'", "15.12", "26.12", "'null'", "'null'", "'null'", "'null'");
+            Assert.IsTrue(db.UpdateElementDataBase("Test1234", "1", "192.168.1.4", "8082", "kaluga", "15.12", "26.12", "null", "null", "null", "null"));
             var t = db.GetDataBaseShort("Test1234");
             while (t.Read())
-           {
-            //    wDB.AddNewElement(element, Convert.ToString(t.GetInt32(0)), Convert.ToString(t.GetString(1)), Convert.ToString(t.GetString(2)), Convert.ToString(t.GetString(3)),
-   //   Convert.ToString(t.GetString(4)), Convert.ToString(t.GetString(5)));
-                Console.WriteLine("{0} {1} {2} {3} {4} {5}", t.GetInt32(0), t.GetString(1), t.GetString(2), t.GetString(3), t.GetString(4), t.GetString(5));
+            {
+                wDB.AddNewElement(element, Convert.ToString(t.GetInt32(0)), Convert.ToString(t.GetString(1)), Convert.ToString(t.GetString(2)), Convert.ToString(t.GetString(3)), Convert.ToString(t.GetString(4)), Convert.ToString(t.GetString(5)), Convert.ToString(t.GetString(6)));
+                Console.WriteLine("{0} {1} {2} {3} {4} {5} {6}", t.GetInt32(0), t.GetString(1), t.GetString(2), t.GetString(3), t.GetString(4), t.GetString(5), t.GetString(6));
             }
             var t1 = wDB.SearchById(element, "1");
-            Assert.AreEqual("22", t1.Item2);
-            Assert.AreEqual("33", t1.Item3);
+            Assert.AreEqual("192.168.1.4", t1.Item2);
+            Assert.AreEqual("8082", t1.Item3);
             db.DeleteTable("Test1234");
         }
 
@@ -303,9 +306,9 @@ namespace UnitTest
             WorkElementDB wDB = new WorkElementDB();
             List<ElementDataBase> element = new List<ElementDataBase>();
             DataBase db = new DataBase(serverBD, portBD, userBD, passwordBD);
-         //   db.CreateTable("LastID");
-         //   db.InsertDataBase("LastID", "22", "22", "22", "22", "22");
-         //   db.InsertDataBase("LastID", "22", "22", "22", "22", "22"); 
+            db.CreateTableApy("LastID");
+            db.InsertDataBase("LastID", "'192.168.1.1'", "8080", "'kaluga'", "15.12", "26.12", "'null'", "'null'", "'null'", "'null'");
+            db.InsertDataBase("LastID", "'192.168.1.1'", "8080", "'kaluga'", "15.12", "26.12", "'null'", "'null'", "'null'", "'null'");
             int id = db.GetLastID("LastID");
             Assert.AreEqual(id, 2);
             db.DeleteTable("LastID");
@@ -318,7 +321,7 @@ namespace UnitTest
             WorkElementDB wDB = new WorkElementDB();
             List<ElementDataBase> element = new List<ElementDataBase>();
             DataBase db = new DataBase(serverBD, portBD, userBD, passwordBD);
-           // db.CreateTable("NullID");
+            db.CreateTableApy("NullID");
             int id = db.GetLastID("LastID");
             Assert.AreEqual(id, -1);
             db.DeleteTable("LastID");

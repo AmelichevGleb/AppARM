@@ -45,7 +45,7 @@ namespace AppARM.PostgresSQL
         //Создание таблицы Девайсов
         public bool CreateTableApy(string _nametable)
         {
-            string sqlStr = "CREATE TABLE " + _nametable +
+            string sqlStr = "CREATE TABLE if not exists " + _nametable +
                 "(  id serial,\r\n" +
                 "ip_device   text,\r\n" +
                 "port text,\r\n" +
