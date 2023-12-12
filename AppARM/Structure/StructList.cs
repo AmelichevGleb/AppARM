@@ -18,8 +18,8 @@ namespace AppARM.Structure
         public string Lagatitude { get; set; }
         public string Description { get; set; }
        // public string Temperature { get; set; }
-     //   public string WindSpeed { get; set; }   
-     //   public string DirectionWind { get; set; }
+       // public string WindSpeed { get; set; }   
+       // public string DirectionWind { get; set; }
 
         public StructList(int _id, string _ip_device, string _port ,string _location,string _longitude ,string _lagatitude,string _description ) //, string _temperature , string _windSpeed , string _directionWind )
         {
@@ -30,9 +30,9 @@ namespace AppARM.Structure
             this.Longitude = _longitude;
             this.Lagatitude = _lagatitude;
             this.Description = _description;
-         //   this.Temperature = _temperature;
-         //   this.WindSpeed = _windSpeed;
-          //  this.DirectionWind = _directionWind;
+        //   this.Temperature = _temperature;
+        //   this.WindSpeed = _windSpeed;
+        //  this.DirectionWind = _directionWind;
         }
     }
 }

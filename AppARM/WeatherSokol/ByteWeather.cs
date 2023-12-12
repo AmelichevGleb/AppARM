@@ -58,30 +58,65 @@ namespace AppARM.WeatherSokol
             }
         }
 
-        // ДОРАБОТАТЬ ПО НЕОБХОДИМОСТИ ! 
         public string HorizonPoints(string _ip, int _directionWind)
         {
-            // ДОРАБОТАТЬ ПО НЕОБХОДИМОСТИ ! 
             string horizon = null;
+            switch (_directionWind)
+            {
+                case > 0 and <= 10:
+                    horizon = "С";
+                    break;
+                case > 10 and <= 30:
+                    horizon = "ССВ";
+                    break;
+                case > 30 and <= 60:
+                    horizon = "СВ";
+                    break;
+                case > 60 and <= 80:
+                    horizon = "ВСВ";
+                    break;
+                case > 80 and <= 100:
+                    horizon = "В";
+                    break;
+                case > 100 and <= 120:
+                    horizon = "ВЮВ";
+                    break;
+                case > 120 and <= 150:
+                    horizon = "ЮВ";
+                    break;
+                case > 150 and <= 170:
+                    horizon = "ЮЮВ";
+                    break;
+                case > 170 and <= 190:
+                    horizon = "Ю";
+                    break;
+                case > 190 and <= 210:
+                    horizon = "ЮЮЗ";
+                    break;
+                case > 210 and <= 240:
+                    horizon = "ЮЗ";
+                    break;
+                case > 240 and <= 260:
+                    horizon = "ЗЮЗ";
+                    break;
+                case > 260 and <= 280:
+                    horizon = "З";
+                    break;
+                case > 280 and <= 300:
+                    horizon = "ЗСЗ";
+                    break;
+                case > 300 and <= 320:
+                    horizon = "СЗ";
+                    break;
+                case > 320 and <= 350:
+                    horizon = "ССЗ";
+                    break;
+                default:
+                    horizon = "С";
+                    break;
+            }
 
-            if ((_directionWind == 0) || (_directionWind == 360)) { horizon = "N"; }
-
-            if (_directionWind == 45) { horizon = "NE"; }
-
-            if (_directionWind == 90) { horizon = "E"; }
-
-            if (_directionWind == 135) { horizon = "SE"; }
-
-            if (_directionWind == 180) { horizon = "S"; }
-
-            if (_directionWind == 225) { horizon = "SW"; }
-
-            if (_directionWind == 270) { horizon = "W"; }
-
-            if (_directionWind == 270) { horizon = "W"; }
-
-            if (_directionWind == 315) { horizon = "NW"; }
-
+          
             return horizon;
 
 
