@@ -27,6 +27,8 @@ using System.Collections.ObjectModel;
 using System.Windows.Interop;
 using AppARM.WeatherSokol;
 using AppARM.TestXML;
+using AppARM.Parser;
+using System.Runtime.Remoting.Messaging;
 
 namespace AppARM.CheckMeteos
 {
@@ -39,15 +41,17 @@ namespace AppARM.CheckMeteos
 
         private DateTime dateTime = new DateTime();
         private Files files = new Files();
+        private ParserAll parserAll = new ParserAll();
 
         // комманда опроса
         private byte[] Message = new byte[] { 0x01, 0x03, 0x00, 0x00, 0x00, 0x5A, 0xC5, 0xF1 };
 
-        private double temperature; 
-        private double windSpeed; 
+        private double temperature;
+        private double windSpeed;
         private int directionWind;
         private static string ipAdress;
         private static string port;
+        private static string request;
 
         public CheckeMeteo()
         {
@@ -69,9 +73,15 @@ namespace AppARM.CheckMeteos
 
         private async void B_Send_Click(object sender, RoutedEventArgs e)
         {
+            //есть баг с кнопкой !!!
+
+
 
             ipAdress = TB_adress.Text;
             port = TB_port.Text;
+            request = TB_request.Text; //получить текст запроса 
+            Console.WriteLine(request + "!!!!!!");
+            Test.Text += "запрос :" + (request) + "\n";
             B_Send.IsEnabled = false;
             Console.WriteLine(ipAdress + " " + port);
             try
@@ -81,9 +91,19 @@ namespace AppARM.CheckMeteos
                     Dispatcher.Invoke((Action)(() => Test.Text += "Проверка по " + ipAdress + ":" + port + '\n'));
                     if ((ipAdress != "") && (port != ""))
                     {
-                        GetWeather();
-                       Dispatcher.Invoke((Action)(() => Test.Text += CorrectString() +'\n' + "температура: " + temperature + '\n' + "Скорость ветра: " + windSpeed + '\n' + "направление ветра: " + directionWind + '\n'));
-                        Thread.Sleep(10);
+                        if (request == "")
+                        {
+                            GetWeather(Message);
+                            Dispatcher.Invoke((Action)(() => Test.Text += CorrectString() + '\n' + "температура: " + temperature + '\n' + "Скорость ветра: " + windSpeed + '\n' + "направление ветра: " + directionWind + '\n'));
+                            Thread.Sleep(10);
+                        }
+                        else
+                        {
+                            byte[] t = parserAll.AddMassive(request);
+                            GetWeather(t);
+                            Dispatcher.Invoke((Action)(() => Test.Text += CorrectString() + '\n' + "температура: " + temperature + '\n' + "Скорость ветра: " + windSpeed + '\n' + "направление ветра: " + directionWind + '\n'));
+                            Thread.Sleep(10);
+                        }
                     }
                 });
                 B_Send.IsEnabled = true;
@@ -108,7 +128,7 @@ namespace AppARM.CheckMeteos
         }
 
         //Проверка подключенной станции
-        private void GetWeather()
+        private void GetWeather(byte[] _message)
         {
             try
             {
@@ -116,7 +136,7 @@ namespace AppARM.CheckMeteos
                 // Test.Text += "Проверка по " + ipAdress + ":" + port + '\n'; 
                 tcpClient.Connect(ipAdress, Convert.ToInt32(port));
                 NetworkStream stream = tcpClient.GetStream();
-                stream.Write(Message, 0, Message.Length);
+                stream.Write(_message, 0, _message.Length);
 
                 byte[] bytes = new byte[tcpClient.ReceiveBufferSize];
                 int bytesRead = stream.Read(bytes, 0, tcpClient.ReceiveBufferSize);
@@ -145,5 +165,17 @@ namespace AppARM.CheckMeteos
         {
 
         }
+
+        private void B_Test_Click(object sender, RoutedEventArgs e)
+        {
+
+        }
+
+
+        //__________________________________________________________________________________________
+
+
+
+
     }
 }

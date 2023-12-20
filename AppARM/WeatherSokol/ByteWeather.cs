@@ -10,6 +10,7 @@ namespace AppARM.WeatherSokol
 {
     public class ByteWeather
     {
+       
         public string ip_adress;
         public string port;
         public string adress;
@@ -58,33 +59,65 @@ namespace AppARM.WeatherSokol
             }
         }
 
-        // ДОРАБОТАТЬ ПО НЕОБХОДИМОСТИ ! 
+        //определение направление ветра
         public string HorizonPoints(string _ip, int _directionWind)
         {
-            // ДОРАБОТАТЬ ПО НЕОБХОДИМОСТИ ! 
             string horizon = null;
-
-            if ((_directionWind == 0) || (_directionWind == 360)) { horizon = "N"; }
-
-            if (_directionWind == 45) { horizon = "NE"; }
-
-            if (_directionWind == 90) { horizon = "E"; }
-
-            if (_directionWind == 135) { horizon = "SE"; }
-
-            if (_directionWind == 180) { horizon = "S"; }
-
-            if (_directionWind == 225) { horizon = "SW"; }
-
-            if (_directionWind == 270) { horizon = "W"; }
-
-            if (_directionWind == 270) { horizon = "W"; }
-
-            if (_directionWind == 315) { horizon = "NW"; }
-
+            switch (_directionWind)
+            {
+                case > 0 and <= 10:
+                    horizon = "С";
+                    break;
+                case > 10 and <= 30:
+                    horizon = "ССВ";
+                    break;
+                case > 30 and <= 60:
+                    horizon = "СВ";
+                    break;
+                case > 60 and <= 80:
+                    horizon = "ВСВ";
+                    break;
+                case > 80 and <= 100:
+                    horizon = "В";
+                    break;
+                case > 100 and <= 120:
+                    horizon = "ВЮВ";
+                    break;
+                case > 120 and <= 150:
+                    horizon = "ЮВ";
+                    break;
+                case > 150 and <= 170:
+                    horizon = "ЮЮВ";
+                    break;
+                case > 170 and <= 190:
+                    horizon = "Ю";
+                    break;
+                case > 190 and <= 210:
+                    horizon = "ЮЮЗ";
+                    break;
+                case > 210 and <= 240:
+                    horizon = "ЮЗ";
+                    break;
+                case > 240 and <= 260:
+                    horizon = "ЗЮЗ";
+                    break;
+                case > 260 and <= 280:
+                    horizon = "З";
+                    break;
+                case > 280 and <= 300:
+                    horizon = "ЗСЗ";
+                    break;
+                case > 300 and <= 320:
+                    horizon = "СЗ";
+                    break;
+                case > 320 and <= 350:
+                    horizon = "ССЗ";
+                    break;
+                default:
+                    horizon = "С";
+                    break;
+            }
             return horizon;
-
-
         }
 
         public ByteWeather(string _ip, string _ipSend, int _portSend, string _location, string _longitude,string _lagatitude, byte _adress, byte _command, byte _registerNumber, byte _firmware_1, byte _firemware_2, byte _orderUnixTime_1, byte _orderUnixTime_2,
@@ -127,7 +160,7 @@ namespace AppARM.WeatherSokol
             Console.WriteLine("Направление ветра {0} , Уровень осадков {1} , Утрафиоле {2} ,уровень света {3}, скорость ветра {4} , направление ветра {5} ", directionWind, precipitationLevel, UVlevel, lightLevel, UVlevel, ultrasonicAnemometerWindDirection);
             if (flag == true)
             {
-                createJsonRequest.CreatJSON(_ip, _ipSend, _portSend, _location, _longitude, _lagatitude, Convert.ToString(temperature), Convert.ToString(windSpeed), Convert.ToString(directionWind), "null");
+                createJsonRequest.CreatJSON(_ip, _location, _longitude, _lagatitude, Convert.ToString(temperature), Convert.ToString(windSpeed), Convert.ToString(directionWind), "null");
             }
         }
 

@@ -118,6 +118,7 @@
     <Compile Include="Device_Database\DeviceDB.xaml.cs">
       <DependentUpon>DeviceDB.xaml</DependentUpon>
     </Compile>
+    <Compile Include="Parser\ParserAll.cs" />
     <Compile Include="PostgresSQL\DataBase.cs" />
     <Compile Include="Scenario\Scenarios.xaml.cs">
       <DependentUpon>Scenarios.xaml</DependentUpon>
@@ -136,7 +137,7 @@
     <Compile Include="WeatherSokol\ByteWeather.cs" />
     <Compile Include="WeatherSokol\CreateJsonRequest.cs" />
     <Compile Include="WeatherSokol\GetWeather.cs" />
-    <Compile Include="WeatherSokol\Weather.cs" />
+    <Compile Include="WeatherSokol\Weathers.cs" />
     <Compile Include="WeatherTest\CitySearchClass.cs" />
     <Compile Include="WeatherTest\DataRepo.cs" />
     <Compile Include="WeatherTest\GettingWeatherData.cs" />

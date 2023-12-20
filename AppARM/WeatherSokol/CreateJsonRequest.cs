@@ -14,29 +14,33 @@ namespace AppARM.WeatherSokol
 {
     internal class CreateJsonRequest
     {
-        public void CreatJSON(string _ip, string _ipSend, int _portSend, string _location, string _longitude, string _lagatitude, string _temperature, string _windSpeed, string _directionWind, string _parametr)
+        private string stringjson;
+        public string CreatJSON(string _ip, string _location, string _longitude, string _lagatitude, string _temperature, string _windSpeed, string _directionWind, string _parametr)
         {
-
+            stringjson = null;
             Coords coords = new Coords()
             {
-                Device_ip = _ip,
                 Name = _location,
+                Device_ip = _ip,
                 Longitude = _longitude,
-                Lagatitude = _lagatitude,
+                Latitude = _lagatitude,
 
-                weather = new Weather
+                Weather = new Weathers
                 {
                     Temperature = _temperature,
-                    Wind_Speed = _windSpeed,
+                    Wind_speed = _windSpeed,
                     Direction = _directionWind,
                     Parameter = _parametr
                 }
             };
 
-            string stringjson = JsonConvert.SerializeObject(coords);
+             stringjson = JsonConvert.SerializeObject(coords);
+           
             Console.WriteLine(stringjson);
-
+            return stringjson;
             /// !!!!
+            /// 
+            /*
             var url = "http://" + _ipSend + ":" + Convert.ToString(_portSend);
             var httpRequest = (HttpWebRequest)WebRequest.Create(url);
             httpRequest.Method = "POST";
@@ -56,6 +60,7 @@ namespace AppARM.WeatherSokol
                 //сообщение
                                   
             }
+            */
         }
     }
 }

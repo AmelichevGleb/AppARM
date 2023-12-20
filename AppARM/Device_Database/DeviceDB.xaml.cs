@@ -40,7 +40,7 @@ namespace AppARM.Device_Database
 
     public partial class DeviceDB : Window
     {
-        
+
 
         List<StructList> deviceList = new List<StructList>(1); // список всех устройств из базы данных
         WorkElementDB wDB = new WorkElementDB();
@@ -57,14 +57,14 @@ namespace AppARM.Device_Database
 
         public DeviceDB(DataBase _dataBase)
         {
-            db = _dataBase; 
+            db = _dataBase;
             InitializeComponent();
             Load();
             DG_device.ItemsSource = deviceList;
         }
 
         //____________________________ОСНОВНЫЕ_КНОПКИ__________________________________________
-        
+
         //Кнопка OK
         private void BC_Ok(object sender, RoutedEventArgs e)
         {
@@ -103,13 +103,13 @@ namespace AppARM.Device_Database
             }
             catch (Exception ex)
             {
-                Console.WriteLine(ex.ToString());   
+                Console.WriteLine(ex.ToString());
             }
         }
         private void GetWeather(string _ip, string port)
         {
             this.temperature = 0;
-            this.windSpeed = 0; 
+            this.windSpeed = 0;
             this.directionWind = 0;
             try
             {
@@ -136,12 +136,12 @@ namespace AppARM.Device_Database
             }
             catch (Exception ex)
             {
-              
+
             }
         }
 
-            //поиск индекса в списке
-            public int FindIndexsList(List<StructList> deviceList, int id)
+        //поиск индекса в списке
+        public int FindIndexsList(List<StructList> deviceList, int id)
         {
             int index = deviceList.FindIndex(
                      delegate (StructList structList)
@@ -177,51 +177,8 @@ namespace AppARM.Device_Database
             MessageBox.Show($"{p.Id} {p.IP_device} {p.Port} {p.Location} {p.Longitude} {p.Lagatitude} {p.Description}");
             //вызов обновления базы данных 
             GetWeather(p.IP_device, p.Port);
-           
-            db.UpdateElementDataBase(tableName, Convert.ToString(p.Id), p.IP_device,Convert.ToString(p.Port), p.Location, p.Longitude,p.Lagatitude,p.Description,Convert.ToString(temperature), Convert.ToString(windSpeed), Convert.ToString(directionWind));
+            db.UpdateElementDataBase(tableName, Convert.ToString(p.Id), p.IP_device, Convert.ToString(p.Port), p.Location, p.Longitude, p.Lagatitude, p.Description, Convert.ToString(temperature), Convert.ToString(windSpeed), Convert.ToString(directionWind));
             db.UpdateElementDataBase(tableName, Convert.ToString(p.Id), null, null, null, null, null, null, Convert.ToString(temperature), Convert.ToString(windSpeed), Convert.ToString(directionWind));
-
-            /* Console.WriteLine(Convert.ToString(p.Id)," ", Convert.ToString(p.Name), p.Age);
-            if (flagfix)
-            {
-                int numRow = e.Row.GetIndex();
-                int t1 = e.Column.DisplayIndex;
-                Console.WriteLine("column {0}", t1);
-                Console.WriteLine("Row {0}", numRow);
-                flagfix = false;
-                DG_device.CancelEdit();
-                DG_device.CancelEdit();
-                flagfix = true;
-                DG_device.Items.Refresh();
-            }
-
-
-             ipAdress = TB_adress.Text;
-            port = TB_port.Text;
-            B_Send.IsEnabled = false;
-            Console.WriteLine(ipAdress + " " + port);
-            try
-            {
-                await Task.Run(() =>
-                {
-                    Dispatcher.Invoke((Action)(() => Test.Text += "Проверка по " + ipAdress + ":" + port + '\n'));
-                    if ((ipAdress != "") && (port != ""))
-                    {
-                        GetWeather();
-                       Dispatcher.Invoke((Action)(() => Test.Text += CorrectString() +'\n' + "температура: " + temperature + '\n' + "Скорость ветра: " + windSpeed + '\n' + "направление ветра: " + directionWind + '\n'));
-                        Thread.Sleep(10);
-                    }
-                });
-                B_Send.IsEnabled = true;
-            }
-            catch (Exception ex)
-            {
-                  Test.Text += CorrectString() + (ex.Message) + "\n";
-                   B_Send.IsEnabled = true;
-            }
-            
-
-           */
         }
 
         //Получаем данные из таблицы
@@ -241,22 +198,22 @@ namespace AppARM.Device_Database
             {
                 if (path != null)
                 {
-                    MessageBox.Show(" ID: " + path.Id + "\n Ip_device: " + path.IP_device + "\n location: " + path.Location + "\n longitode: " + path.Longitude 
+                    MessageBox.Show(" ID: " + path.Id + "\n Ip_device: " + path.IP_device + "\n location: " + path.Location + "\n longitode: " + path.Longitude
                         + "\n lagatitude: " + path.Lagatitude + "\n Description: " + path.Description + "\n null: ");
                 }
             }
             finally { Console.WriteLine("Не выбрано поле для методы SHOW "); }
         }
-        
+
         //вывод информации о записи
-        private void MenuItem_Click_Add(object sender,RoutedEventArgs e) 
+        private void MenuItem_Click_Add(object sender, RoutedEventArgs e)
         {
-            db.InsertDataBase(tableName, "'127.0.0.1'","11000", "'Kaluga'", "54.5293", "36.2754", "'Inform'","'test'","'test'","'test'");
+            db.InsertDataBase(tableName, "'127.0.0.1'", "11000", "'Kaluga'", "54.5293", "36.2754", "'Inform'", "'test'", "'test'", "'test'");
             var id = db.GetLastID(tableName);
             deviceList.Add(new StructList(id, "127.0.0.1", "11000", "Kaluga", "54.5293", "36.2754", "Inform"));
             DG_device.ItemsSource = deviceList.ToList();
         }
-          
+
         //удаление записи из таблицы
         private void MenuItem_Click_Delete(object sender, RoutedEventArgs e)
         {
@@ -281,39 +238,5 @@ namespace AppARM.Device_Database
             }
         }
         //__________________________________________________________________________________________
-
-        /*
-        private void GetWeather()
-        {
-            try
-            {
-                TcpClient tcpClient = new TcpClient();
-                // Test.Text += "Проверка по " + ipAdress + ":" + port + '\n'; 
-                tcpClient.Connect(ipAdress, Convert.ToInt32(port));
-                NetworkStream stream = tcpClient.GetStream();
-                stream.Write(Message, 0, Message.Length);
-
-                byte[] bytes = new byte[tcpClient.ReceiveBufferSize];
-                int bytesRead = stream.Read(bytes, 0, tcpClient.ReceiveBufferSize);
-
-                ByteWeather byteWeather = new ByteWeather(null, null, 0, null, null, null, bytes[0], bytes[1], bytes[2], bytes[3], bytes[4], bytes[5], bytes[6], bytes[7], bytes[8],
-                        bytes[9], bytes[10], bytes[11], bytes[12], bytes[13], bytes[14], bytes[15], bytes[16], bytes[17], bytes[18], bytes[19], bytes[20], bytes[21], bytes[22], bytes[23],
-                        bytes[24], bytes[25], bytes[26], bytes[27], bytes[28], false);
-
-                temperature = byteWeather.temperature;
-                windSpeed = byteWeather.windSpeed;
-                directionWind = byteWeather.directionWind;
-
-                Thread.Sleep(10);
-
-                tcpClient.Close();
-            }
-            catch (Exception ex)
-            {
-                Dispatcher.Invoke((Action)(() => Test.Text += Convert.ToString(ex) + '\n'));
-            }
-
-*/
-        }
-
+    }
 }

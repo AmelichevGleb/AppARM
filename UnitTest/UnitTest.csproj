@@ -76,6 +76,8 @@
     <Compile Include="UnitList.cs" />
     <Compile Include="UnitTest1.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
+    <Compile Include="UnitByteWeathers.cs" />
+    <Compile Include="UnitParserModule.cs" />
     <Compile Include="UnitTestDataBase.cs" />
   </ItemGroup>
   <ItemGroup>
