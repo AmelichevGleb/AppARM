@@ -118,6 +118,7 @@
     <Compile Include="Device_Database\DeviceDB.xaml.cs">
       <DependentUpon>DeviceDB.xaml</DependentUpon>
     </Compile>
+    <Compile Include="Parser\ParserAll.cs" />
     <Compile Include="PostgresSQL\DataBase.cs" />
     <Compile Include="Scenario\Scenarios.xaml.cs">
       <DependentUpon>Scenarios.xaml</DependentUpon>

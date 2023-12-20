@@ -10,6 +10,7 @@ namespace AppARM.WeatherSokol
 {
     public class ByteWeather
     {
+       
         public string ip_adress;
         public string port;
         public string adress;
@@ -58,6 +59,7 @@ namespace AppARM.WeatherSokol
             }
         }
 
+        //определение направление ветра
         public string HorizonPoints(string _ip, int _directionWind)
         {
             string horizon = null;
@@ -115,11 +117,7 @@ namespace AppARM.WeatherSokol
                     horizon = "С";
                     break;
             }
-
-          
             return horizon;
-
-
         }
 
         public ByteWeather(string _ip, string _ipSend, int _portSend, string _location, string _longitude,string _lagatitude, byte _adress, byte _command, byte _registerNumber, byte _firmware_1, byte _firemware_2, byte _orderUnixTime_1, byte _orderUnixTime_2,
