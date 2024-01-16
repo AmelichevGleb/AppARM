@@ -117,8 +117,6 @@ namespace AppARM.Scripts
                     Console.WriteLine($"Age: {age1?.Value}");
                     Console.WriteLine($"Age: {age1?.Attribute("code").Value}");
                     var t = per.Element("details");
-
-
                     Console.WriteLine($"total = :{t?.Attribute("total").Value}");
                     Console.WriteLine($"terminals = :{t?.Element("terminals").Value}");
                     Console.WriteLine($"consoles = :{t?.Element("consoles").Value}");

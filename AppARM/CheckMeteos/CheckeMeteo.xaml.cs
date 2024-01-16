@@ -81,7 +81,7 @@ namespace AppARM.CheckMeteos
             port = TB_port.Text;
             request = TB_request.Text; //получить текст запроса 
             Console.WriteLine(request + "!!!!!!");
-            Test.Text += "запрос :" + (request) + "\n";
+            
             B_Send.IsEnabled = false;
             Console.WriteLine(ipAdress + " " + port);
             try
@@ -93,15 +93,16 @@ namespace AppARM.CheckMeteos
                     {
                         if (request == "")
                         {
+                            
                             GetWeather(Message);
-                            Dispatcher.Invoke((Action)(() => Test.Text += CorrectString() + '\n' + "температура: " + temperature + '\n' + "Скорость ветра: " + windSpeed + '\n' + "направление ветра: " + directionWind + '\n'));
+                            Dispatcher.Invoke((Action)(() => Test.Text += "запрос :  " + (BitConverter.ToString(Message)) + "\n" + CorrectString() + '\n' + "температура: " + temperature + '\n' + "Скорость ветра: " + windSpeed + '\n' + "направление ветра: " + directionWind + '\n'));
                             Thread.Sleep(10);
                         }
                         else
                         {
-                            byte[] t = parserAll.AddMassive(request);
-                            GetWeather(t);
-                            Dispatcher.Invoke((Action)(() => Test.Text += CorrectString() + '\n' + "температура: " + temperature + '\n' + "Скорость ветра: " + windSpeed + '\n' + "направление ветра: " + directionWind + '\n'));
+                            byte[] temp = parserAll.AddMassive(request);
+                            GetWeather(temp);
+                            Dispatcher.Invoke((Action)(() => Test.Text += "запрос :  " + (BitConverter.ToString(temp)) + "\n" +  CorrectString() + '\n' + "температура: " + temperature + '\n' + "Скорость ветра: " + windSpeed + '\n' + "направление ветра: " + directionWind + '\n'));
                             Thread.Sleep(10);
                         }
                     }

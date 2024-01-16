@@ -7,6 +7,192 @@
         mc:Ignorable="d"
         Title="Scenarios" Height="450" Width="800">
     <Grid>
-        
+        <Grid Margin="5,5,5,5">
+            <Grid.ColumnDefinitions>
+                <ColumnDefinition></ColumnDefinition>
+                <ColumnDefinition></ColumnDefinition>
+            </Grid.ColumnDefinitions>
+            <Grid Grid.Row="0">
+                <Border Background="GhostWhite" BorderBrush="Black" BorderThickness="1" CornerRadius="20,20,20,20">
+                    <Grid>
+                        <Grid.RowDefinitions>
+                            <RowDefinition Height="25 px"></RowDefinition>
+                            <RowDefinition Height="25 px"></RowDefinition>
+                            <RowDefinition Height="25 px"></RowDefinition>
+                            <RowDefinition Height="25 px"></RowDefinition>
+                            <RowDefinition></RowDefinition>
+                        </Grid.RowDefinitions>
+                        <Label  Margin="0,1,0,0"  FontWeight ="Bold" FontSize="12" Grid.Row="0">Подключение</Label>
+                        <Grid Grid.Row="1">
+                            <Border Margin="-1,0,-1,0" BorderBrush="Black"  BorderThickness="0.1">
+                                <Grid>
+                                    <Grid.ColumnDefinitions>
+                                        <ColumnDefinition Width="53"></ColumnDefinition>
+                                        <ColumnDefinition Width="110"></ColumnDefinition>
+                                        <ColumnDefinition Width="40"></ColumnDefinition>
+                                        <ColumnDefinition Width="50"></ColumnDefinition>
+                                        <ColumnDefinition></ColumnDefinition>
+                                        <ColumnDefinition></ColumnDefinition>
+
+                                    </Grid.ColumnDefinitions>
+
+                                    <Label  FontSize="9" FontWeight ="Bold"  Margin="2,2,2,2" Grid.Column="0">IP-адрес:</Label>
+                                    <TextBox  x:Name="TB_IPAdress" FontSize="14" TextAlignment ="Justify"   Margin="2,2,2,2" Grid.Column="1">127.124.124.221</TextBox>
+                                    <Label  FontSize="9" FontWeight ="Bold" Margin="2,2,2,2" Grid.Column="2">Порт:</Label>
+                                    <TextBox x:Name="TB_Port"  FontSize="14"   TextAlignment ="Justify" Margin="2,2,2,2" Grid.Column="3">11000</TextBox>
+                                    <Button x:Name="B_Connect" FontSize="9" Margin="2,2,2,2" Grid.Column="4" Click="Button_Click_Connect">Подкл</Button>
+                                    <Button  x:Name="B_Disconnect" FontSize="9"  Margin="2,2,2,2" Grid.Column="5" Click="Button_Click_Disconnect">Откл</Button>
+                                </Grid>
+                            </Border>
+                        </Grid>
+                        <Grid Grid.Row="2">
+                            <Label  FontWeight ="Bold" FontSize="11" MouseLeftButtonUp="MouseClick_AddTextLable" >Место под сервера команд</Label>
+                        </Grid>
+                        <Grid Grid.Row="3">
+                            <Label MouseLeftButtonUp="MouseClick_ClearLable">Логи</Label>
+                        </Grid>
+                        <Grid Margin ="6,6,6,6" Grid.Row="4">
+                            <ScrollViewer>
+                                <TextBlock x:Name="Test" Background="White"/>
+                            </ScrollViewer>
+                        </Grid>
+                    </Grid>
+                </Border>
+            </Grid>
+            <Grid Margin="5,0,0,0" Grid.Column="1">
+                <Border Background="AliceBlue" BorderBrush="Black"  BorderThickness="1" CornerRadius="20,20,20,20"  >
+                    <Grid>
+                        <Grid.RowDefinitions>
+                            <RowDefinition Height="28 px"></RowDefinition>
+                            <RowDefinition Height="28 px"></RowDefinition>
+                            <RowDefinition Height="28 px"></RowDefinition>
+                            <RowDefinition Height="28 px"></RowDefinition>
+                            <RowDefinition Height="200 px"></RowDefinition>
+                            <RowDefinition Height="28 px"></RowDefinition>
+                            <RowDefinition></RowDefinition>
+                        </Grid.RowDefinitions>
+                        <Grid Grid.Row="0">
+                            <Grid.ColumnDefinitions>
+                                <ColumnDefinition Width="55"></ColumnDefinition>
+                                <ColumnDefinition Width="240"></ColumnDefinition>
+                                <ColumnDefinition Width="55"></ColumnDefinition>
+                            </Grid.ColumnDefinitions>
+                            <Label Margin="0,1,0,0"  FontWeight ="Bold" FontSize="12" Grid.Row="0">1. Пинг</Label>
+                            <Button x:Name="BT_Ping"  FontSize="12" Margin ="10,3,0,3" Click="BT_Ping_Click" Grid.Column="2" HorizontalAlignment="Center">Ping</Button>
+                        </Grid>
+                        <Grid Grid.Row="1">
+                            <Border Margin="-1,0,-1,0" BorderBrush="Black"  BorderThickness="0.1">
+                                <Label Margin="0,1,0,0"  FontWeight ="Bold" FontSize="12" Grid.Row="0">2. Запуск сценария</Label>
+                            </Border>
+                        </Grid>
+                        <Grid Grid.Row="2">
+                            <Grid.ColumnDefinitions>
+                                <ColumnDefinition Width="105"></ColumnDefinition>
+                                <ColumnDefinition Width="100"></ColumnDefinition>
+                                <ColumnDefinition Width="40"></ColumnDefinition>
+                                <ColumnDefinition Width="40"></ColumnDefinition>
+                                <ColumnDefinition Width="40"></ColumnDefinition>
+                            </Grid.ColumnDefinitions>
+                            <Label Grid.Column="0">Номер сценария</Label>
+                            <ComboBox x:Name="CB_Script_number" Margin="5,5,5,5"  Grid.Column ="1">
+                                <TextBlock>1</TextBlock>
+                                <TextBlock>2</TextBlock>
+                                <TextBlock>3</TextBlock>
+                                <TextBlock>4</TextBlock>
+                            </ComboBox>
+                            <Label Grid.Column="2">Внешний источник</Label>
+                            <CheckBox x:Name="vs" Grid.Column="3" Margin="5,5,5,5"></CheckBox>
+                            <Button x:Name="srq" Grid.Column="4" Margin="5,5,5,5"></Button>
+                        </Grid>
+                        <Grid Grid.Row="3">
+                            <Border Margin="-1,0,-1,0" BorderBrush="Black"  BorderThickness="0.1">
+                                <Label Margin="0,1,0,0"  FontWeight ="Bold" FontSize="12">3. Старт сеанса</Label>
+                            </Border>
+                        </Grid>
+                        <Grid Grid.Row="4">
+                            <Grid.RowDefinitions>
+                                <RowDefinition Height="30 px"></RowDefinition>
+                                <RowDefinition Height="30 px"></RowDefinition>
+                                <RowDefinition Height="30 px"></RowDefinition>
+                                <RowDefinition Height="30 px"></RowDefinition>
+                                <RowDefinition Height="30 px"></RowDefinition>
+                            </Grid.RowDefinitions>
+                            <Grid Grid.Row="0">
+                                <Grid.ColumnDefinitions>
+                                    <ColumnDefinition></ColumnDefinition>
+                                    <ColumnDefinition></ColumnDefinition>
+                                    <ColumnDefinition></ColumnDefinition>
+                                    <ColumnDefinition></ColumnDefinition>
+                                    <ColumnDefinition></ColumnDefinition>
+                                    <ColumnDefinition></ColumnDefinition>
+                                </Grid.ColumnDefinitions>
+                                <CheckBox Grid.Column="0"></CheckBox>
+                                <Label Grid.Column="1">Рабочий запуск</Label>
+                                <CheckBox Grid.Column="2"></CheckBox>
+                                <Label Grid.Column="3">Сирены непрерывно</Label>
+                                <Label Grid.Column="4">Команда П 160/ П 164</Label>
+                                <TextBox Margin="5,5,5,5" Grid.Column="5"></TextBox>
+                            </Grid>
+                            <Grid Grid.Row="1">
+                                <Grid.ColumnDefinitions>
+                                    <ColumnDefinition></ColumnDefinition>
+                                    <ColumnDefinition></ColumnDefinition>
+                                </Grid.ColumnDefinitions>
+                                <Label Grid.Column="0">Id Апу через ";"</Label>
+                                <TextBox Margin="5,5,5,5" Grid.Column="1"></TextBox>
+                            </Grid>
+                            <Grid Grid.Row="2">
+                                <Grid.ColumnDefinitions>
+                                    <ColumnDefinition></ColumnDefinition>
+                                    <ColumnDefinition></ColumnDefinition>
+                                </Grid.ColumnDefinitions>
+                                <Label Grid.Column="0">Id устройств через ";"</Label>
+                                <TextBox Margin="5,5,5,5" Grid.Column="1"></TextBox>
+                            </Grid>
+                            <Grid Grid.Row="3">
+                                <Grid.ColumnDefinitions>
+                                    <ColumnDefinition></ColumnDefinition>
+                                    <ColumnDefinition></ColumnDefinition>
+                                    <ColumnDefinition></ColumnDefinition>
+                                    <ColumnDefinition></ColumnDefinition>
+                                    <ColumnDefinition></ColumnDefinition>
+                                    <ColumnDefinition></ColumnDefinition>
+                                    <ColumnDefinition></ColumnDefinition>
+                                    <ColumnDefinition></ColumnDefinition>
+                                    <ColumnDefinition></ColumnDefinition>
+                                    <ColumnDefinition></ColumnDefinition>
+                                </Grid.ColumnDefinitions>
+                                <Label Grid.Column="0">Тип устройств:</Label>
+                                <CheckBox Grid.Column="1"></CheckBox>
+                                <Label Grid.Column="2">АПУ</Label>
+                                <CheckBox Grid.Column="3"></CheckBox>
+                                <Label Grid.Column="4">ТЛФ</Label>
+                                <CheckBox Grid.Column="5"></CheckBox>
+                                <Label Grid.Column="6">РТУ</Label>
+                                <CheckBox Grid.Column="7"></CheckBox>
+                                <Label Grid.Column="8">Сирены</Label>
+                                <Button Grid.Column="9" Click="Button_Click"></Button>
+                            </Grid>
+                            <Grid Grid.Row="4">
+                                <Border Margin="-1,0,-1,0" BorderBrush="Black"  BorderThickness="0.1">
+                                    <Grid>
+
+                                        <Grid.ColumnDefinitions>
+                                            <ColumnDefinition Width="55"></ColumnDefinition>
+                                            <ColumnDefinition Width="250"></ColumnDefinition>
+                                            <ColumnDefinition Width="40"></ColumnDefinition>
+                                        </Grid.ColumnDefinitions>
+
+                                        <Label Margin="0,1,0,0"  FontWeight ="Bold" FontSize="12" Grid.Row="0">4. Остановка оповещения</Label>
+                                        <Button x:Name="BT_Stop" Margin ="5,6,-30,6"  Grid.Column="2" Click="BT_Stop_Click"></Button>
+
+                                    </Grid>
+                                </Border>
+                            </Grid>
+                        </Grid>
+                    </Grid>
+                </Border>
+            </Grid>
+        </Grid>
     </Grid>
 </Window>

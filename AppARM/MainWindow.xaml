@@ -11,21 +11,28 @@
     <Grid HorizontalAlignment="Right" Width="680" Background="Black" Height="434" VerticalAlignment="Center" >
         <Grid Margin="10,0,0,10" Background="#659DBD" HorizontalAlignment="Left" Width="315" Height="414" VerticalAlignment="Bottom">
             <TextBlock Margin="10,10,10,10" HorizontalAlignment="Left" Width="668" FontWeight="Bold" FontSize="14" Height="423" VerticalAlignment="Top" Text=""/>
+            <Grid>
+                <Button x:Name="BT_Settings" Margin="30,70,30,0" Content ="Настройки"  Background="#0C5DA5" VerticalAlignment="Top" Height="40" Width="255" Click="BC_Settings"/>
+                <Button x:Name="BT_DataBase" Margin="30,130,30,0" Content="База данных" HorizontalAlignment="Center" Background="#0C5DA5"  VerticalAlignment="Top" Height="40" Width="255" Click="BC_DataBase"/>
+                <Button x:Name="BT_Verification"   Margin="30,190,30,0" Content="Проверка метеостанции" Background="#0C5DA5" HorizontalAlignment="Left" VerticalAlignment="Top" Height="40" Width="255" Click="BС_CheckMeteo"/>
+                <Button x:Name="BT_Send" Margin="30,250,30,0" Content="Получение/отпавка погоды" Background="#0C5DA5" HorizontalAlignment="Left"  VerticalAlignment="Top" Height="40" Width="255" Click="BC_SendMeteo"/>
+                <Button x:Name="BT_Script" Margin="30,310,30,0"  Content="Cценарий" Background="#0C5DA5" HorizontalAlignment="Left"  VerticalAlignment="Top" Height="40" Width="255" Click="BC_Script"></Button>
+                <Label Name="lblTime" FontSize="48" HorizontalAlignment="Left" VerticalAlignment="Top" Margin="70,350,30,0"   Width="255" />
+
+                
+            </Grid>
         </Grid>
-        <Grid>
-            <Label Name="lblTime" FontSize="48" HorizontalAlignment="Left" VerticalAlignment="Top" Margin="72,350,0,0" />
-        </Grid>
+
         <Grid>
             <TextBlock  Margin="39,24,395,339" TextAlignment="Center" FontSize="20">Работа с метеостанцией</TextBlock>
-            <Button x:Name="Settings" Margin="39,81,394,307" Content ="Настройки" Click="BC_Settings" Background="#0C5DA5"></Button>
-            <Button x:Name="XML" Margin="394,81,39,307"  Content="Xml" Click ="BC_XML"></Button>
-            <Button x:Name="XML1" Margin="394,208,39,184"  Content="Xml1" Click ="BC_XML1"></Button>
-            <Button x:Name="BConnect" Margin="393,144,39,245"  Content="Connect" Click="BC_Connect" />
+
+
+            <Button x:Name="XML1" Margin="394,147,39,245"  Content="Xml1" Click ="BC_XML1"></Button>
+            <Button x:Name="BConnect" Margin="379,223,53,166"  Content="Connect" Click="BC_Connect" />
             <Button x:Name="BDisconnect" Margin="393,268,39,124"  Content="Disconnect" Click="BC_Disconnect"  />
-            <Button Content="Получение/отпавка погоды" Background="#0C5DA5" HorizontalAlignment="Left" Margin="39,268,0,0" VerticalAlignment="Top" Height="42" Width="246" Click="BC_SendMeteo"/>
+
             <Button Content="2" HorizontalAlignment="Left" Margin="505,349,0,0" VerticalAlignment="Top" Height="27" Width="28" Click="Button_Click_2"/>
-            <Button Content="База данных" HorizontalAlignment="Left" Background="#0C5DA5  " Margin="39,144,0,0" VerticalAlignment="Top" Height="45" Width="246" Click="BC_DataBase"/>
-            <Button Content="Проверка метеостанции" Background="#0C5DA5" HorizontalAlignment="Left" Margin="39,208,0,0" VerticalAlignment="Top" Height="42" Width="246" Click="BС_CheckMeteo"/>
+
         </Grid>
     </Grid>
 </Window>

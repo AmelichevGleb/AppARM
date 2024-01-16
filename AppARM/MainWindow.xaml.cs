@@ -30,6 +30,7 @@ using AppARM.Weather;
 using AppARM.WeatherSokol;
 using AppARM.CheckMeteos;
 using Newtonsoft.Json;
+using AppARM.Scenario;
 
 namespace AppARM
 { 
@@ -46,9 +47,10 @@ namespace AppARM
         private Script script = new Script();
         private DispatcherTimer timer = new DispatcherTimer();
         private Files files = new Files();
-       
+        private Scenarios scenario = new Scenarios();
         private SettingForm settingApp;
         
+
 
       
         private static string staticIP = "192.168.1.40";
@@ -73,7 +75,7 @@ namespace AppARM
             BDisconnect.IsEnabled = false;
             BConnect.IsEnabled = false;
             XML1.IsEnabled = false;
-            XML.IsEnabled = false;
+        
 
         }
         //____________________________ТАЙМЕР________________________________________________________
@@ -171,6 +173,12 @@ namespace AppARM
         private void Button_Click_2(object sender, RoutedEventArgs e)
         {
 
+            scenario.Show();
+        }
+
+        private async void BC_Script(object sender, RoutedEventArgs e)
+        {
+
             string serverBD = Convert.ToString(Properties.Settings.Default.IP_adress);
             string portBD = Convert.ToString(Properties.Settings.Default.Port);
             string userBD = Convert.ToString(Properties.Settings.Default.Login_BD);
@@ -201,7 +209,7 @@ namespace AppARM
                         Console.WriteLine(t);
                     }
                 }
-                
+
                 else
                 {
 
@@ -217,7 +225,7 @@ namespace AppARM
             //var t ="[" +create.CreatJSON("12", "232", 123, "22", "22.24", "45.24", "22", "22", "22", "22");
             // t = t + "," + create.CreatJSON("12", "232", 123, "22", "25.24", "35.24", "22", "22", "22", "22") + "]";
             Console.WriteLine(t);
-            t +="]";
+            t += "]";
             Console.WriteLine(t);
             var url = "http://" + "127.0.0.1" + ":" + Convert.ToString(8000) + "/set_stations/";
             var httpRequest = (HttpWebRequest)WebRequest.Create(url);
@@ -234,11 +242,11 @@ namespace AppARM
                 var result = streamReader.ReadToEnd();
             }
             var status = httpResponse.StatusCode.ToString();
-            if (status == "OK") { 
+            if (status == "OK")
+            {
                 //сообщение
-                                  
-            }
 
+            }
         }
 
         //__________________________________________________________________________________________
@@ -341,32 +349,9 @@ namespace AppARM
 
         //____________________________ОТКЛЮЧЕННЫЕ_КНОПКИ____________________________________________
 
-        //отключено
-        private void BC_Connect(object sender, RoutedEventArgs e)
-        {
-            ConnectServer();
-        }
-        
-        //отключено
-        private void BC_Disconnect(object sender, RoutedEventArgs e)
-        {
-            DisconnectServer();
-        }
 
         //отключено
-        private async void BC_XML(object sender, RoutedEventArgs e)
-        {
-            // apu.Ip = TB_IP.Text;
-            //  apu.Port =TB_Port.Text;
-            //apu.PortServer = TB_ServerPort.Text;
-            //apu.Value2 = null;
-            Console.WriteLine("Ip = {0}, Port = {1}, Value1 = {2}", apu.Ip, apu.Port, apu.PortServer);
-
-            script.ParserElement("dsd");
-        }
-
-        //отключено
-        private async void BC_XML1(object sender, RoutedEventArgs e)
+        private void BC_XML1(object sender, RoutedEventArgs e)
         {
             XDocument xdoc = XDocument.Load("Start1.xml");
             if (xdoc is not null)
@@ -385,6 +370,22 @@ namespace AppARM
                 }
             }
         }
+
+
+        //отключено
+        private void BC_Connect(object sender, RoutedEventArgs e)
+        {
+            ConnectServer();
+        }
+        
+        //отключено
+        private void BC_Disconnect(object sender, RoutedEventArgs e)
+        {
+            DisconnectServer();
+        }
+
+
+        
 
         //__________________________________________________________________________________________
 
