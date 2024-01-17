@@ -37,7 +37,7 @@
                                     </Grid.ColumnDefinitions>
 
                                     <Label  FontSize="9" FontWeight ="Bold"  Margin="2,2,2,2" Grid.Column="0">IP-адрес:</Label>
-                                    <TextBox  x:Name="TB_IPAdress" FontSize="14" TextAlignment ="Justify"   Margin="2,2,2,2" Grid.Column="1">127.124.124.221</TextBox>
+                                    <TextBox  x:Name="TB_IPAdress" FontSize="14" TextAlignment ="Justify"   Margin="2,2,2,2" Grid.Column="1">127.0.0.1</TextBox>
                                     <Label  FontSize="9" FontWeight ="Bold" Margin="2,2,2,2" Grid.Column="2">Порт:</Label>
                                     <TextBox x:Name="TB_Port"  FontSize="14"   TextAlignment ="Justify" Margin="2,2,2,2" Grid.Column="3">11000</TextBox>
                                     <Button x:Name="B_Connect" FontSize="9" Margin="2,2,2,2" Grid.Column="4" Click="Button_Click_Connect">Подкл</Button>

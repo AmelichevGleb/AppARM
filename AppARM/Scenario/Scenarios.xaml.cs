@@ -22,6 +22,11 @@ using AppARM.WeatherSokol;
 using AppARM.TestXML;
 using AppARM.Parser;
 using System.Net.Sockets;
+using System.Xml.Linq;
+using System.IO;
+using static System.Net.Mime.MediaTypeNames;
+using System.Reflection;
+using static Mono.Xml.MiniParser;
 
 namespace AppARM.Scenario
 {
@@ -33,60 +38,49 @@ namespace AppARM.Scenario
         private string ipServer;
         private string portServer;
 
-        private TcpClient tcpClient;
+        private Socket tcpClient;
+        private NetworkStream tcpStream;
         private Files files = new Files();
 
         public Scenarios()
         {
             InitializeComponent();
             B_Disconnect.IsEnabled = false;
+            BT_Ping.IsEnabled = false;
         }
-        public void test()
+
+        //отправка сообщения на устройства. (особая постановка байт)
+        private void SendReceive(string _Message)
         {
-            /*
-             * byte[] bytes = new byte[1024];
-           
-           IPHostEntry ipHost = Dns.GetHostEntry("localhost");
-           IPAddress ipAddr = ipHost.AddressList[0];
-           IPEndPoint ipEndPoint = new IPEndPoint(ipAddr, 8081);
-           Socket sender = new Socket(ipAddr.AddressFamily, SocketType.Stream, ProtocolType.Tcp);
-           sender.Connect(ipEndPoint);
-           string text = "<?xml version =\"1.0\" encoding=\"utf-8\"?><command>\n<action>ping</action>\n</command>";
-           byte[] t1 = new byte[85];
-           byte[] t = new byte[81];
-           t = Encoding.Default.GetBytes(text);
-           Console.WriteLine("byte array: " + BitConverter.ToString(t1));
-           Int32 datasize = t.Length;
-           Console.WriteLine(t.Length);
-           Console.WriteLine("byte array: " + BitConverter.ToString(t1));
-           for (int i = 3; i >= 0; i--)
-           {
-               t1[i] = (byte)(datasize % 256);
-               datasize = datasize / 256;
-           }
-           int l = 0;
-           Console.WriteLine("byte Array: " + BitConverter.ToString(t1));
-           for (int j = 4; j < 85; j++)
-           { 
-               t1[j] = t[j - 4];
-           }
-
-           Console.WriteLine("byte Array: " + BitConverter.ToString(t1));
-           tmp = t1;
-           // Отправляем данные через сокет    
-           int bytesSent = sender.Send(tmp);
-           // Получаем ответ от сервера
-           int bytesRec = sender.Receive(bytes);
-           Console.WriteLine("\nОтвет от сервера: {0}\n\n", Encoding.UTF8.GetString(bytes, 0, bytesRec));
-           // Используем рекурсию для неоднократного вызова SendMessageFromSocket()
-
-           // Освобождаем сокет
-           sender.Shutdown(SocketShutdown.Both);
-           sender.Close();
-      */
+            byte[] bytes = new byte[1024];
+            byte[] t1 = new byte[85];
+            byte[] t = new byte[81];
+            t = Encoding.Default.GetBytes(_Message);
+            Console.WriteLine("byte array: " + BitConverter.ToString(t1));
+            Int32 datasize = t.Length;
+            Console.WriteLine(t.Length);
+            Console.WriteLine("byte array: " + BitConverter.ToString(t1));
+            for (int i = 3; i >= 0; i--)
+            {
+                t1[i] = (byte)(datasize % 256);
+                datasize = datasize / 256;
+            }
+            int l = 0;
+            Console.WriteLine("byte Array: " + BitConverter.ToString(t1));
+            for (int j = 4; j < 85; j++)
+            {
+                t1[j] = t[j - 4];
+            }
+            Console.WriteLine("byte Array: " + BitConverter.ToString(t1));
+            tmp = t1;
+            tcpClient.Send(tmp);
+            byte[] data = new byte[1024];
+            int length = tcpClient.Receive(data);
+            string message = Encoding.UTF8.GetString(data, 0, length);
+            Console.WriteLine(message);
+            Test.Text += "ответ \"Устройства\":\n" + message + '\n';
         }
 
-  
         private void MouseClick_AddTextLable(object sender, MouseButtonEventArgs e)
         {
             Test.Text += "ffff \n";
@@ -101,11 +95,23 @@ namespace AppARM.Scenario
             tcpClient.Dispose();
             B_Connect.IsEnabled = true;
             B_Disconnect.IsEnabled = false;
+            BT_Ping.IsEnabled = false;
         }
 
+
+        //запросить пинг устройства
+        //<?xml version = "1.0" encoding="utf-8"?>
+        //<command>
+        //<action>ping</action>
+        //</command>
+        byte[] tmp;
+        byte[] bytes = new byte[1024];
+       
         private void BT_Ping_Click(object sender, RoutedEventArgs e)
         {
-
+            string text = "<?xml version =\"1.0\" encoding=\"utf-8\"?><command>\n<action>ping</action>\n</command>";
+            Test.Text += "Выполнение команды: \"ping\" \n";
+            SendReceive(text);
         }
 
         private void BT_Stop_Click(object sender, RoutedEventArgs e)
@@ -124,14 +130,14 @@ namespace AppARM.Scenario
             portServer = TB_Port.Text;
             B_Connect.IsEnabled = false;
             B_Disconnect.IsEnabled = true;
-
-
+            BT_Ping.IsEnabled = true;
             Console.WriteLine(ipServer + " " + portServer);
             try
             {
-               tcpClient= new TcpClient();
-                tcpClient.Connect(ipServer, Convert.ToInt32(portServer));
-                Test.Text += "Подключение удачное \n";
+                tcpClient = new Socket(AddressFamily.InterNetwork, SocketType.Stream, ProtocolType.Tcp);
+                IPAddress ipaddress = IPAddress.Parse(ipServer);
+                EndPoint point = new IPEndPoint(ipaddress, Convert.ToInt32(portServer));
+                tcpClient.Connect(point);
             }
             catch (Exception ex)
             {
@@ -139,10 +145,8 @@ namespace AppARM.Scenario
                 Test.Text += "Подключение не удачное \n";
                 B_Connect.IsEnabled = true;
                 B_Disconnect.IsEnabled = false;
+                BT_Ping.IsEnabled = false;
             }
-
-        }
-
-      
+        }    
     }
 }

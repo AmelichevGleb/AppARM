@@ -81,7 +81,7 @@ namespace AppARM
         //____________________________ТАЙМЕР________________________________________________________
         void timer_Tick(object sender, EventArgs e)
         {
-            lblTime.Content = DateTime.Now.ToLongTimeString();
+           lblTime.Content = DateTime.Now.ToLongTimeString();
         }
 
         byte[] tmp;
