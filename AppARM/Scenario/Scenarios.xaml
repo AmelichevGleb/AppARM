@@ -5,7 +5,7 @@
         xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
         xmlns:local="clr-namespace:AppARM.Scenario"
         mc:Ignorable="d"
-        Title="Scenarios" Height="450" Width="800">
+        Title="Scenarios" Height="600" Width="1000">
     <Grid>
         <Grid Margin="5,5,5,5">
             <Grid.ColumnDefinitions>
@@ -102,7 +102,7 @@
                             </ComboBox>
                             <Label Grid.Column="2">Внешний источник:</Label>
                             <CheckBox x:Name="CB_Sound" Grid.Column="3" Margin="5,7,5,0"/>
-                            <Button x:Name="srq" Grid.Column="4" FontSize="9" Padding="0, 0, 0, 1" Margin="10,7,0,6" HorizontalContentAlignment="Center" Click="srq_Click">Запуск</Button>
+                            <Button x:Name="B_StartScenario" Grid.Column="4" FontSize="9" Padding="0, 0, 0, 1" Margin="10,7,0,0" HorizontalContentAlignment="Center" Click="Button_Click_StartScenario" Height="15" VerticalAlignment="Top">Запуск</Button>
                         </Grid>
                         <Grid Grid.Row="3">
                             <Border Margin="-1,0,-1,0" BorderBrush="Black"  BorderThickness="0.1">
@@ -119,59 +119,59 @@
                             </Grid.RowDefinitions>
                             <Grid Grid.Row="0">
                                 <Grid.ColumnDefinitions>
-                                    <ColumnDefinition></ColumnDefinition>
-                                    <ColumnDefinition></ColumnDefinition>
-                                    <ColumnDefinition></ColumnDefinition>
-                                    <ColumnDefinition></ColumnDefinition>
-                                    <ColumnDefinition></ColumnDefinition>
+                                    <ColumnDefinition Width="100"></ColumnDefinition>
+                                    <ColumnDefinition Width="25"></ColumnDefinition>
+                                    <ColumnDefinition Width="130"></ColumnDefinition>
+                                    <ColumnDefinition Width="25"></ColumnDefinition>
+                                    <ColumnDefinition Width="125"></ColumnDefinition>
                                     <ColumnDefinition></ColumnDefinition>
                                 </Grid.ColumnDefinitions>
-                                <CheckBox Grid.Column="0"></CheckBox>
-                                <Label Grid.Column="1">Рабочий запуск</Label>
-                                <CheckBox Grid.Column="2"></CheckBox>
-                                <Label Grid.Column="3">Сирены непрерывно</Label>
-                                <Label Grid.Column="4">Команда П 160/ П 164</Label>
-                                <TextBox Margin="5,5,5,5" Grid.Column="5"></TextBox>
+                                <Label Grid.Column="0">Рабочий запуск:</Label>
+                                <CheckBox x:Name="CB_WL" Grid.Column="1"  Margin="5,7,5,0"></CheckBox>
+                                <Label Grid.Column="2">Сирены непрерывно:</Label>
+                                <CheckBox x:Name="CB_SC" Grid.Column="3" Margin="5,7,5,0"></CheckBox>
+                                <Label Grid.Column="4">Команда П160/П164:</Label>
+                                <TextBox x:Name="TB_Command" Margin="10,8,10,9" Padding="10, 0, 0, 1" HorizontalContentAlignment="Stretch" FontSize="9" Grid.Column="5"/>
                             </Grid>
                             <Grid Grid.Row="1">
                                 <Grid.ColumnDefinitions>
-                                    <ColumnDefinition></ColumnDefinition>
+                                    <ColumnDefinition Width="130"></ColumnDefinition>
                                     <ColumnDefinition></ColumnDefinition>
                                 </Grid.ColumnDefinitions>
                                 <Label Grid.Column="0">Id Апу через ";"</Label>
-                                <TextBox Margin="5,5,5,5" Grid.Column="1"></TextBox>
+                                <TextBox x:Name="TB_IdAPU" Margin="10,8,10,9" Padding="10, 0, 0, 1" HorizontalContentAlignment="Stretch" FontSize="9" Grid.Column="1"></TextBox>
                             </Grid>
                             <Grid Grid.Row="2">
                                 <Grid.ColumnDefinitions>
-                                    <ColumnDefinition></ColumnDefinition>
+                                    <ColumnDefinition Width="130"></ColumnDefinition>
                                     <ColumnDefinition></ColumnDefinition>
                                 </Grid.ColumnDefinitions>
                                 <Label Grid.Column="0">Id устройств через ";"</Label>
-                                <TextBox Margin="5,5,5,5" Grid.Column="1"></TextBox>
+                                <TextBox x:Name="TB_IdDevise" Margin="10,8,10,9" Padding="10, 0, 0, 1" HorizontalContentAlignment="Stretch" FontSize="9" Grid.Column="1"></TextBox>
                             </Grid>
                             <Grid Grid.Row="3">
                                 <Grid.ColumnDefinitions>
-                                    <ColumnDefinition></ColumnDefinition>
-                                    <ColumnDefinition></ColumnDefinition>
-                                    <ColumnDefinition></ColumnDefinition>
-                                    <ColumnDefinition></ColumnDefinition>
-                                    <ColumnDefinition></ColumnDefinition>
-                                    <ColumnDefinition></ColumnDefinition>
-                                    <ColumnDefinition></ColumnDefinition>
-                                    <ColumnDefinition></ColumnDefinition>
-                                    <ColumnDefinition></ColumnDefinition>
+                                    <ColumnDefinition Width="90"></ColumnDefinition>
+                                    <ColumnDefinition Width="35"></ColumnDefinition>
+                                    <ColumnDefinition Width="25"></ColumnDefinition>
+                                    <ColumnDefinition Width="35"></ColumnDefinition>
+                                    <ColumnDefinition Width="25"></ColumnDefinition>
+                                    <ColumnDefinition Width="35"></ColumnDefinition>
+                                    <ColumnDefinition Width="25"></ColumnDefinition>
+                                    <ColumnDefinition Width="55"></ColumnDefinition>
+                                    <ColumnDefinition Width="25"></ColumnDefinition>
                                     <ColumnDefinition></ColumnDefinition>
                                 </Grid.ColumnDefinitions>
                                 <Label Grid.Column="0">Тип устройств:</Label>
-                                <CheckBox Grid.Column="1"></CheckBox>
-                                <Label Grid.Column="2">АПУ</Label>
-                                <CheckBox Grid.Column="3"></CheckBox>
-                                <Label Grid.Column="4">ТЛФ</Label>
-                                <CheckBox Grid.Column="5"></CheckBox>
-                                <Label Grid.Column="6">РТУ</Label>
-                                <CheckBox Grid.Column="7"></CheckBox>
-                                <Label Grid.Column="8">Сирены</Label>
-                                <Button Grid.Column="9" Click="Button_Click"></Button>
+                                <Label Grid.Column="1">АПУ</Label>
+                                <CheckBox x:Name="CB_APU"  Margin="5,7,5,0" Grid.Column="2"></CheckBox>
+                                <Label Grid.Column="3">ТЛФ</Label>
+                                <CheckBox x:Name="CB_TLF" Grid.Column="4" Margin="5,7,5,0"></CheckBox>
+                                <Label Grid.Column="5">РТУ</Label>
+                                <CheckBox x:Name="CB_RTU" Grid.Column="6" Margin="5,7,5,0"></CheckBox>
+                                <Label Grid.Column="7">Сирены</Label>
+                                <CheckBox x:Name="CB_SRN" Grid.Column="8" Margin="5,7,5,0"></CheckBox>
+                                <Button Grid.Column="9" FontSize="9" Padding="0, -2, 0, 0" Margin="10,8,10,9" Click="BС_StartScenarios">Запуск</Button>
                             </Grid>
                             <Grid Grid.Row="4">
                                 <Border Margin="-1,0,-1,0" BorderBrush="Black"  BorderThickness="0.1">

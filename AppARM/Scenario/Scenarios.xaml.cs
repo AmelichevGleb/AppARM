@@ -51,6 +51,7 @@ namespace AppARM.Scenario
             InitializeComponent();
             B_Disconnect.IsEnabled = false;
             BT_Ping.IsEnabled = false;
+            B_StartScenario.IsEnabled = false;
         }
 
         //отправка сообщения на устройства. (особая постановка байт)
@@ -110,6 +111,7 @@ namespace AppARM.Scenario
             B_Connect.IsEnabled = false;
             B_Disconnect.IsEnabled = true;
             BT_Ping.IsEnabled = true;
+            B_StartScenario.IsEnabled = true;
             Console.WriteLine(ipServer + " " + portServer);
             try
             {
@@ -126,6 +128,7 @@ namespace AppARM.Scenario
                 B_Connect.IsEnabled = true;
                 B_Disconnect.IsEnabled = false;
                 BT_Ping.IsEnabled = false;
+                B_StartScenario.IsEnabled = false;
             }
         }
 
@@ -137,6 +140,7 @@ namespace AppARM.Scenario
             B_Connect.IsEnabled = true;
             B_Disconnect.IsEnabled = false;
             BT_Ping.IsEnabled = false;
+            B_StartScenario.IsEnabled = false;
         }
 
         //Кнопка отправка команды пинг на подключенное устройство
@@ -155,7 +159,7 @@ namespace AppARM.Scenario
         }
 
         //Кнопка запуска сценария
-        private void srq_Click(object sender, RoutedEventArgs e)
+        private void Button_Click_StartScenario(object sender, RoutedEventArgs e)
         {
             string soundCheck = "internal";
             var command = new StringBuilder();
@@ -164,23 +168,46 @@ namespace AppARM.Scenario
                 "<parameters>\n<scenario>{0}</scenario>\n<audio>{1}<audio/>\n</parameters>\n</command>", CB_Script_number.Text, soundCheck);
             Console.WriteLine(command);
             SendReceive(Convert.ToString(command));
-
         }
-
-
-
-
-
 
         private void BT_Stop_Click(object sender, RoutedEventArgs e)
         {
 
         }
 
-        private void Button_Click(object sender, RoutedEventArgs e)
+        private void BС_StartScenarios(object sender, RoutedEventArgs e)
         {
+            string type = null ;
+            var command = new StringBuilder();
+            string NumberCommand = TB_Command.Text;
+            string typeSiren = "discontinuous";
+            int working_Launch = 0;
+            //Особенность сеанса:
+            //рабочий запуск 
+            if (CB_WL.IsChecked == true) {
+                working_Launch = 1;
+            }
+            //сирены непрерывно
+            if (CB_SC.IsChecked == true)
+            {
+                typeSiren = "continuous";
+            }
+            //Типы устройств 
+            if (CB_APU.IsChecked == true) { type += "apu;"; }
+            if (CB_TLF.IsChecked == true) { type += "tlf;"; }
+            if (CB_RTU.IsChecked == true) { type += "rtu;"; }
+            if (CB_SRN.IsChecked == true) { type += "srn;"; }
 
+            command.AppendFormat("<?xml version=\"1.0\" encoding=\"utf-8\"?>\n<command>\n<action>start</action>\n" +
+                                "<parameters>\n<seance startmode=\"{0}\">\n<types>{1}</types>\n"+
+                                "<consoles>{2}</consoles>\n<terminals>{3}</terminals>\n<p160command>{4}</p160command>\n" +
+                                "<sirenmode>{5}</sirenmode>\n</seance>\n</parameters>\n</command>", working_Launch, type,TB_IdAPU.Text ,TB_IdDevise.Text, NumberCommand, typeSiren);
+
+            Console.WriteLine(command);
+            SendReceive(Convert.ToString(command));
         }
+
+  
 
 
 
