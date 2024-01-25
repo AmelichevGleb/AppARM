@@ -19,7 +19,7 @@
                 <Button x:Name="BT_Script" Margin="30,310,30,0"  Content="Cценарий" Background="#0C5DA5" HorizontalAlignment="Left"  VerticalAlignment="Top" Height="40" Width="255" Click="BC_Script"></Button>
                 <Label Name="lblTime" FontSize="48" HorizontalAlignment="Left" VerticalAlignment="Top" Margin="70,350,30,0"   Width="255" />
 
-                
+
             </Grid>
         </Grid>
 
@@ -27,12 +27,26 @@
             <TextBlock  Margin="39,24,395,339" TextAlignment="Center" FontSize="20">Работа с метеостанцией</TextBlock>
 
 
-            <Button x:Name="XML1" Margin="394,147,39,245"  Content="Xml1" Click ="BC_XML1"></Button>
-            <Button x:Name="BConnect" Margin="379,223,53,166"  Content="Connect" Click="BC_Connect" />
-            <Button x:Name="BDisconnect" Margin="393,268,39,124"  Content="Disconnect" Click="BC_Disconnect"  />
+            <Button x:Name="XML1" Margin="405,196,28,196"  Content="Xml1" Click ="BC_XML1"></Button>
+            <Button x:Name="BConnect" Margin="405,262,27,127"  Content="Connect" Click="BC_Connect" />
+            <Button x:Name="BDisconnect" Margin="405,328,27,64"  Content="Disconnect" Click="BC_Disconnect"  />
 
-            <Button Content="2" HorizontalAlignment="Left" Margin="505,349,0,0" VerticalAlignment="Top" Height="27" Width="28" Click="Button_Click_2"/>
-
+            <Button Content="Агронитовский запуск" HorizontalAlignment="Left" Margin="396,81,0,0" VerticalAlignment="Top" Height="39" Width="256" Click="Button_Click_2">
+                <Button.Background>
+                    <LinearGradientBrush EndPoint="0.5,1" StartPoint="0.5,0">
+                        <GradientStop Color="Black"/>
+                        <GradientStop Color="#FFF95555" Offset="1"/>
+                    </LinearGradientBrush>
+                </Button.Background>
+            </Button>
+            <Button Content="Тестовые объекты" Margin="396,141,28,254" Click="Button_Click">
+                <Button.Background>
+                    <LinearGradientBrush EndPoint="0.5,1" StartPoint="0.5,0">
+                        <GradientStop Color="Black"/>
+                        <GradientStop Color="#FFF95555" Offset="1"/>
+                    </LinearGradientBrush>
+                </Button.Background>
+            </Button>
         </Grid>
     </Grid>
 </Window>

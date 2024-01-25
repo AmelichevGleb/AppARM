@@ -33,9 +33,7 @@
                                         <ColumnDefinition Width="50"></ColumnDefinition>
                                         <ColumnDefinition></ColumnDefinition>
                                         <ColumnDefinition></ColumnDefinition>
-
                                     </Grid.ColumnDefinitions>
-
                                     <Label  FontSize="9" FontWeight ="Bold"  Margin="2,2,2,2" Grid.Column="0">IP-адрес:</Label>
                                     <TextBox  x:Name="TB_IPAdress" FontSize="14" TextAlignment ="Justify"   Margin="2,2,2,2" Grid.Column="1">127.0.0.1</TextBox>
                                     <Label  FontSize="9" FontWeight ="Bold" Margin="2,2,2,2" Grid.Column="2">Порт:</Label>
@@ -73,12 +71,12 @@
                         </Grid.RowDefinitions>
                         <Grid Grid.Row="0">
                             <Grid.ColumnDefinitions>
-                                <ColumnDefinition Width="55"></ColumnDefinition>
-                                <ColumnDefinition Width="240"></ColumnDefinition>
-                                <ColumnDefinition Width="55"></ColumnDefinition>
+                                <ColumnDefinition Width="300"></ColumnDefinition>
+                                <ColumnDefinition Width="50"></ColumnDefinition>
+
                             </Grid.ColumnDefinitions>
                             <Label Margin="0,1,0,0"  FontWeight ="Bold" FontSize="12" Grid.Row="0">1. Пинг</Label>
-                            <Button x:Name="BT_Ping"  FontSize="12" Margin ="10,3,0,3" Click="BT_Ping_Click" Grid.Column="2" HorizontalAlignment="Center">Ping</Button>
+                            <Button x:Name="BT_Ping"   Click="BT_Ping_Click" Grid.Column="1" FontSize="9" Padding="0, 0, 0, 1" Margin="10,7,0,0" HorizontalContentAlignment="Center" Height="15" VerticalAlignment="Top">Ping</Button>
                         </Grid>
                         <Grid Grid.Row="1">
                             <Border Margin="-1,0,-1,0" BorderBrush="Black"  BorderThickness="0.1">
@@ -131,7 +129,7 @@
                                 <Label Grid.Column="2">Сирены непрерывно:</Label>
                                 <CheckBox x:Name="CB_SC" Grid.Column="3" Margin="5,7,5,0"></CheckBox>
                                 <Label Grid.Column="4">Команда П160/П164:</Label>
-                                <TextBox x:Name="TB_Command" Margin="10,8,10,9" Padding="10, 0, 0, 1" HorizontalContentAlignment="Stretch" FontSize="9" Grid.Column="5"/>
+                                <TextBox x:Name="TB_Command" Margin="10,8,10,9" Padding="10, 0, 0, 1" HorizontalContentAlignment="Stretch" FontSize="9" Grid.Column="5">0</TextBox>
                             </Grid>
                             <Grid Grid.Row="1">
                                 <Grid.ColumnDefinitions>
@@ -163,29 +161,25 @@
                                     <ColumnDefinition></ColumnDefinition>
                                 </Grid.ColumnDefinitions>
                                 <Label Grid.Column="0">Тип устройств:</Label>
-                                <Label Grid.Column="1">АПУ</Label>
+                                <Label Grid.Column="1">АПУ:</Label>
                                 <CheckBox x:Name="CB_APU"  Margin="5,7,5,0" Grid.Column="2"></CheckBox>
-                                <Label Grid.Column="3">ТЛФ</Label>
+                                <Label Grid.Column="3">ТЛФ:</Label>
                                 <CheckBox x:Name="CB_TLF" Grid.Column="4" Margin="5,7,5,0"></CheckBox>
-                                <Label Grid.Column="5">РТУ</Label>
+                                <Label Grid.Column="5">РТУ:</Label>
                                 <CheckBox x:Name="CB_RTU" Grid.Column="6" Margin="5,7,5,0"></CheckBox>
-                                <Label Grid.Column="7">Сирены</Label>
+                                <Label Grid.Column="7">Сирены:</Label>
                                 <CheckBox x:Name="CB_SRN" Grid.Column="8" Margin="5,7,5,0"></CheckBox>
                                 <Button Grid.Column="9" FontSize="9" Padding="0, -2, 0, 0" Margin="10,8,10,9" Click="BС_StartScenarios">Запуск</Button>
                             </Grid>
                             <Grid Grid.Row="4">
                                 <Border Margin="-1,0,-1,0" BorderBrush="Black"  BorderThickness="0.1">
                                     <Grid>
-
                                         <Grid.ColumnDefinitions>
-                                            <ColumnDefinition Width="55"></ColumnDefinition>
-                                            <ColumnDefinition Width="250"></ColumnDefinition>
-                                            <ColumnDefinition Width="40"></ColumnDefinition>
+                                            <ColumnDefinition Width="300"></ColumnDefinition>
+                                            <ColumnDefinition Width="50"></ColumnDefinition>
                                         </Grid.ColumnDefinitions>
-
-                                        <Label Margin="0,1,0,0"  FontWeight ="Bold" FontSize="12" Grid.Row="0">4. Остановка оповещения</Label>
-                                        <Button x:Name="BT_Stop" Margin ="5,6,-30,6"  Grid.Column="2" Click="BT_Stop_Click"></Button>
-
+                                        <Label Margin="0,1,0,0"  FontWeight ="Bold" FontSize="12" Grid.Row="0">4. Остановка оповещения ( Вопросы к работе !!!)</Label>
+                                        <Button x:Name="BT_Stop"  Grid.Column="2" FontSize="9" Padding="0, 0, 0, 1" Margin="10,7,0,0" HorizontalContentAlignment="Center" Height="15" VerticalAlignment="Top" Click="BT_Stop_Click">Stop</Button>
                                     </Grid>
                                 </Border>
                             </Grid>

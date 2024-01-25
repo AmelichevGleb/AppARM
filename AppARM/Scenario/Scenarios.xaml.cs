@@ -152,7 +152,7 @@ namespace AppARM.Scenario
             <action>ping</action>
             </command>
             */
-            string command = "<?xml version =\"1.0\" encoding=\"utf-8\"?>\n<command>\n<action>ping</action>\n</command>";
+            string command = "<?xml version=\"1.0\" encoding=\"utf-8\" ?><command>\n<action>ping</action>\n</command>";
             Test.Text += "Выполнение команды: \"ping\" \n";
             Console.WriteLine(command); 
             SendReceive(command);
@@ -164,7 +164,7 @@ namespace AppARM.Scenario
             string soundCheck = "internal";
             var command = new StringBuilder();
             if (CB_Sound.IsChecked == true) { soundCheck = "external"; }
-            command.AppendFormat("<?xml version=\"1.0\" encoding=\"utf-8\"?>\n<command>\n<action>start</action>\n" +
+            command.AppendFormat("<?xml version=\"1.0\" encoding=\"utf-8\" ?><command>\n<action>start</action>\n" +
                 "<parameters>\n<scenario>{0}</scenario>\n<audio>{1}<audio/>\n</parameters>\n</command>", CB_Script_number.Text, soundCheck);
             Console.WriteLine(command);
             SendReceive(Convert.ToString(command));
@@ -172,6 +172,10 @@ namespace AppARM.Scenario
 
         private void BT_Stop_Click(object sender, RoutedEventArgs e)
         {
+            var command = new StringBuilder();
+            command.AppendFormat("<?xml version=\"1.0\" encoding=\"utf-8\" ?><command>\n<action>stop</action>\n%1</command>");
+            Console.WriteLine(command);
+            SendReceive(Convert.ToString(command));
 
         }
 
@@ -198,10 +202,10 @@ namespace AppARM.Scenario
             if (CB_RTU.IsChecked == true) { type += "rtu;"; }
             if (CB_SRN.IsChecked == true) { type += "srn;"; }
 
-            command.AppendFormat("<?xml version=\"1.0\" encoding=\"utf-8\"?>\n<command>\n<action>start</action>\n" +
+            command.AppendFormat("<?xml version=\"1.0\" encoding=\"utf-8\" ?><command>\n<action>start</action>\n" +
                                 "<parameters>\n<seance startmode=\"{0}\">\n<types>{1}</types>\n"+
                                 "<consoles>{2}</consoles>\n<terminals>{3}</terminals>\n<p160command>{4}</p160command>\n" +
-                                "<sirenmode>{5}</sirenmode>\n</seance>\n</parameters>\n</command>", working_Launch, type,TB_IdAPU.Text ,TB_IdDevise.Text, NumberCommand, typeSiren);
+                                "<sirenmode>{5} </sirenmode>\n</seance>\n</parameters>\n</command>", working_Launch, type,TB_IdAPU.Text ,TB_IdDevise.Text, NumberCommand, typeSiren);
 
             Console.WriteLine(command);
             SendReceive(Convert.ToString(command));
