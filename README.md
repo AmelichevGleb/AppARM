@@ -1,13 +1,13 @@
 # AppARM
 
-Зависимости для tileserver-gl
+**Зависимости для tileserver-gl**
 
 * NodeJS 20.0.3
 
-Установка
+**Установка**
 
-npm install -g tileserver-gl
+* npm install -g tileserver-gl
 
-Запуск
+**Запуск**
 
-tileserver-gl --file <pathtofile.mbtiles>
+* tileserver-gl --file <pathtofile.mbtiles>
