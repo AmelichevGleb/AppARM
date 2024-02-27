@@ -11,7 +11,7 @@ mmr.bindPopup('55.740, 37.185');
 
 
 //color = blue, gold, red, green, orange, yellow, violet, grey, black
-function addMarker(x, y, color = "blue"){
+function addMarker(x, y, color = "blue", title = x+", "+y){
 	var markerIcon = new L.Icon({
 	iconUrl: 'img/marker-icon-2x-'+color+'.png',
 	shadowUrl: 'img/marker-shadow.png',
@@ -20,7 +20,9 @@ function addMarker(x, y, color = "blue"){
 	popupAnchor: [1, -34],
 	shadowSize: [41, 41]
 	});
-	L.marker([x, y], {icon: markerIcon}).addTo(mymap);
+	var marker = L.marker([x, y], {icon: markerIcon});
+	marker.bindPopup(title);
+	marker.addTo(mymap);
 }
 function addCircle(centerX, centerY, radius, clr = 'red'){
 	var circleCenter = [centerX, centerY];
