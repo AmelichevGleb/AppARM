@@ -2,7 +2,7 @@ import webbrowser
 import socket
 import http.server
 import socketserver
-import _thread as thread
+from threading import Thread
 
 #Инициализация сервера
 class MyHttpRequestHandler(http.server.SimpleHTTPRequestHandler):
@@ -44,8 +44,10 @@ draw(request("33;"))
 response2 = request("127.0.0.1;2222;")
 print(response2)
 #Запуск сервера
-thread.start_new_thread(start_server, ())
+serverThread = Thread(target=start_server, args=())
+serverThread.start()
 print('Сервер запущен')
 #printRez()
 url = 'http://localhost/'
 webbrowser.open(url,new=2)
+serverThread.join()
