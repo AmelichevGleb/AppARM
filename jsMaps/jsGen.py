@@ -54,14 +54,16 @@ def draw(response, path = 'draw.js'):
         f.write('m'+str(i)+' = new marker('+resSplited[4]+', '+resSplited[5]+', "blue", "<dl><dt><b>Name: </b>'+resSplited[3]+'</dt><dt> <b>X: </b>'+resSplited[4]+'</dt><dt><b>Y: </b>'+resSplited[5]+'</dt><dt><b>Temperature: </b>'+'18'+'</dt><dt><b>Wind Speed: </b>'+'5'+'</dt><dt><b>Direction: </b>'+'30'+'</dt></dl>");\n')
         f.write('c'+str(i)+' = new circle(['+resSplited[4]+', '+resSplited[5]+'], 800, "#D6DF71");\n')
     f.close()
+def updateInfo():
+    try:
+        draw(request("33;"))
+        response2 = request(config['ADDRESSES']['requestAddress']+";2222;")
+        print(response2)
+    except ConnectionRefusedError:
+        print("Не удалось считать информацию с сервера")
 
 #Тело
-try:
-    draw(request("33;"))
-    response2 = request(config['ADDRESSES']['requestAddress']+";2222;")
-    print(response2)
-except ConnectionRefusedError:
-    print("Не удалось считать информацию с сервера")
+updateInfo()
 #Запуск сервера
 serverThread = Thread(target=start_server, args=())
 serverThread.start()
@@ -69,7 +71,7 @@ tileThread = Thread(target=tileServerStart, args=())
 tileThread.start()
 print('Сервер запущен')
 #printRez()
-url = 'http://'+config['ADDRESSES']['host']+':'+config['ADDRESSES']['port']+'/'
+url = 'http://'+config['ADDRESSES']['host']+':'+config['ADDRESSES']['port']+'/#54.524,36.28458,14z'
 webbrowser.open(url,new=2)
 serverThread.join()
 tileThread.join()

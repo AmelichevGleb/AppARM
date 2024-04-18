@@ -12,6 +12,13 @@ index = '''<html>
 	<div id="mapWrap"></div>
 	<script src="script.js"></script>
 	<script src="draw.js"></script>
+    <script>
+    function reload() {
+		location.reload();
+	}
+	//setInterval(reload, 10000);
+    
+    </script>
 </body>
 </html>'''
 def script(host, port):
@@ -19,12 +26,16 @@ def script(host, port):
 const latitude = 55.750784;
 const longitude = 37.622558;
 const zoom = 15;
+L.Permalink={getMapLocation:function(b,c){b=b||0===b?b:18;c=c?c:[52.26869,-113.81034];if(""!==window.location.hash){var a=window.location.hash.replace("#","").split(",");3===a.length&&(c={lat:parseFloat(a[0]),lng:parseFloat(a[1])},b=parseInt(a[2].slice(0,-1),10))}return{zoom:b,center:c}},setup:function(b){var c=!0;b.on("moveend",function(){if(c){var a=b.getCenter(),d="#"+Math.round(1E5*a.lat)/1E5+","+Math.round(1E5*a.lng)/1E5+","+b.getZoom()+"z",a={zoom:b.getZoom(),center:a};window.history.pushState(a,
+"map",d)}else c=!0});window.addEventListener("popstate",function(a){null!==a.state&&(b.setView(a.state.center,a.state.zoom),c=!1)})}};
 // Set DIV element to embed map
+var mappos = L.Permalink.getMapLocation();
 var mymap = L.map('mapWrap');
-
+L.Permalink.setup(mymap);
 //popup window
 var mmr = L.marker([55.740, 37.185]);
 mmr.bindPopup('55.740, 37.185');
+mymap.setView(mappos.center, mappos.zoom);
 
 class marker{
 	constructor(x, y, color = 'blue', title = '<dl><dt>'+x+'</dt><dt>'+y+'</dt></dl>'){
@@ -145,7 +156,6 @@ L.tileLayer('http://'''+host+''':'''+port+'''/styles/basic-preview/{z}/{x}/{y}.p
 ).addTo(mymap);
 // Set lat lng position and zoom level of map 
 mmr.setLatLng(L.latLng(latitude, longitude));
-mymap.setView([latitude, longitude], zoom);
 // Set popup window content
 mmr.setPopupContent('Latitude: '+latitude+' <br /> Longitude: '+longitude).openPopup();
 
