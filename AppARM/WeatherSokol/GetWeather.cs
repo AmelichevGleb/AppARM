@@ -1,4 +1,4 @@
-﻿using AppARM.TestXML;
+﻿using AppARM.FilesLogs;
 using System;
 using System.Collections.Generic;
 using System.Linq;
@@ -37,7 +37,7 @@ namespace AppARM.WeatherSokol
                 ByteWeather byteWeather = new ByteWeather(_ip, _ipSend, _portSend, _location, _longitude, _lagatitude,0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00,
                                   0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, false);
 
-                files.ReadExeption(ex);
+                files.ReadException(ex);
             }
         }
 

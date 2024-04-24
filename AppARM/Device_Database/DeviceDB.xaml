@@ -5,30 +5,33 @@
         xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
         xmlns:local="clr-namespace:AppARM.Device_Database"
         mc:Ignorable="d"
-        Title="DeviceDB" Height="420" Width="800"
+        Title="DeviceDB" Height="449" Width="800"
          ResizeMode="NoResize">
 
-    <Grid   Margin="0,0,0,0" Background="#659DBD" Height="384" VerticalAlignment="Top">
+    <Grid Background="#659DBD" Height="414" VerticalAlignment="Top">
         <Grid.RowDefinitions>
-            <RowDefinition>
-            </RowDefinition>
+            <RowDefinition Height="25"></RowDefinition>
+            <RowDefinition Height="auto"></RowDefinition>
             <RowDefinition Height="auto"></RowDefinition>
         </Grid.RowDefinitions>
-        <Grid Margin="5,5,5,5" Background="#659DBD">
+        <Grid>
+            <Menu>
+                <MenuItem x:Name="MI_MeteoStation" Margin="4,4,4,4" Header="Метеостанции" Click="MI_MeteoStation_Click"></MenuItem>
+                <MenuItem x:Name="MI_Danger" Margin="4,4,4,4" Header="Датчики ЧС" Click="MI_Danger_Click"></MenuItem>
+                <MenuItem x:Name="MI_Apy" Margin="4,4,4,4" Header="AПУ" Click="MI_Apy_Click"></MenuItem>
+            </Menu>
         </Grid>
-        <Grid Margin="5,5,5,5" Background="Gray">
-            <DataGrid x:Name="DG_device" AutoGenerateColumns="False" MouseUp="grid_MouseUp" CellEditEnding="dataGrid_CellEditEnding" SelectionChanged="DG_device_SelectionChanged" Height="341" VerticalAlignment="Center" HorizontalAlignment="Left" Width="790" >
+        <Grid x:Name="G_DataTable" Grid.Row="1" Margin="5,5,5,5" Background="Gray">
+            <DataGrid x:Name="DG_MeteoStation" AutoGenerateColumns="False" MouseUp="grid_MouseUp" CellEditEnding="dataGrid_CellEditEnding" SelectionChanged="DG_device_SelectionChanged" Height="341" VerticalAlignment="Center" HorizontalAlignment="Left" Width="790" >
                 <DataGrid.Columns>
                     <DataGridTextColumn Binding="{Binding Id, UpdateSourceTrigger=PropertyChanged}" IsReadOnly="True" Header="Id"/>
-                    <DataGridTextColumn Binding="{Binding IP_device, UpdateSourceTrigger=PropertyChanged}" Header="IP_device"/>
-                    <DataGridTextColumn Binding="{Binding Port, UpdateSourceTrigger=PropertyChanged}" Header="Port"/>
-                    <DataGridTextColumn Binding="{Binding Location, UpdateSourceTrigger=PropertyChanged}" Header="Location"/>
-                    <DataGridTextColumn Binding="{Binding Longitude, UpdateSourceTrigger=PropertyChanged}" Header="Longitude"/>
-                    <DataGridTextColumn Binding="{Binding Lagatitude, UpdateSourceTrigger=PropertyChanged}" Header="Lagatitude"/>
-                    <DataGridTextColumn Binding="{Binding Description, UpdateSourceTrigger=PropertyChanged}" Header="Description"/>
-
+                    <DataGridTextColumn Binding="{Binding IP_device, UpdateSourceTrigger=PropertyChanged}" Header="IP метеостанции"/>
+                    <DataGridTextColumn Binding="{Binding Port, UpdateSourceTrigger=PropertyChanged}" Header="Port метеостанции"/>
+                    <DataGridTextColumn Binding="{Binding Location, UpdateSourceTrigger=PropertyChanged}" Header="Адрес метеостанции"/>
+                    <DataGridTextColumn Binding="{Binding Longitude, UpdateSourceTrigger=PropertyChanged}" Header="Долгота"/>
+                    <DataGridTextColumn Binding="{Binding Lagatitude, UpdateSourceTrigger=PropertyChanged}" Header="Широта"/>
+                    <DataGridTextColumn Binding="{Binding Description, UpdateSourceTrigger=PropertyChanged}" Header="Датчик"/>
                 </DataGrid.Columns>
-
                 <DataGrid.ContextMenu>
                     <ContextMenu>
                         <MenuItem Header="Добавление" Click="MenuItem_Click_Add"/>
@@ -39,8 +42,28 @@
                     </ContextMenu>
                 </DataGrid.ContextMenu>
             </DataGrid>
+            <DataGrid x:Name="DG_DeviceDanger" AutoGenerateColumns="False" MouseUp="grid_MouseUp" CellEditEnding="dataGrid_CellEditEnding" SelectionChanged="DG_device_SelectionChanged" Height="341" VerticalAlignment="Center" HorizontalAlignment="Left" Width="790">
+                <DataGrid.Columns>
+                    <DataGridTextColumn Binding="{Binding Id, UpdateSourceTrigger=PropertyChanged}" IsReadOnly="True" Header="Id"/>
+                    <DataGridTextColumn Binding="{Binding Id, UpdateSourceTrigger=PropertyChanged}" IsReadOnly="True" Header="IP датчика"/>
+                    <DataGridTextColumn Binding="{Binding Id, UpdateSourceTrigger=PropertyChanged}" IsReadOnly="True" Header="Port датчика"/>
+                    <DataGridTextColumn Binding="{Binding Id, UpdateSourceTrigger=PropertyChanged}" IsReadOnly="True" Header="Долгота"/>
+                    <DataGridTextColumn Binding="{Binding Id, UpdateSourceTrigger=PropertyChanged}" IsReadOnly="True" Header="Широта"/>
+                </DataGrid.Columns>
+                <DataGrid.ContextMenu>
+                    <ContextMenu>
+                        <MenuItem Header="Добавление" Click="MenuItem_Click_Add1"/>
+                        <Separator></Separator>
+                        <MenuItem Header="Удаление" Click="MenuItem_Click_Delete1"/>
+                        <Separator></Separator>
+                        <MenuItem  Header="Вывод" Click="MenuItem_Click_Show1" />
+                    </ContextMenu>
+                </DataGrid.ContextMenu>
+            </DataGrid>
+            
+
         </Grid>
-        <StackPanel Grid.Row="1" Orientation="Horizontal" HorizontalAlignment="Right">
+        <StackPanel Grid.Row="2" Orientation="Horizontal" HorizontalAlignment="Right">
             <Button x:Name="B_OK" Background="#0C5DA5" Margin="0,0,0,5" Padding="5" Click="BC_Ok">OK</Button>
             <Button x:Name="B_Cancel" Background="#0C5DA5" Margin="5,0,5,5" Padding="5" Click="BC_Cancel">Cancel</Button>
         </StackPanel>

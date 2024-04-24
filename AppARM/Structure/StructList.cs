@@ -21,6 +21,9 @@ namespace AppARM.Structure
        // public string WindSpeed { get; set; }   
        // public string DirectionWind { get; set; }
 
+        public string Script { get; set; }
+        public string Path { get; set; }
+        public string Notify { get; set; }
         public StructList(int _id, string _ip_device, string _port ,string _location,string _longitude ,string _lagatitude,string _description ) //, string _temperature , string _windSpeed , string _directionWind )
         {
             this.Id = _id;
@@ -33,6 +36,21 @@ namespace AppARM.Structure
         //   this.Temperature = _temperature;
         //   this.WindSpeed = _windSpeed;
         //  this.DirectionWind = _directionWind;
+        }
+        public StructList(int _id, string _ip_device, string _script, string _path, string _notify) //, string _temperature , string _windSpeed , string _directionWind )
+        {
+            this.Id = _id;
+            this.IP_device = _ip_device;
+            this.Script = _script;
+            this.Path = _path;
+            this.Notify = _notify;
+        }
+        public StructList(int _id, string _ip_device, string _port, string _script) //, string _temperature , string _windSpeed , string _directionWind )
+        {
+            this.Id = _id;
+            this.IP_device = _ip_device;
+            this.Port = _port;
+            this.Script = _script;
         }
     }
 }

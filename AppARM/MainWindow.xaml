@@ -6,47 +6,139 @@
         xmlns:local="clr-namespace:AppARM"
         mc:Ignorable="d"
         ResizeMode="NoResize"
-        Title="MainWindow" Height="450" Width="680"  MinHeight="450" MinWidth="680" >
+        Title="MainWindow"  Height="489" Width="720"  MinHeight="480" MinWidth="720" >
+    <!--#376B75
 
-    <Grid HorizontalAlignment="Right" Width="680" Background="Black" Height="434" VerticalAlignment="Center" >
-        <Grid Margin="10,0,0,10" Background="#659DBD" HorizontalAlignment="Left" Width="315" Height="414" VerticalAlignment="Bottom">
-            <TextBlock Margin="10,10,10,10" HorizontalAlignment="Left" Width="668" FontWeight="Bold" FontSize="14" Height="423" VerticalAlignment="Top" Text=""/>
+#5990AF
+
+#DCCAFF
+
+#8B83D0
+
+#4A4FA7
+    -->
+    <Grid>
+        <Grid.ColumnDefinitions>
+            <ColumnDefinition Width="50"/>
+            <ColumnDefinition/>
+        </Grid.ColumnDefinitions>
+        <Grid Grid.Column ="0" Background="White">
             <Grid>
-                <Button x:Name="BT_Settings" Margin="30,70,30,0" Content ="Настройки"  Background="#0C5DA5" VerticalAlignment="Top" Height="40" Width="255" Click="BC_Settings"/>
-                <Button x:Name="BT_DataBase" Margin="30,130,30,0" Content="База данных" HorizontalAlignment="Center" Background="#0C5DA5"  VerticalAlignment="Top" Height="40" Width="255" Click="BC_DataBase"/>
-                <Button x:Name="BT_Verification"   Margin="30,190,30,0" Content="Проверка метеостанции" Background="#0C5DA5" HorizontalAlignment="Left" VerticalAlignment="Top" Height="40" Width="255" Click="BС_CheckMeteo"/>
-                <Button x:Name="BT_Send" Margin="30,250,30,0" Content="Получение/отпавка погоды" Background="#0C5DA5" HorizontalAlignment="Left"  VerticalAlignment="Top" Height="40" Width="255" Click="BC_SendMeteo"/>
-                <Button x:Name="BT_Script" Margin="30,310,30,0"  Content="Cценарий" Background="#0C5DA5" HorizontalAlignment="Left"  VerticalAlignment="Top" Height="40" Width="255" Click="BC_Script"></Button>
-                <Label Name="lblTime" FontSize="48" HorizontalAlignment="Left" VerticalAlignment="Top" Margin="70,350,30,0"   Width="255" />
+                <Grid.RowDefinitions>
+                    <RowDefinition Height="50"></RowDefinition>
+                    <RowDefinition Height="50"></RowDefinition>
+                    <RowDefinition Height="50"></RowDefinition>
+                    <RowDefinition Height="50"></RowDefinition>
+                    <RowDefinition Height="50"></RowDefinition>
+                    <RowDefinition Height="50"></RowDefinition>
+                    <RowDefinition Height="50"></RowDefinition>
+                    <RowDefinition Height="50"></RowDefinition>
+                    <RowDefinition Height="50"></RowDefinition>
+                </Grid.RowDefinitions>
 
+                <Grid Grid.Row="0"  Background="#5990AF" >
+                    <Image  x:Name="ImageRupor" Source="Images/rupor-off.png"></Image>
+                </Grid>
+                <Button x:Name="BT_Settings" Margin="0,0,0,0" Grid.Row="1" Background="#0C5DA5" Click="BC_Settings">
+                    <StackPanel Margin="5,5,5,5">
+                        <Image Source="Images/settings.png"></Image>
+                    </StackPanel>
+                </Button>
+                <Button x:Name="BT_DataBase" Margin="0,0,0,0" Grid.Row="2"  Background="#0C5DA5" Click="BC_DataBase">
+                    <StackPanel Margin="5,5,5,5">
+                        <Image Source="Images/database2.png"></Image>
+                    </StackPanel>
+                </Button>
+                <Button x:Name="BT_Send" Margin="0,0,0,0"  Grid.Row="3" Background="#0C5DA5"  Click="BС_CheckMeteo">
+                    <StackPanel Margin="5,5,5,5">
+                        <Image Source="Images/temperature_2.png"/>
+                    </StackPanel>
+                </Button>
+                <Button x:Name="BT_Script"  Grid.Row="4"  Background="#0C5DA5"  Click="BC_Script" HorizontalAlignment="Left" Width="50">
+                    <StackPanel Margin="5,5,5,5">
+                        <Image  Source="Images/forAgronit2.png"></Image>
+                    </StackPanel>
+                </Button>
+                <Button x:Name="BT_Voice"  Grid.Row="5"  Background="#0C5DA5"   HorizontalAlignment="Left" Width="50" Click="BT_Browser_Click">
+                    <StackPanel Margin="5,5,5,5">
+                        <Image  Source="Images/Browser.png"></Image>
+                    </StackPanel>
+                </Button>
+                <Button x:Name="BT_Server"  Grid.Row="6"  Background="#0C5DA5"   HorizontalAlignment="Center" Width="50" Click="BT_Server_Click" Height="50" VerticalAlignment="Top">
+                    <StackPanel Margin="5,5,5,5">
+                        <Image  Source="Images/forAll.png"></Image>
+                    </StackPanel>
+                </Button>
 
+                <Button x:Name="BT_TestStop"  Grid.Row="7"  Background="#0C5DA5"   HorizontalAlignment="Center" Width="50"  Height="50" VerticalAlignment="Top" Click="BT_TestStop_Click">
+                    <StackPanel Margin="5,5,5,5">
+                        <Image  Source="Images/server.png"></Image>
+                    </StackPanel>
+                </Button>
+                <Button x:Name="BT_TestStop1"  Grid.Row="8"  Background="#0C5DA5"   HorizontalAlignment="Center" Width="50"  Height="50" VerticalAlignment="Top" Click="BT_TestStop1_Click" >
+                    <StackPanel Margin="5,5,5,5">
+                        <Image  Source="Images/logIcon.png"></Image>
+                    </StackPanel>
+                </Button>
+
+                <Label Name="lblTime" FontSize="7,24,7,0" HorizontalAlignment="Left" VerticalAlignment="Top" Margin="70,350,30,0"   Width="255" />
+            </Grid>
+            <Grid>
+                <Grid.RowDefinitions>
+                    <RowDefinition/>
+                    <RowDefinition/>
+                </Grid.RowDefinitions>
             </Grid>
         </Grid>
+        <Grid  Grid.Column="1">
+            <Grid >
+                <Grid.RowDefinitions>
+                    <RowDefinition Height="50"></RowDefinition>
+                    <RowDefinition></RowDefinition>
+                    <RowDefinition Height="50"></RowDefinition>
+                </Grid.RowDefinitions>
+                <Grid  Background="#5990AF">
+                    <Label FontWeight ="Bold" FontSize="28" HorizontalContentAlignment="Center">АРМ КСЭОН</Label>
+                </Grid>
+                <Grid x:Name="LogServerPython" Background="#659DBD" Grid.Row="1">
 
-        <Grid>
-            <TextBlock  Margin="39,24,395,339" TextAlignment="Center" FontSize="20">Работа с метеостанцией</TextBlock>
-
-
-            <Button x:Name="XML1" Margin="405,196,28,196"  Content="Xml1" Click ="BC_XML1"></Button>
-            <Button x:Name="BConnect" Margin="405,262,27,127"  Content="Connect" Click="BC_Connect" />
-            <Button x:Name="BDisconnect" Margin="405,328,27,64"  Content="Disconnect" Click="BC_Disconnect"  />
-
-            <Button Content="Агронитовский запуск" HorizontalAlignment="Left" Margin="396,81,0,0" VerticalAlignment="Top" Height="39" Width="256" Click="Button_Click_2">
-                <Button.Background>
-                    <LinearGradientBrush EndPoint="0.5,1" StartPoint="0.5,0">
-                        <GradientStop Color="Black"/>
-                        <GradientStop Color="#FFF95555" Offset="1"/>
-                    </LinearGradientBrush>
-                </Button.Background>
-            </Button>
-            <Button Content="Тестовые объекты" Margin="396,141,28,254" Click="Button_Click">
-                <Button.Background>
-                    <LinearGradientBrush EndPoint="0.5,1" StartPoint="0.5,0">
-                        <GradientStop Color="Black"/>
-                        <GradientStop Color="#FFF95555" Offset="1"/>
-                    </LinearGradientBrush>
-                </Button.Background>
-            </Button>
+                </Grid>
+                <Grid x:Name="LogServerPython1" Background="#659DBD" Visibility="Collapsed" Grid.Row="1">
+                    <Grid.RowDefinitions>
+                        <RowDefinition Height="30"></RowDefinition>
+                        <RowDefinition></RowDefinition>
+                    </Grid.RowDefinitions>
+                    <Grid Grid.Row="0">
+                        <Label FontWeight ="Bold" FontSize="16" HorizontalContentAlignment="Center" >Информация с датчиков</Label>
+                    </Grid>
+                    <Grid Grid.Row="1">
+                        <ScrollViewer>
+                            <TextBlock x:Name="MessageServer" x:FieldModifier="public" ></TextBlock>
+                        </ScrollViewer>
+                    </Grid>
+                </Grid>
+                <Grid  Grid.Row="2" Background="Gray">
+                    <Border BorderBrush="Black" Background="GhostWhite" BorderThickness="1" CornerRadius="0,0,0,0">
+                        <ScrollViewer>
+                            <TextBlock x:Name="Test"  x:FieldModifier="public" Background="White"></TextBlock>
+                        </ScrollViewer>
+                    </Border>
+                </Grid>
+            </Grid>
+        </Grid>
+        <Grid  x:Name="ServerTrue" Grid.Column="1" Visibility="Collapsed">
+            <Grid.RowDefinitions>
+                <RowDefinition Height="30"></RowDefinition>
+                <RowDefinition></RowDefinition>
+            </Grid.RowDefinitions>
+            <Grid Grid.Row="0">
+                <Label>Информация с датчиков</Label>
+            </Grid>
+            <Grid Grid.Row="1">
+                <ScrollViewer>
+                    <TextBlock x:Name="MessageServer1" x:FieldModifier="public" ></TextBlock>
+                </ScrollViewer>
+            </Grid>
         </Grid>
     </Grid>
 </Window>

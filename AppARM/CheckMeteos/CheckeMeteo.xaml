@@ -7,7 +7,7 @@
         xmlns:local="clr-namespace:AppARM.CheckMeteos"
         mc:Ignorable="d"
         ResizeMode="NoResize"
-        Title="CheckeMeteo" Height="450" Width="800">
+        Title="Проверка работоспособности метеостанции" Height="600" Width="500">
 
     <Grid Background="#659DBD">
         <Grid.RowDefinitions>
@@ -17,38 +17,38 @@
         </Grid.RowDefinitions>
         <Grid Margin="5,5,5,5" Background="#659DBD">
 
-            <Grid.ColumnDefinitions>
-                <ColumnDefinition></ColumnDefinition>
-                <ColumnDefinition></ColumnDefinition>
 
-            </Grid.ColumnDefinitions>
             <Grid>
-                <Grid.RowDefinitions>
-                    <RowDefinition Height="auto"></RowDefinition>
-                    <RowDefinition Height="auto" ></RowDefinition>
-                    <RowDefinition Height="auto"></RowDefinition>
-                    <RowDefinition Height="auto" ></RowDefinition>
-                    <RowDefinition Height="auto" ></RowDefinition>
-                    <RowDefinition Height="auto" ></RowDefinition>
-                    <RowDefinition Height="auto" ></RowDefinition>
-                    <RowDefinition Height="auto" ></RowDefinition>
-                    <RowDefinition Height="auto" ></RowDefinition>
-
-                </Grid.RowDefinitions>
-                <Label Margin="5,5,5,5" Grid.Row="0" Grid.Column="0">IP адрес станции</Label>
-                <TextBox x:Name="TB_adress" Margin="5,5,5,5"  ToolTip=" для теста 127.0.0.1 " Grid.Row="1" Grid.Column="0"></TextBox>
-                <Label Margin="5,5,5,5" Grid.Row="2" Grid.Column="0">Порт</Label>
-                <TextBox x:Name="TB_port"  Margin="5,5,5,5" ToolTip=" для теста 11000 " Grid.Row="3" Grid.Column="0"></TextBox>
-                <Label Margin="5,5,5,5" Grid.Row="4" Grid.Column="0">Текст запроса</Label>
-                <TextBox x:Name="TB_request"  Margin="5,5,5,5" ToolTip=" Каждый байт через ; " Grid.Row="5" Grid.Column="0"></TextBox>
-                <Button x:Name="B_Send"  Background="#0C5DA5" Margin="5,5,5,-54" Grid.Row="6" Grid.Column="0" Click="B_Send_Click">Проверка</Button>
-                <Button x:Name="B_Test" Margin="108,74,109,-124" Grid.Row="8" Click="B_Test_Click" >Жми/Дыши/Чувствую</Button>
-
-            </Grid>
-            <Grid Grid.Column="1">
-                <ScrollViewer>
-                    <TextBlock x:Name="Test" Background="White"/>
-                </ScrollViewer>
+                <Border Margin="5,5,5,5" BorderBrush="Black" Background="GhostWhite" BorderThickness="1" CornerRadius="20,20,20,20">
+                    <Grid Margin="0,0,0,24">
+                        <Grid.RowDefinitions>
+                            <RowDefinition Height="35"></RowDefinition>
+                            <RowDefinition Height="30" ></RowDefinition>
+                            <RowDefinition Height="35"></RowDefinition>
+                            <RowDefinition Height="30" ></RowDefinition>
+                            <RowDefinition Height="35" ></RowDefinition>
+                            <RowDefinition Height="30" ></RowDefinition>
+                            <RowDefinition Height="50" ></RowDefinition>
+                            <RowDefinition Height="35" ></RowDefinition>
+                            <RowDefinition Height="207" ></RowDefinition>
+                        </Grid.RowDefinitions>
+                        <Label Margin="5,5,5,5" Grid.Row="0" Grid.Column="0"  FontWeight ="Bold" FontSize="12" HorizontalContentAlignment="Left">IP адрес станции</Label>
+                        <TextBox x:Name="TB_adress" Margin="5,5,5,5"  ToolTip=" для теста 127.0.0.1 " Grid.Row="1" Grid.Column="0"></TextBox>
+                        <Label Margin="5,5,5,5" Grid.Row="2" Grid.Column="0"  FontWeight ="Bold" FontSize="12" HorizontalContentAlignment="Left" >Порт</Label>
+                        <TextBox x:Name="TB_port"  Margin="5,5,5,5" ToolTip=" для теста 11000 " Grid.Row="3" Grid.Column="0"></TextBox>
+                        <Label Margin="5,5,5,5" Grid.Row="4" Grid.Column="0"  FontWeight ="Bold" FontSize="12" HorizontalContentAlignment="Left">Текст запроса</Label>
+                        <TextBox x:Name="TB_request"  Margin="5,5,5,5" ToolTip=" Каждый байт через ; " Grid.Row="5" Grid.Column="0"></TextBox>
+                        <Button x:Name="B_Send"  Background="#0C5DA5" Margin="5,5,5,6" Grid.Row="6" Grid.Column="0" FontSize="12" Click="B_Send_Click">Проверка</Button>
+                        <Label Margin="5,5,5,5" Grid.Row="7" Grid.Column="0"  FontWeight ="Bold" FontSize="12" HorizontalContentAlignment="Left">Результат запроса</Label>
+                        <Grid Grid.Row="8" Margin="5,5,5,5">
+                            <Border BorderBrush="Black" Background="GhostWhite" BorderThickness="1" CornerRadius="0,0,0,0">
+                                <ScrollViewer Margin="5,5,5,5">
+                                    <TextBlock x:Name="Test" Background="White"></TextBlock>
+                                </ScrollViewer>
+                            </Border>
+                        </Grid>
+                    </Grid>
+                </Border>
             </Grid>
         </Grid>
 

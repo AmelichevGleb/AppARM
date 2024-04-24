@@ -32,10 +32,6 @@ namespace AppARM.WeatherSokol
         public int lightLevel;//12 - Уровень освещенности беззнаковое; разрешение 1 lux; 92 - 146
         public double ultrasonicAnemometerWindspeed;//13 - скорость ветра УЗ анемометра беззнаковое; разрешение 0.01 m/s
         public int ultrasonicAnemometerWindDirection;//14 - направление ветра УЗ анемометра беззнаковое; разрешение 1 град
-
-
-        CreateJsonRequest createJsonRequest = new CreateJsonRequest();
-       
         
         /*                  
         ЕСТЬ ЕЩЕ ПАРАМЕТРЫ
@@ -43,12 +39,16 @@ namespace AppARM.WeatherSokol
         byte[] solarRadiation = new byte[2];//15  - Солнечная радиация беззнаковое; разрешение 1 Вт/м2. Пирогелиометр должен иметь сетевой адрес 181
         */
 
+        CreateJsonRequest createJsonRequest = new CreateJsonRequest();
+       
+        
+
+
         //перевод из беззнакового формата в знаковый
         public double NumberSign(string _number)
         {
-
-            var t = Convert.ToInt32(_number, 16);
-            if (t <= 32767)
+            var tmp = Convert.ToInt32(_number, 16);
+            if (tmp <= 32767)
             {
                 return Convert.ToInt32(_number, 16) * 0.01;
             }
@@ -120,6 +120,40 @@ namespace AppARM.WeatherSokol
             return horizon;
         }
 
+        //нормальный конструктор
+        public ByteWeather(byte[] receivedData)
+        {
+           
+            this.adress = Convert.ToString(receivedData[0], 16);
+            this.command = Convert.ToString(receivedData[1], 16);
+            this.registerNumber = Convert.ToString(receivedData[2], 16);
+            this.firmware_1 = Convert.ToString(receivedData[3], 16);
+            this.firmware_2 = Convert.ToString(receivedData[4], 16);
+            this.orderUnixTime_1 = Convert.ToString(receivedData[5], 16);
+            this.orderUnixTime_2 = Convert.ToString(receivedData[6], 16);
+            this.juniorUnixTime_1 = Convert.ToString(receivedData[7], 16);
+            this.juniorUnixTime_2 = Convert.ToString(receivedData[8], 16);
+            Console.WriteLine(Convert.ToString(receivedData[9]) + "   " + Convert.ToString(receivedData[10]));
+            string temp = Convert.ToString(receivedData[9],16) + Convert.ToString(receivedData[10],16);
+            this.temperature = NumberSign(temp);
+            temp = Convert.ToString(receivedData[11], 16) + Convert.ToString(receivedData[12], 16);
+            this.pressure = Convert.ToInt32(temp, 16) * 10;
+            temp = Convert.ToString(receivedData[13], 16) + Convert.ToString(receivedData[14], 16);
+            this.relativeРumidity = Convert.ToInt32(temp, 16);
+            this.windSpeed = Convert.ToDouble(Convert.ToString(receivedData[15], 16) + "," + Convert.ToString(receivedData[16], 16)) * 0.01;
+            temp = Convert.ToString(receivedData[17], 16) + Convert.ToString(receivedData[18], 16);
+            this.directionWind = Convert.ToInt32(temp, 16);
+            temp = Convert.ToString(receivedData[19], 16) + Convert.ToString(receivedData[20], 16);
+            this.precipitationLevel = Convert.ToInt32(temp, 16) * 0.1;
+            temp = Convert.ToString(receivedData[21], 16) + Convert.ToString(receivedData[22], 16);
+            this.UVlevel = Convert.ToInt32(temp, 16) * 0.01;
+            temp = Convert.ToString(receivedData[23], 16) + Convert.ToString(receivedData[24], 16);
+            this.lightLevel = Convert.ToInt32(temp, 16);
+            temp = Convert.ToString(receivedData[25], 16) + Convert.ToString(receivedData[26], 16);
+            this.ultrasonicAnemometerWindspeed = Convert.ToInt32(temp, 16) * 0.01;
+            temp = Convert.ToString(receivedData[27], 16) + Convert.ToString(receivedData[28], 16);
+            this.ultrasonicAnemometerWindDirection = Convert.ToInt32(temp, 16);
+        }
         public ByteWeather(string _ip, string _ipSend, int _portSend, string _location, string _longitude,string _lagatitude, byte _adress, byte _command, byte _registerNumber, byte _firmware_1, byte _firemware_2, byte _orderUnixTime_1, byte _orderUnixTime_2,
             byte _juniorUnixTime_1, byte _juniorUnixTime_2, byte _temperature_1, byte _temperature_2, byte _pressure_1, byte _pressure_2, byte _relativePumidity_1, byte _relativePumidity_2,
             byte _windSpeed_1, byte _windSpeed_2, byte _directionWind_1, byte _directionWind_2, byte _precipitationLevel_1, byte _precipitationLevel_2, byte UVlevel_1, byte UVlevel_2, byte lightLevel_1,
@@ -127,6 +161,7 @@ namespace AppARM.WeatherSokol
         {
             this.ip_adress = _ip;
             this.port = Convert.ToString(_portSend);
+            
             this.adress = Convert.ToString(_adress, 16);
             this.command = Convert.ToString(_command, 16);
             this.registerNumber = Convert.ToString(_registerNumber, 16);
@@ -164,9 +199,13 @@ namespace AppARM.WeatherSokol
             }
         }
 
-        public Tuple<string, string, string, string, string> ReturnPartWeater() 
+        public Tuple<string, string, string, string, string> ReturnPartWeater1() 
         {
             return Tuple.Create(ip_adress, port, Convert.ToString(temperature), Convert.ToString(windSpeed), Convert.ToString(directionWind));
+        }
+        public Tuple<string, string, string> ReturnPartWeater()
+        {
+            return Tuple.Create(Convert.ToString(temperature), Convert.ToString(windSpeed), Convert.ToString(directionWind));
         }
     }
 }

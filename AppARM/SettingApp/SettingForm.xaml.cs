@@ -1,16 +1,5 @@
 ﻿using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
 using System.Windows;
-using System.Windows.Controls;
-using System.Windows.Data;
-using System.Windows.Documents;
-using System.Windows.Input;
-using System.Windows.Media;
-using System.Windows.Media.Imaging;
-using System.Windows.Shapes;
 
 namespace AppARM.SettingApp
 {
@@ -28,6 +17,10 @@ namespace AppARM.SettingApp
             TB_Port.Text = Convert.ToString(Properties.Settings.Default.Port);
             TB_Login.Text = Convert.ToString(Properties.Settings.Default.Login_BD);
             TB_PasswordMask.Text = Convert.ToString(Properties.Settings.Default.Password_BD);
+            TB_IP_for_device.Text = Convert.ToString(Properties.Settings.Default.IP_ServerListen);
+            TB_Port_for_device.Text = Convert.ToString(Properties.Settings.Default.Port_ServerListen);
+            TB_IP_server_maps.Text = Convert.ToString(Properties.Settings.Default.IP_Server_maps);
+            TB_Port_server_maps.Text = Convert.ToString(Properties.Settings.Default.Port_Server_maps);
             Properties.Settings.Default.Save();
         }
 
@@ -39,7 +32,11 @@ namespace AppARM.SettingApp
             Properties.Settings.Default.Port = Convert.ToInt32(TB_Port.Text);
             Properties.Settings.Default.IP_adress = Convert.ToString(TB_Server.Text);
             Properties.Settings.Default.Login_BD = Convert.ToString(TB_Login.Text);
-            Properties.Settings.Default.Password_BD = Convert.ToString(TB_PasswordMask.Text);
+            Properties.Settings.Default.Password_BD = Convert.ToString(TB_PasswordMask.Text);    
+            Properties.Settings.Default.IP_ServerListen = Convert.ToString(TB_IP_for_device.Text);
+            Properties.Settings.Default.Port_ServerListen = Convert.ToString(TB_Port_for_device.Text);
+            Properties.Settings.Default.IP_Server_maps = Convert.ToString(TB_IP_server_maps.Text);
+            Properties.Settings.Default.Port_Server_maps = Convert.ToString(TB_Port_server_maps.Text);
             Properties.Settings.Default.Save();
             this.Close();
         }
@@ -55,7 +52,6 @@ namespace AppARM.SettingApp
 
             if ((CB_ShowPassword.IsChecked != true))
             {
-
                 TB_PasswordMask.Visibility = Visibility.Hidden;
                 PB_Password.Visibility = Visibility.Visible;
                 TB_PasswordMask.Text = password;
@@ -65,7 +61,6 @@ namespace AppARM.SettingApp
                 PB_Password.Visibility = Visibility.Hidden;
                 TB_PasswordMask.Visibility = Visibility.Visible;
                 PB_Password.Password = password;
-
             }
         }
 

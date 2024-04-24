@@ -10,6 +10,7 @@ using static System.Net.Mime.MediaTypeNames;
 namespace AppARM.Scripts
 {
     //____________________СЦЕНАРИИ КОТОРЫЕ РАБОТАЮТ ИНАЧЕ :) ___________________________________
+    //Cоздание XML документа под сценарии
     public class Script
     {
        public void AllCommand()
@@ -17,7 +18,6 @@ namespace AppARM.Scripts
             CommandPing();
             CommandStart(2);
             CommandStartFull();
-
         }
         
         //пинг 
