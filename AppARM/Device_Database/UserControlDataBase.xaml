@@ -1,0 +1,99 @@
+﻿<UserControl x:Class="AppARM.Device_Database.UserControlDataBase"
+             xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
+             xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+             xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006" 
+             xmlns:d="http://schemas.microsoft.com/expression/blend/2008" 
+             xmlns:local="clr-namespace:AppARM.Device_Database"
+             mc:Ignorable="d" 
+             d:DesignHeight="300" d:DesignWidth="800">
+    <Grid Background="#659DBD" Height="414" VerticalAlignment="Top">
+        <Grid.RowDefinitions>
+            <RowDefinition Height="25"></RowDefinition>
+            <RowDefinition Height="auto"></RowDefinition>
+        </Grid.RowDefinitions>
+        <Grid  Margin="5,0,5,0" >
+            <Menu>
+                <MenuItem x:Name="MI_MeteoStation" Margin="4,4,4,4" Header="Метеостанции" Click="MI_MeteoStation_Click"></MenuItem>
+                <MenuItem x:Name="MI_Danger" Margin="4,4,4,4" Header="Датчики ЧС" Click="MI_Danger_Click"></MenuItem>
+                <MenuItem x:Name="MI_Apy" Margin="4,4,4,4" Header="Cценарии" Click="MI_Apy_Click"></MenuItem>
+            </Menu>
+        </Grid>
+
+        <Grid x:Name="G_DataTable" Grid.Row="1"  Margin="5,5,5,5" Background="Gray">
+
+            <DataGrid x:Name="DG_MeteoStation"  AutoGenerateColumns="False" Visibility="Collapsed" MouseUp="grid_MouseUp"   CellEditEnding="dataGrid_CellEditEnding" 
+                      SelectionChanged="DG_device_SelectionChanged" Height="315" VerticalAlignment="Center" HorizontalAlignment="Left" Width="790" >
+                <DataGrid.Columns>
+                    <DataGridTextColumn Binding="{Binding Id, UpdateSourceTrigger=PropertyChanged}" IsReadOnly="True" Header="Id"/>
+                    <DataGridTextColumn Binding="{Binding IP_device, UpdateSourceTrigger=PropertyChanged}" Header="IP метеостанции"/>
+                    <DataGridTextColumn Binding="{Binding Port, UpdateSourceTrigger=PropertyChanged}" Header="Port метеостанции"/>
+                    <DataGridTextColumn Binding="{Binding Location, UpdateSourceTrigger=PropertyChanged}" Header="Адрес метеостанции"/>
+                    <DataGridTextColumn Binding="{Binding Longitude, UpdateSourceTrigger=PropertyChanged}" Header="Долгота"/>
+                    <DataGridTextColumn Binding="{Binding Lagatitude, UpdateSourceTrigger=PropertyChanged}" Header="Широта"/>
+                    <DataGridTextColumn Binding="{Binding Description, UpdateSourceTrigger=PropertyChanged}" Header="Датчик"/>
+                </DataGrid.Columns>
+                <DataGrid.ContextMenu>
+                    <ContextMenu>
+                        <MenuItem Header="Добавление" Click="MenuItem_Click_Add"/>
+                        <Separator></Separator>
+                        <MenuItem Header="Удаление" Click="MenuItem_Click_Delete"/>
+                        <Separator></Separator>
+                        <MenuItem  Header="Вывод" Click="MenuItem_Click_Show" />
+                    </ContextMenu>
+                </DataGrid.ContextMenu>
+            </DataGrid>
+            <DataGrid x:Name="DG_DeviceDanger" AutoGenerateColumns="False"  Visibility="Collapsed" MouseUp="grid_MouseUp"  
+                      CellEditEnding="dataGridAlarm_CellEditEnding" SelectionChanged="DG_DeviceDanger_SelectionChanged" Height="315" 
+                      VerticalAlignment="Center" HorizontalAlignment="Left" Width="790">
+                <DataGrid.Columns>
+                    <DataGridTextColumn Binding="{Binding Id, UpdateSourceTrigger=PropertyChanged}" IsReadOnly="True" Header="Id"/>
+                    <DataGridTextColumn Binding="{Binding IP_device, UpdateSourceTrigger=PropertyChanged}"  Header="IP датчика"/>
+                    <DataGridTextColumn Binding="{Binding Script, UpdateSourceTrigger=PropertyChanged}"  Header="Номер Сценария"/>
+                    <DataGridTextColumn Binding="{Binding Path, UpdateSourceTrigger=PropertyChanged}"  Header="Путь"/>
+                    <DataGridTextColumn Binding="{Binding Notify, UpdateSourceTrigger=PropertyChanged}"   Width="390" Header="Устройства">
+                        <DataGridTextColumn.ElementStyle>
+                            <Style TargetType="TextBlock">
+                                <Setter Property="TextWrapping" Value="Wrap"></Setter>
+                            </Style>
+                        </DataGridTextColumn.ElementStyle>
+                    </DataGridTextColumn>
+                </DataGrid.Columns>
+                <DataGrid.ContextMenu>
+                    <ContextMenu>
+                        <MenuItem Header="Добавление" Click="MenuItem_Click_Add_AlarmDevice"/>
+                        <Separator></Separator>
+                        <MenuItem Header="Удаление" Click="MenuItem_Click_Delete_AlarmDevice"/>
+                        <Separator></Separator>
+                        <MenuItem  Header="Вывод" Click="MenuItem_Click_Show_AlarmDevice" />
+                    </ContextMenu>
+                </DataGrid.ContextMenu>
+            </DataGrid>
+            <DataGrid x:Name="DG_Scenario" AutoGenerateColumns="False" Visibility="Collapsed" MouseUp="grid_MouseUp"   
+                         CellEditEnding="DG_Scenario_CellEditEnding"    SelectionChanged="DG_Scenario_SelectionChanged" Height="315" 
+                         VerticalAlignment="Center"  HorizontalAlignment="Left" Width="790">
+                <DataGrid.Columns>
+                    <DataGridTextColumn Header="id" Binding="{Binding Path='Id' , UpdateSourceTrigger=PropertyChanged}"  />
+                    <DataGridTextColumn Header="Ip Устройства" Binding="{Binding Path='IP_device',UpdateSourceTrigger=PropertyChanged}"  />
+                    <DataGridTextColumn Header="Порт Устройства" Binding="{Binding Path='Port',UpdateSourceTrigger=PropertyChanged}" />
+                    <DataGridTextColumn Header="Сценарий" Binding="{Binding Path='Script',UpdateSourceTrigger=PropertyChanged}"  />
+                    <DataGridTemplateColumn Header="Запуск сценария">
+                        <DataGridTemplateColumn.CellTemplate>
+                            <DataTemplate>
+                                <Button x:Name="bnt_Send" Content="Запуск" Click="bt_send_Click" />
+                            </DataTemplate>
+                        </DataGridTemplateColumn.CellTemplate>
+                    </DataGridTemplateColumn>
+                </DataGrid.Columns>
+                <DataGrid.ContextMenu>
+                    <ContextMenu>
+                        <MenuItem Header="Добавление" Click="MenuItem_Click_Add_Scenario"/>
+                        <Separator></Separator>
+                        <MenuItem Header="Удаление" Click="MenuItem_Click_Delete_Scenario"/>
+                        <Separator></Separator>
+                        <MenuItem  Header="Вывод" Click="MenuItem_Click_Show_Scenario" />
+                    </ContextMenu>
+                </DataGrid.ContextMenu>
+            </DataGrid>
+        </Grid>
+    </Grid>
+</UserControl>

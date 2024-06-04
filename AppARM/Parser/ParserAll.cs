@@ -1,21 +1,17 @@
 ﻿using System;
-using System.Collections.Generic;
-using System.IO.IsolatedStorage;
-using System.Linq;
-using System.Reflection;
-using System.Text;
-using System.Threading.Tasks;
+using System.Text.RegularExpressions;
+using System.Windows.Ink;
+
 
 namespace AppARM.Parser
 {
     public class ParserAll
     {
-        byte[] Message = new byte[] { 0x01, 0x03, 0x00, 0x00, 0x00, 0x5A, 0xC5, 0xF1 };  // правильный массив
-        //byte[] data = new byte[8];
-        byte[] test = new byte[8];
-        int countByte = 0;
+        readonly byte[] messageConst = new byte[] { 0x01, 0x03, 0x00, 0x00, 0x00, 0x5A, 0xC5, 0xF1 };  // правильный массив
+        byte[] testMassive = new byte[8]; 
+        int countByte;
 
-        //подсчет кол-ва "значение" в строке 
+        //подсчет кол-ва ;
         public int CountByteSend(string _message)
         {
             countByte = 0;
@@ -40,7 +36,6 @@ namespace AppARM.Parser
             int index = _message.LastIndexOf(';');
             Console.WriteLine(index);
             Console.WriteLine(_message.Length);
-            // return index;
             if (index + 1 < _message.Length)
             {
                 return true;
@@ -48,7 +43,7 @@ namespace AppARM.Parser
             else return false;
         }
         //заполнение массива тестового
-        public byte[] AddMassive(string _message)
+        public byte[] AddMassiveByte(string _message)
         {
             string str = "";
             int i = 0;
@@ -60,17 +55,74 @@ namespace AppARM.Parser
                 }
                 else
                 {
-                    test[i] = Convert.ToByte(str);
+                    testMassive[i] = Convert.ToByte(str);
                     i++;
                     str = "";
                 }
             }
-            test[i] = Convert.ToByte(str);
-            for (int i1 = 0; i1 < test.Length; i1++)
+            testMassive[i] = Convert.ToByte(str);
+            for (int i1 = 0; i1 < testMassive.Length; i1++)
             {
-                Console.WriteLine(test[i1]);
+                Console.WriteLine(testMassive[i1]);
             }
-            return test;
+            return testMassive;
         }
+
+        //парсер для IP адреса и порта !!!!
+        public Tuple<string,string> AddMassiveStringIP(string _message)
+        { 
+
+            string ip = null ;
+            string port  = null;
+            int count = 0;
+            string[] words = _message.Split(';');
+            foreach (var word in words)
+            {   if (count == 0) { ip = word; }
+                if (count == 1) { port = word; }     
+                System.Console.WriteLine($"<{word}>");
+                count++;
+            }
+            return Tuple.Create(ip, port);
+        }
+        // формат строки 127.0.0.1:60606 нужно оставить только IP
+        public string AddMassiveStringIP(string _message,string _parametrs)
+        {
+            string ip = null;
+            int count = 0;
+            string[] words = _message.Split(':');
+            foreach (var word in words)
+            {
+                if (count == 0) { ip = word; break; }
+                System.Console.WriteLine($"<{ip}>");
+            }
+            return ip;
+        }
+
+        //public void MassiveIPDanger(string str)
+        public Tuple <string[],string[]> MassiveIPDanger(string _str)
+        {
+            //127.0.0.1;127.0.0.2;127.0.0.3;127.0.0.4;127.0.0.5;127.0.0.6;127.0.0.7;127.0.0.8; 
+            //для строки разделенной ';' и если на конец ; то делаем на -1 раз меньше
+
+           //string str = "127.0.0.1-4444;127.0.0.2-4444;";
+            string input = "abc][rfd][5][,][.";
+            string[] parts1 = _str.Split(new string[] { ";" }, StringSplitOptions.None);
+            string[] MassiveIP = new string[parts1.Length - 1];
+            string[] MassivePort = new string[parts1.Length - 1];
+            string str2;
+            for (int i = 0; i < parts1.Length - 1; i++)
+            {
+                str2 = parts1[i];
+                MassiveIP[i] = str2.Substring(0, str2.IndexOf('-'));
+                MassivePort[i] = str2.Substring(str2.IndexOf('-') + 1);
+
+                Console.WriteLine("IP = {0} Port = {1} ", MassiveIP[i], MassivePort[i]);
+            }
+
+
+            return Tuple.Create(MassiveIP,MassivePort);
+        }
+        //       номер сценария    кого оповестить 
+        //        0 127.0.0.1  127.0.0.1  127.0.0.1  127.0.0.1  127.0.0.1  127.0.0.1  127.0.0.1  127.0.0.2 
     }
 }

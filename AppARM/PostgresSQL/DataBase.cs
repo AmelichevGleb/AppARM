@@ -21,12 +21,13 @@ namespace AppARM.PostgresSQL
 
     public class DataBase
     {
+
         private string server;
         private string port;
         private string user;
         private string password;
         private static string connStr;
-
+  
         private NpgsqlConnection conn;
         private Files files = new Files();
         WorkElementDB workElement = new WorkElementDB();
@@ -40,11 +41,11 @@ namespace AppARM.PostgresSQL
             connStr = "Server=" + server + ";Port=" + port + ";User Id=" + user + ";Password=" + password + ";";
             conn = new NpgsqlConnection(connStr);
         }
-
+        
         //Создание таблицы Девайсов
         public bool CreateTableApy(string _nametable)
         {
-            string sqlStr = "CREATE TABLE if not exists " + _nametable +
+            string sqlStr = "CREATE TABLE " + _nametable +
                 "(  id serial,\r\n" +
                 "ip_device   text,\r\n" +
                 "port text,\r\n" +
@@ -58,6 +59,7 @@ namespace AppARM.PostgresSQL
             try
             {
                 conn.Open();
+                //string sqlStr = "SELECT * FROM INFORMATION_SCHEMA.TABLES WHERE TABLE_NAME='" + _nametable + "'";
                 NpgsqlCommand sqlCommand = new NpgsqlCommand(sqlStr, conn);
                 sqlCommand.ExecuteNonQuery();
                 conn.Close();
@@ -70,7 +72,7 @@ namespace AppARM.PostgresSQL
                 return false;
             }
         }
-
+        
         //Удаление таблицы
         public bool DeleteTable(string _nametable)
         {
@@ -89,8 +91,8 @@ namespace AppARM.PostgresSQL
                 conn.Close();
                 return false;
             }
-        }
-
+        }  
+       
         //Подключение к таблице
         public bool ConnectDataBase()
         {
@@ -109,18 +111,19 @@ namespace AppARM.PostgresSQL
         }
 
         //Добавление данных в таблицу
-        public bool InsertDataBase(string _nametable, string _ipDevice, string _port, string _location, string _longitude, string _lagatitude, string _description, string _temperature, string _windspeed, string _directionwind)
+        public bool InsertDataBase(string _nametable, string _ipDevice,string _port, string _location,string _longitude , string _lagatitude,string _description , string _temperature, string _windspeed ,string _directionwind)
         {
-            string sqlStr = "INSERT INTO " + _nametable + " (ip_device ,port,location ,longitude ,lagatitude,description,temperature, windspeed,directionwind) " +
+            string sqlStr = "INSERT INTO " + _nametable  + " (ip_device ,port,location ,longitude ,lagatitude,description,temperature, windspeed,directionwind) " +
                 "VALUES(";
             try
             {
+                
                 conn.Open();
-                sqlStr = sqlStr + _ipDevice + "," + _port + "," + _location + "," + _longitude + "," + _lagatitude + "," + _description + "," + _temperature + "," + _windspeed + "," + _directionwind + ")";
+                sqlStr = sqlStr + _ipDevice + ","+ _port + "," + _location + "," + _longitude + "," + _lagatitude + "," + _description+ "," + _temperature + "," + _windspeed + "," + _directionwind + ")";
                 NpgsqlCommand sqlCommand = new NpgsqlCommand(sqlStr, conn);
                 Console.WriteLine(sqlStr);
                 sqlCommand.ExecuteNonQuery();
-                conn.Close();
+                 conn.Close();
                 return true;
             }
             catch (Exception ex)
@@ -153,6 +156,7 @@ namespace AppARM.PostgresSQL
             }
         }
 
+
         //Выгрузка базы данных (с метеоданными)
 
         public NpgsqlDataReader GetDataBaseLong(string _nametable)
@@ -174,6 +178,7 @@ namespace AppARM.PostgresSQL
                 conn.Close();
                 return null;
             }
+
         }
 
         //Выгрузка базы данных (без метеоданных)
@@ -182,7 +187,7 @@ namespace AppARM.PostgresSQL
             try
             {
                 conn.Open();
-                string sql = "SELECT id,ip_device,port,location,longitude,lagatitude,description FROM " + _nametable;
+                string sql = "SELECT id,ip_device,port,location,longitude,lagatitude,description FROM " + _nametable ;
                 using var cmd = new NpgsqlCommand(sql, conn);
                 Console.WriteLine(sql);
                 using NpgsqlDataReader rdr = cmd.ExecuteReader();
@@ -211,7 +216,7 @@ namespace AppARM.PostgresSQL
                 using NpgsqlDataReader rdr = cmd.ExecuteReader();
                 while (rdr.Read())
                 {
-                    Console.WriteLine("{0} - last id ", Convert.ToString(rdr.GetInt64(0)));
+                    Console.WriteLine("{0} - last id ",Convert.ToString( rdr.GetInt64(0)));
                     count = Convert.ToString(rdr.GetInt64(0));
                 }
                 conn.Close();
@@ -244,7 +249,7 @@ namespace AppARM.PostgresSQL
                 return false;
             }
         }
-
+        
         //Удаление таблицы
         public bool DropTable(string _nametable)
         {
@@ -268,7 +273,7 @@ namespace AppARM.PostgresSQL
 
         //получение последнего ID в базе данных
         public int GetLastID(string _nametable)
-        {
+        { 
             /*
            SELECT * 
             FROM test2 
@@ -277,10 +282,10 @@ namespace AppARM.PostgresSQL
             LIMIT 1;
            */
 
-            int lastId = -1;
-            try
+            int lastId = -1; 
+                try
             {
-                string sqlStr = "SELECT * FROM " + _nametable + " ORDER BY id DESC , id DESC LIMIT 1";
+                string sqlStr = "SELECT * FROM "  + _nametable + " ORDER BY id DESC , id DESC LIMIT 1";
                 conn.Open();
                 using var cmd = new NpgsqlCommand(sqlStr, conn);
                 Console.WriteLine(sqlStr);
@@ -302,18 +307,20 @@ namespace AppARM.PostgresSQL
         }
 
         //Обновление элемента в таблице
+        //(string _nametable, string _ipDevice,string _port, string _location,string _longitude , string _lagatitude,string _description , string _temperature, string _windspeed ,string _directionwind)
         public bool UpdateElementDataBase(string _nametable, string _id, string _ipDevice, string _port, string _location, string _longitude, string _lagatitude, string _description, string _temperature, string _windspeed, string _directionwind)
         {
-            /*
-                * update test2 
-                * set text = 122 , value = 12
-                * where id = 2 
-            */
-
             System.Threading.Thread.CurrentThread.CurrentCulture = new System.Globalization.CultureInfo("en-US");
             Console.WriteLine(_temperature);
+            
             string sqlStr = "Update " + _nametable + " set ";
             string sqlStrWhere = " where id = " + _id;
+
+            /*
+             * update test2 
+             * set text = 122 , value = 12
+             * where id = 2 
+             */
             if ((_ipDevice == null) && (_port == null) && (_location == null) && (_longitude == null) && (_lagatitude == null) && (_description == null) & (_temperature == null) && (_windspeed == null) && (_directionwind == null))
             {
                 Console.WriteLine("1");
@@ -349,10 +356,12 @@ namespace AppARM.PostgresSQL
                 Console.WriteLine("6");
                 sqlStr = sqlStr + "description = " + _description + sqlStrWhere;
             }
+            
             if ((_ipDevice == null) && (_port == null) && (_location == null) && (_longitude == null) && (_lagatitude == null) && (_description == null) & (_temperature != null) && (_windspeed != null) && (_directionwind != null))
             {
-                sqlStr = sqlStr + "temperature = " + "'" + _temperature + "'," + " " + "windspeed = " + "'" + _windspeed + "'," + " " + "directionwind = " + "'" + _directionwind + "'" + " " + sqlStrWhere;
+                sqlStr = sqlStr + "temperature = " + "'"+_temperature + "'," + " " + "windspeed = " + "'" + _windspeed + "'," + " " + "directionwind = " + "'" + _directionwind + "'" + " "  + sqlStrWhere; 
             }
+          
             if ((_ipDevice != null) && (_port != null) && (_location != null) && (_longitude != null) && (_lagatitude != null) && (_description != null) & (_temperature != null) && (_windspeed != null) && (_directionwind != null))
             {
                 sqlStr = sqlStr +
@@ -361,7 +370,7 @@ namespace AppARM.PostgresSQL
                     "location = " + "'" + _location + "'" + ',' +
                     "longitude = " + "'" + _longitude + "'" + ',' +
                     "lagatitude = " + "'" + _lagatitude + "'" + ',' +
-                    "description = " + "'" + _description + "'"
+                    "description = " + "'" + _description + "'" 
                     + sqlStrWhere;
                 Console.WriteLine("7");
                 // "temperature = " + "'" + _temperature + "'" + ',' +
@@ -370,7 +379,7 @@ namespace AppARM.PostgresSQL
             }
             try
             {
-                conn.Open();
+                conn.Open();              
                 NpgsqlCommand sqlCommand = new NpgsqlCommand(sqlStr, conn);
                 sqlCommand.ExecuteNonQuery();
                 Console.WriteLine(sqlStr);

@@ -1,36 +1,36 @@
 ﻿using System;
-using System.Collections.Generic;
-using System.Linq;
 using System.Text;
-using System.Threading.Tasks;
 using System.Windows;
-using System.IO;
-using System.Xml;
-using System.Windows.Controls;
 using System.Net.Sockets;
 using System.Xml.Linq;
+using System.Threading;
 
-using System.Net;
-using AppARM.TestXML;
+using AppARM.CheckMeteos;
+using AppARM.Parser;
+using AppARM.ServerListren;
+using AppARM.Test;
+using AppARM.WeatherSokol;
+using AppARM.FilesLogs;
 using AppARM.Scripts;
 using System.Windows.Threading;
-
-
 using AppARM.PostgresSQL;
 using AppARM.Structure;
 using AppARM.SettingApp;
 using AppARM.Device_Database;
 using AppARM.Scenario;
-using System.Data.SqlClient;
-using static System.Net.Mime.MediaTypeNames;
-using AppARM.Test;
-using AppARM.WeatherSokol;
-using static AppARM.Test.Experiment;
-using AppARM.Weather;
-using AppARM.WeatherSokol;
-using AppARM.CheckMeteos;
-using Newtonsoft.Json;
-using AppARM.Scenario;
+using System.Windows.Media;
+using System.Diagnostics;
+using System.Windows.Media.Imaging;
+using System.Net.Http;
+using System.Text.Json;
+using System.Collections.Specialized;
+using System.Net;
+using System.Security.Policy;
+using System.Drawing;
+using System.Collections.Generic;
+using System.Threading.Tasks;
+using System.IO;
+
 
 namespace AppARM
 { 
@@ -38,53 +38,45 @@ namespace AppARM
     public partial class MainWindow : Window
     {
 
+        /// <summary>
+        /// private Script script = new Script();
+        /// private SettingForm settingApp;
+        /// private CreateJsonRequest create = new CreateJsonRequest();
+        /// private DispatcherTimer timer = new DispatcherTimer();
+        /// private NetworkStream tcpStream;
+        /// private static TcpClient newClient;
+        /// private DataBaseMeteostation db;
+        /// </summary>
 
-        private DataBase db;
-        private static TcpClient newClient;
         private GetWeather getWeather = new GetWeather();
-        private NetworkStream tcpStream;
-        private APU apu = new APU();
-        private Script script = new Script();
-        private DispatcherTimer timer = new DispatcherTimer();
         private Files files = new Files();
-        private Scenarios scenario = new Scenarios();
-        private SettingForm settingApp;
-        
+        private Thread threadServerListen;
+        private ServerForListen startListen = new ServerForListen();
+        private ServerReceiv startServerReceiv = new ServerReceiv();
 
+        private UserControlMeteostation userControlMeteostation;
+        private UserControlSetting userControlSetting;
 
-      
-        private static string staticIP = "192.168.1.40";
-        private static IPAddress ip = IPAddress.Parse(staticIP);
-        private static int staticPort = 30088;
-        
 
         public MainWindow()
         {
-
             InitializeComponent();
-
-            //Создание файла logs и apu
-            files.InitFile();
+            files.InitFileLogs();
+            files.InitFileException();
+          //  startListen.mainStart(this);  //Старт сервера прослушки 
+          //  startServerReceiv.mainStartServerReceiver(this); //Старт сервера принимающего сигналы ЧС
 
             //Таймер 
-            timer.Interval = TimeSpan.FromSeconds(1);
-            timer.Tick += timer_Tick;
-            timer.Start();
-            
-            //Тестовые кнопки убраны
-            BDisconnect.IsEnabled = false;
-            BConnect.IsEnabled = false;
-            XML1.IsEnabled = false;
-        
+            // timer.Interval = TimeSpan.FromSeconds(1);
+            //  timer.Tick += timer_Tick;
+            //   timer.Start();
 
         }
         //____________________________ТАЙМЕР________________________________________________________
-        void timer_Tick(object sender, EventArgs e)
+        void timer_Tick(object sender, EventArgs e)  //пока отключен
         {
            lblTime.Content = DateTime.Now.ToLongTimeString();
         }
-
-        byte[] tmp;
 
         //__________________________________________________________________________________________
 
@@ -92,160 +84,89 @@ namespace AppARM
 
         //Открытие окна с базой данных
         private void BC_DataBase(object sender, RoutedEventArgs e)
-        {  
-            //Данные для БД
+        {
+            files.ReadFile("открытие окна База данных", false);
+            LogServerPython1.Visibility = Visibility.Collapsed;
             string serverBD = Convert.ToString(Properties.Settings.Default.IP_adress);
             string portBD = Convert.ToString(Properties.Settings.Default.Port);
             string userBD = Convert.ToString(Properties.Settings.Default.Login_BD);
             string passwordBD = Convert.ToString(Properties.Settings.Default.Password_BD);
-
-            DataBase dataBase = new DataBase(serverBD, portBD, userBD, passwordBD);
-            DeviceDB deviceDB = new DeviceDB(dataBase);
-            deviceDB.Show();
+            DataBaseMeteostation dataBase = new DataBaseMeteostation(serverBD, portBD, userBD, passwordBD); //БД для метеостанции
+            AlarmDB dataBaseAlarm = new AlarmDB(serverBD, portBD, userBD, passwordBD);                      //БД для датчиков ЧС
+            AdditionalDb additionalDb = new AdditionalDb(serverBD, portBD, userBD, passwordBD);             //БД для сценариев
+            UserControlDataBase userControlDataBase = new UserControlDataBase(dataBase, dataBaseAlarm, additionalDb);
+            LogServerPython.Children.Add(userControlDataBase);
         }
-
         //Открытие окно с проверкой Метеостанций
         private void BС_CheckMeteo(object sender, RoutedEventArgs e)
         {
-            CheckeMeteo checkMeteo = new CheckeMeteo();
-            checkMeteo.Show();
+            LogServerPython1.Visibility = Visibility.Collapsed;
+            userControlMeteostation = new UserControlMeteostation();  
+            LogServerPython.Children.Add(userControlMeteostation);
+            files.ReadFile("открытие окна Метеостанция", false);
         }
-       
-        //Отправка погоды НУЖНО ИЗМЕНИТЬ !!!!!!!!!!!!!!!!!!!!!!!!!!!!!
-        private void BC_SendMeteo(object sender, RoutedEventArgs e)
+        protected override void OnClosing(System.ComponentModel.CancelEventArgs e)
         {
-            string serverBD = Convert.ToString(Properties.Settings.Default.IP_adress);
-            string portBD = Convert.ToString(Properties.Settings.Default.Port);
-            string userBD = Convert.ToString(Properties.Settings.Default.Login_BD);
-            string passwordBD = Convert.ToString(Properties.Settings.Default.Password_BD);
-
-
-            DataBase dataBase = new DataBase(serverBD, portBD, userBD, passwordBD);
-            //string server = "194.154.83.11";
-            int port = 64700;
-            //string ipSend = "127.0.0.1";
-            //int portSend = 8000;
-            //getWeather.ConnectMeteo(server, port, Properties.Settings.Default.IP_adress, Properties.Settings.Default.Port);
-            //// вывести все ip из бд
-
-            var t = dataBase.GetDataBaseShort("Arm");
-            if (t != null)
-            {
-                while (t.Read())
-                {
-                    Console.WriteLine("{0} {1} {2} {3} {4} {5}", t.GetInt32(0), t.GetString(1), t.GetString(2), t.GetString(3), t.GetString(4), t.GetString(5));
-
-                    getWeather.ConnectMeteo(t.GetString(1), port, t.GetString(2), t.GetString(3), t.GetString(4), Properties.Settings.Default.IP_adress, Properties.Settings.Default.Port);
-
-                }
-            }
-
+            Application.Current.Shutdown();
+            Environment.Exit(0);
         }
-
         //настройки конфигураций 
-        public async void BC_Settings(object sender, RoutedEventArgs e)
+        public void BC_Settings(object sender, RoutedEventArgs e)
         {
-            settingApp = new SettingForm();
-            settingApp.Show();
+            LogServerPython1.Visibility = Visibility.Collapsed;
+            userControlSetting = new UserControlSetting(threadServerListen);
+            LogServerPython.Children.Add(userControlSetting);
+            files.ReadFile("открытие окна настроек", false);
         }
-
-
-        CreateJsonRequest create =  new CreateJsonRequest();
-
-        /*
-
-            {
-        "Name":"22",
-        "Device_ip":"12",
-        "Longitude":"32.22",
-        "Latitude":"12.24",
-        "Weather":
+        private void BT_Server_Click(object sender, RoutedEventArgs e)
         {
-            "Temperature":"22",
-            "Wind_speed":"22",
-            "Direction":"22",
-            "Parameter": ""
+            LogServerPython1.Visibility = Visibility.Visible;
         }
-        */
-        private string tableName = "Arm";
-
-        //Для тестовых проверок 
-        private void Button_Click_2(object sender, RoutedEventArgs e)
+        private bool active = true;
+        ServerReceiv serverReceiver;
+        ServerForListen serverForListner;
+        private void BT_TestStop_Click(object sender, RoutedEventArgs e)
         {
-
-            scenario.Show();
-        }
-
-        private async void BC_Script(object sender, RoutedEventArgs e)
-        {
-
-            string serverBD = Convert.ToString(Properties.Settings.Default.IP_adress);
-            string portBD = Convert.ToString(Properties.Settings.Default.Port);
-            string userBD = Convert.ToString(Properties.Settings.Default.Login_BD);
-            string passwordBD = Convert.ToString(Properties.Settings.Default.Password_BD);
-
-            DataBase dataBase = new DataBase(serverBD, portBD, userBD, passwordBD);
-
-            string t = "[";
-            var ts = dataBase.GetDataBaseLong(tableName);
-
             try
             {
-                int count = Convert.ToInt32(dataBase.CountDataInBD(tableName));
-                if (ts != null)
+                if (active)
                 {
-                    while (ts.Read())
-                    {
-                        Console.WriteLine("{0} {1} {2} {3} {4} {5} {6} {7} ", ts.GetInt32(0), ts.GetString(1), ts.GetString(2), ts.GetString(3), ts.GetString(4), ts.GetString(5), ts.GetString(6), ts.GetString(7));
+                    serverReceiver = new ServerReceiv();
+                    serverForListner = new ServerForListen();
+                    active = false;
 
-                        Console.WriteLine(t);
-                        t += create.CreatJSON(ts.GetString(3), ts.GetString(1), ts.GetString(4), ts.GetString(5), ts.GetString(7), ts.GetString(8), ts.GetString(9), ts.GetString(6));
+                    MessageBox.Show("Сервер запущен");
+                    serverReceiver.StartServerReceiver(1, this);
+                    serverForListner.StartServerListen(1, this);
+                    Uri resourceUri = new Uri("Images/rupor-on.png", UriKind.Relative);
 
-                        if (count != 1)
-                        {
-                            t += ",";
-                        }
-                        count--;
-                        Console.WriteLine(t);
-                    }
+                    string path = Environment.CurrentDirectory;
+                    //process = Process.Start(path + @"\jsGen.exe");
+                    //Convert.ToString("Images/rupor-off.png");
+                    ImageRupor.Source = new BitmapImage(resourceUri);
                 }
-
                 else
                 {
 
-                    dataBase.CreateTableApy(tableName);
+                    active = true;
+                    MessageBox.Show("Сервер остановлен");
+                    serverReceiver.StartServerReceiver(2, this);
+                    serverForListner.StartServerListen(2, this);
+                    Uri resourceUri = new Uri("Images/rupor-off.png", UriKind.Relative);
+                  //  foreach (Process process in Process.GetProcesses())
+                  //  {
+                       
+                       // if ((process.ProcessName == "jsGen") || (process.ProcessName == "node"))
+                     //   {
+                       //     process.Kill();
+                       // }
+                   // }
+                    ImageRupor.Source = new BitmapImage(resourceUri);
                 }
             }
-            catch (Exception ex)
+            catch (Exception _ex)
             {
-                Console.WriteLine(ex.ToString());
-            }
-
-
-            //var t ="[" +create.CreatJSON("12", "232", 123, "22", "22.24", "45.24", "22", "22", "22", "22");
-            // t = t + "," + create.CreatJSON("12", "232", 123, "22", "25.24", "35.24", "22", "22", "22", "22") + "]";
-            Console.WriteLine(t);
-            t += "]";
-            Console.WriteLine(t);
-            var url = "http://" + "127.0.0.1" + ":" + Convert.ToString(8000) + "/set_stations/";
-            var httpRequest = (HttpWebRequest)WebRequest.Create(url);
-            httpRequest.Method = "POST";
-            httpRequest.Accept = "application/json";
-            httpRequest.ContentType = "application/json";
-            using (var streamWriter = new StreamWriter(httpRequest.GetRequestStream()))
-            {
-                streamWriter.Write(t);
-            }
-            var httpResponse = (HttpWebResponse)httpRequest.GetResponse();
-            using (var streamReader = new StreamReader(httpResponse.GetResponseStream()))
-            {
-                var result = streamReader.ReadToEnd();
-            }
-            var status = httpResponse.StatusCode.ToString();
-            if (status == "OK")
-            {
-                //сообщение
-
+                files.ReadException(_ex);
             }
         }
 
@@ -253,28 +174,23 @@ namespace AppARM
 
         //_____________________________СТАРЫЙ_КОД___________________________________________________
 
-        private void SendFile()
+        private async void BC_Script(object sender, RoutedEventArgs e)
         {
-            /* string fileName = Environment.CurrentDirectory + @"\start.xml";
-             Console.WriteLine(fileName);
-             // Send file fileName to remote device
-             //Console.WriteLine("Sending {0} to the host.", fileName);
-             //client.SendFile(fileName);
-
-             StreamWriter sWriter = new StreamWriter(tcpClient1.GetStream());
-
-             byte[] bytes = File.ReadAllBytes(fileName);
-
-             sWriter.WriteLine(bytes.Length.ToString());
-             sWriter.Flush();
-
-             sWriter.WriteLine(fileName);
-             sWriter.Flush();
-
-             Console.WriteLine("Sending file");
-             tcpClient.Client.SendFile(fileName);
-         */
+            Scenarios scenario = new Scenarios();
+            scenario.Show();
         }
+
+        //Для тестовых проверок 
+        private void Button_Click_2(object sender, RoutedEventArgs e)
+        {
+            Scenarios scenario = new Scenarios();
+            scenario.Show();
+        }
+
+        //__________________________________________________________________________________________
+
+        //____________________________ОТКЛЮЧЕННЫЕ_КНОПКИ____________________________________________
+
         private void ConnectServer()
         {
             try
@@ -286,7 +202,7 @@ namespace AppARM
             }
             catch (SocketException ex)
             {
-                files.ReadExeption(ex);
+                files.ReadException(ex);
             }
 
             /*byte[] bytes = new byte[1024];
@@ -329,28 +245,30 @@ namespace AppARM
             sender.Close();
        */
         }
-        private void DisconnectServer()
+
+        //отключено
+        //Отправка погоды НУЖНО ИЗМЕНИТЬ !!!!!!!!!!!!!!!!!!!!!!!!!!!!!
+        private void BC_SendMeteo(object sender, RoutedEventArgs e)
         {
-            try
+            string serverBD = Convert.ToString(Properties.Settings.Default.IP_adress);
+            string portBD = Convert.ToString(Properties.Settings.Default.Port);
+            string userBD = Convert.ToString(Properties.Settings.Default.Login_BD);
+            string passwordBD = Convert.ToString(Properties.Settings.Default.Password_BD);
+
+            DataBaseMeteostation dataBase = new DataBaseMeteostation(serverBD, portBD, userBD, passwordBD);
+            int port = 64700;
+            var t = dataBase.GetDataBaseShort("Arm");
+            if (t != null)
             {
-                Console.WriteLine(newClient.Connected);
-                newClient.Close();
-                BDisconnect.IsEnabled = false;
-                BConnect.IsEnabled = true;
-            }
-            catch (Exception ex)
-            {
-                files.ReadExeption(ex);
+                while (t.Read())
+                {
+                    Console.WriteLine("{0} {1} {2} {3} {4} {5}", t.GetInt32(0), t.GetString(1), t.GetString(2), t.GetString(3), t.GetString(4), t.GetString(5));
+                    getWeather.ConnectMeteo(t.GetString(1), port, t.GetString(2), t.GetString(3), t.GetString(4), Properties.Settings.Default.IP_adress, Properties.Settings.Default.Port);
+                }
             }
 
         }
 
-        //__________________________________________________________________________________________
-
-        //____________________________ОТКЛЮЧЕННЫЕ_КНОПКИ____________________________________________
-
-
-        //отключено
         private void BC_XML1(object sender, RoutedEventArgs e)
         {
             XDocument xdoc = XDocument.Load("Start1.xml");
@@ -371,24 +289,126 @@ namespace AppARM
             }
         }
 
-
         //отключено
         private void BC_Connect(object sender, RoutedEventArgs e)
         {
             ConnectServer();
         }
-        
         //отключено
         private void BC_Disconnect(object sender, RoutedEventArgs e)
         {
-            DisconnectServer();
+            MessageBox.Show("aaa");
+            byte[] sendBytes = Encoding.UTF8.GetBytes("127.0.0.1;2222");
+            Console.WriteLine(Encoding.UTF8.GetString(sendBytes));
+            var t = Encoding.UTF8.GetString(sendBytes);
+            ParserAll parserAll = new ParserAll();
+            var l = parserAll.AddMassiveStringIP(t);
+            Console.WriteLine("п = {0} , t = {1}",l.Item1 ,l.Item2 );   
         }
 
+        private void Button_Click(object sender, RoutedEventArgs e)
+        {
+         //   allAPU2.Show();
+        }
 
-        
+        private void Button_Click_1(object sender, RoutedEventArgs e)
+        {
+            //UserControlSetting userControlSetting = new UserControlSetting();
+            //LogServerPython.Children.Add(userControlSetting);   
+        }
+
+        private void Button_Click_3(object sender, RoutedEventArgs e)
+        {
+
+        }
+
+        private void BT_Browser_Click(object sender, RoutedEventArgs e)
+        {
+            string IpMap = Properties.Settings.Default.IP_Server_maps;
+            string PortMap = Properties.Settings.Default.Port_Server_maps;
+            Process.Start(new ProcessStartInfo("http://" + IpMap + ":" +PortMap  + "/#55.77223,37.6141,13z"));
+            ///#55.77223,37.6141,13z
+
+
+        }
+
+        class PostResponse
+        {
+            public string Type { get; set; }
+            public string IP { get; set; }
+        }
+
+        private bool test2 = true; Process process;
+        private static readonly HttpClient client = new HttpClient();
+        private async void Post()
+        {
+            string IpMap = Properties.Settings.Default.IP_Server_maps;
+            string url = "http://" + IpMap + "/index.html";
+
+            var httpWebRequest = (HttpWebRequest)WebRequest.Create(url);
+            httpWebRequest.ContentType = "application/json";
+            httpWebRequest.Method = "POST";
+
+            using (var streamWriter = new StreamWriter(httpWebRequest.GetRequestStream()))
+            {
+                string json = "{\"Type\":\"1\"," +
+                              "\"IP\":\"55.7374\"}";
+
+                streamWriter.Write(json);
+            }
+
+            var httpResponse = (HttpWebResponse)httpWebRequest.GetResponse();
+            using (var streamReader = new StreamReader(httpResponse.GetResponseStream()))
+            {
+                var result = streamReader.ReadToEnd();
+            }
+        }
+
+        private void BT_TestStop1_Click(object sender, RoutedEventArgs e)
+        {
+            Post();
+
+            //process.Kill();
+
+            /*
+            string IpMap = Properties.Settings.Default.IP_Server_maps;
+            string PortMap = Properties.Settings.Default.Port_Server_maps;
+          
+
+            var postData = new PostData
+            {
+                State = "Привет Денис", 
+            };
+
+
+            var client = new HttpClient();
+             client.BaseAddress = new Uri("http://" + IpMap + ":" + PortMap);
+            ///client.BaseAddress = new Uri("https://jsonplaceholder.typicode.com/");
+            var json = System.Text.Json.JsonSerializer.Serialize(postData);
+            var content = new StringContent(json, Encoding.UTF8, "application/json");
+            var response = client.PostAsync("posts", content).Result;
+            if (response.IsSuccessStatusCode)
+            {
+                var responseContent = response.Content.ReadAsStringAsync().Result;
+
+                var options = new JsonSerializerOptions
+                {
+                    PropertyNameCaseInsensitive = true
+                };
+
+                var postResponse = System.Text.Json.JsonSerializer.Deserialize<PostResponse>(responseContent, options);
+              MessageBox.Show("Post successful! ID: " + postResponse.Id);
+
+            }
+            else
+            {
+                MessageBox.Show("Error: " + response.StatusCode);
+            }
+            */
+        }
 
         //__________________________________________________________________________________________
 
-       
+
     }
 }

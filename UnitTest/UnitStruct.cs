@@ -16,14 +16,14 @@ namespace UnitTest
         [TestMethod]
         public void TestEmptyList()
         {
-            WorkElementDB wDB = new WorkElementDB();
+            WorkElementDBMeteo wDB = new WorkElementDBMeteo();
             List<ElementDataBase> element = new List<ElementDataBase>();
             Assert.AreEqual(0, element.Count);
         }
         [TestMethod]
         public void TestAddelement()
         {
-            WorkElementDB wDB = new WorkElementDB();
+            WorkElementDBMeteo wDB = new WorkElementDBMeteo();
             List<ElementDataBase> element = new List<ElementDataBase>();
             wDB.AddNewElement(element, "1", "127.0.0.1", "8080", "Kaluga", "30.30", "20.200", null);
             Assert.AreEqual(1, element.Count);
@@ -31,7 +31,7 @@ namespace UnitTest
         [TestMethod]
         public void TestAddelement2()
         {
-            WorkElementDB wDB = new WorkElementDB();
+            WorkElementDBMeteo wDB = new WorkElementDBMeteo();
             List<ElementDataBase> element = new List<ElementDataBase>();
             wDB.AddNewElement(element, "1", "127.0.0.1", "8080", "Kaluga", "30.30", "20.200", null);
             wDB.AddNewElement(element, "2", "127.0.0.1", "8080", "Kaluga", "30.30", "20.200", null);
@@ -45,7 +45,7 @@ namespace UnitTest
         public void TestFindExistElement()
         {
             //Проверка по id
-            WorkElementDB wDB = new WorkElementDB();
+            WorkElementDBMeteo wDB = new WorkElementDBMeteo();
             List<ElementDataBase> element = new List<ElementDataBase>();
             wDB.AddNewElement(element, "1", "127.0.0.1", "8080", "Kaluga", "30.30", "20.200", null);
             wDB.AddNewElement(element, "2", "127.0.0.1", "8080", "Kaluga", "30.30", "20.200", null);
@@ -60,7 +60,7 @@ namespace UnitTest
         public void TestFindNotExistElement()
         {
             //Проверка по id (нет элемента)
-            WorkElementDB wDB = new WorkElementDB();
+            WorkElementDBMeteo wDB = new WorkElementDBMeteo();
             List<ElementDataBase> element = new List<ElementDataBase>();
             wDB.AddNewElement(element, "1", "127.0.0.1", "8080", "Kaluga", "30.30", "20.200", null);
             wDB.AddNewElement(element, "2", "127.0.0.1", "8080", "Kaluga", "30.30", "20.200", null);
@@ -75,7 +75,7 @@ namespace UnitTest
         public void TestFindExistElement1()
         {
             //проверка по IP (есть)
-            WorkElementDB wDB = new WorkElementDB();
+            WorkElementDBMeteo wDB = new WorkElementDBMeteo();
             List<ElementDataBase> element = new List<ElementDataBase>();
             wDB.AddNewElement(element, "1", "127.0.0.1", "8080", "Kaluga", "30.30", "20.200", null);
             wDB.AddNewElement(element, "2", "127.0.0.1", "8080", "Kaluga", "30.30", "20.200", null);
@@ -90,7 +90,7 @@ namespace UnitTest
         public void TestFindNotExistElement1()
         {
             //проверка по IP (нет)
-            WorkElementDB wDB = new WorkElementDB();
+            WorkElementDBMeteo wDB = new WorkElementDBMeteo();
             List<ElementDataBase> element = new List<ElementDataBase>();
             wDB.AddNewElement(element, "1", "127.0.0.1", "8080", "Kaluga", "30.30", "20.200", null);
             wDB.AddNewElement(element, "2", "127.0.0.1", "8080", "Kaluga", "30.30", "20.200", null);
@@ -105,7 +105,7 @@ namespace UnitTest
         public void TestFindExistElement2()
         {
             //проверка по локации (есть)
-            WorkElementDB wDB = new WorkElementDB();
+            WorkElementDBMeteo wDB = new WorkElementDBMeteo();
             List<ElementDataBase> element = new List<ElementDataBase>();
             wDB.AddNewElement(element, "1", "127.0.0.1", "8080", "Kaluga", "30.30", "20.200", null);
             wDB.AddNewElement(element, "2", "127.0.0.1", "8080", "Kaluga", "30.30", "20.200", null);
@@ -120,7 +120,7 @@ namespace UnitTest
         public void TestFindNotExistElement2()
         {
             //проверка по локации (нет)
-            WorkElementDB wDB = new WorkElementDB();
+            WorkElementDBMeteo wDB = new WorkElementDBMeteo();
             List<ElementDataBase> element = new List<ElementDataBase>();
             wDB.AddNewElement(element, "1", "127.0.0.1", "8080", "Kalugas", "30.30", "20.200", null);
             wDB.AddNewElement(element, "2", "127.0.0.1", "8080", "Kalugas", "30.30", "20.200", null);
@@ -135,7 +135,7 @@ namespace UnitTest
         public void TestSearchRecordById_1()
         {
             (string, string, string, string, string, string, string) test = ("4", "192.168.0.13", "8080", "Kalugas", "30.30", "20.200", null);
-            WorkElementDB wDB = new WorkElementDB();
+            WorkElementDBMeteo wDB = new WorkElementDBMeteo();
             List<ElementDataBase> element = new List<ElementDataBase>();
             wDB.AddNewElement(element, "1", "127.0.0.1", "8080", "Kalugas", "30.30", "20.200", null);
             wDB.AddNewElement(element, "2", "127.0.0.1", "8080", "Kalugas", "30.30", "20.200", null);
@@ -156,7 +156,7 @@ namespace UnitTest
         public void TestSearchRecordById_2()
         {
             (string, string, string, string, string, string, string) test = ("4", "192.168.0.13", "8080", "Kalugas", "30.30", "20.200", null);
-            WorkElementDB wDB = new WorkElementDB();
+            WorkElementDBMeteo wDB = new WorkElementDBMeteo();
             List<ElementDataBase> element = new List<ElementDataBase>();
             wDB.AddNewElement(element, "1", "127.0.0.1", "8080", "Kalugas", "30.30", "20.200", null);
             wDB.AddNewElement(element, "2", "127.0.0.1", "8080", "Kalugas", "30.30", "20.200", null);
@@ -177,7 +177,7 @@ namespace UnitTest
         public void TestSearchRecordByIP()
         {
             (string, string, string, string, string, string, string) test = ("4", "192.168.0.13", "8080", "Kalugas", "30.30", "20.200", null);
-            WorkElementDB wDB = new WorkElementDB();
+            WorkElementDBMeteo wDB = new WorkElementDBMeteo();
             List<ElementDataBase> element = new List<ElementDataBase>();
             wDB.AddNewElement(element, "1", "127.0.0.1", "8080", "Kalugas", "30.30", "20.200", null);
             wDB.AddNewElement(element, "2", "127.0.0.1", "8080", "Kalugas", "30.30", "20.200", null);
@@ -198,7 +198,7 @@ namespace UnitTest
         public void TestSearchRecordByLocation()
         {
             (string, string, string, string, string, string, string) test = ("4", "192.168.0.13", "8080", "Kaluga", "30.30", "20.200", null);
-            WorkElementDB wDB = new WorkElementDB();
+            WorkElementDBMeteo wDB = new WorkElementDBMeteo();
             List<ElementDataBase> element = new List<ElementDataBase>();
             wDB.AddNewElement(element, "1", "127.0.0.1", "8080", "Kalugas", "30.30", "20.200", null);
             wDB.AddNewElement(element, "2", "127.0.0.1", "8080", "Kalugas", "30.30", "20.200", null);
@@ -218,7 +218,7 @@ namespace UnitTest
         public void TestSearchRecordByText_1()
         {
             (string, string, string, string, string, string) test = ("3", "192.168.1.1", "Kaluga", "42.245", "23.1241", "Null");
-            WorkElementDB wDB = new WorkElementDB();
+            WorkElementDBMeteo wDB = new WorkElementDBMeteo();
             List<ElementDataBase> element = new List<ElementDataBase>();
             wDB.AddNewElement(element, "1", "127.0.0.1", "8080", "Kaluga", "30.30", "20.200", null);
             wDB.AddNewElement(element, "2", "127.0.0.1", "8080", "Kaluga", "30.30", "20.200", null);

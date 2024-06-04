@@ -12,7 +12,7 @@ namespace AppARM.Properties {
     
     
     [global::System.Runtime.CompilerServices.CompilerGeneratedAttribute()]
-    [global::System.CodeDom.Compiler.GeneratedCodeAttribute("Microsoft.VisualStudio.Editors.SettingsDesigner.SettingsSingleFileGenerator", "17.7.0.0")]
+    [global::System.CodeDom.Compiler.GeneratedCodeAttribute("Microsoft.VisualStudio.Editors.SettingsDesigner.SettingsSingleFileGenerator", "17.8.0.0")]
     internal sealed partial class Settings : global::System.Configuration.ApplicationSettingsBase {
         
         private static Settings defaultInstance = ((Settings)(global::System.Configuration.ApplicationSettingsBase.Synchronized(new Settings())));
@@ -89,6 +89,78 @@ namespace AppARM.Properties {
             }
             set {
                 this["UserApI"] = value;
+            }
+        }
+        
+        [global::System.Configuration.UserScopedSettingAttribute()]
+        [global::System.Diagnostics.DebuggerNonUserCodeAttribute()]
+        [global::System.Configuration.DefaultSettingValueAttribute("127.0.0.1")]
+        public string IP_ServerListen {
+            get {
+                return ((string)(this["IP_ServerListen"]));
+            }
+            set {
+                this["IP_ServerListen"] = value;
+            }
+        }
+        
+        [global::System.Configuration.UserScopedSettingAttribute()]
+        [global::System.Diagnostics.DebuggerNonUserCodeAttribute()]
+        [global::System.Configuration.DefaultSettingValueAttribute("6666")]
+        public string Port_ServerListen {
+            get {
+                return ((string)(this["Port_ServerListen"]));
+            }
+            set {
+                this["Port_ServerListen"] = value;
+            }
+        }
+        
+        [global::System.Configuration.UserScopedSettingAttribute()]
+        [global::System.Diagnostics.DebuggerNonUserCodeAttribute()]
+        [global::System.Configuration.DefaultSettingValueAttribute("127.0.0.1")]
+        public string IP_Server_maps {
+            get {
+                return ((string)(this["IP_Server_maps"]));
+            }
+            set {
+                this["IP_Server_maps"] = value;
+            }
+        }
+        
+        [global::System.Configuration.UserScopedSettingAttribute()]
+        [global::System.Diagnostics.DebuggerNonUserCodeAttribute()]
+        [global::System.Configuration.DefaultSettingValueAttribute("6666")]
+        public string Port_Server_maps {
+            get {
+                return ((string)(this["Port_Server_maps"]));
+            }
+            set {
+                this["Port_Server_maps"] = value;
+            }
+        }
+        
+        [global::System.Configuration.UserScopedSettingAttribute()]
+        [global::System.Diagnostics.DebuggerNonUserCodeAttribute()]
+        [global::System.Configuration.DefaultSettingValueAttribute("127.0.0.1")]
+        public string Ip_Server_Device {
+            get {
+                return ((string)(this["Ip_Server_Device"]));
+            }
+            set {
+                this["Ip_Server_Device"] = value;
+            }
+        }
+        
+        [global::System.Configuration.UserScopedSettingAttribute()]
+        [global::System.Diagnostics.DebuggerNonUserCodeAttribute()]
+        [global::System.Configuration.DefaultSettingValueAttribute("6666")]
+        public string Port_Server_Device {
+            get {
+                return ((string)(this["Port_Server_Device"]));
+            }
+            set {
+                this["Port_Server_Device"] = value;
             }
         }
     }

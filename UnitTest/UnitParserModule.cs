@@ -66,7 +66,7 @@ namespace UnitTest
             int[] test = new int[8] { 22, 22, 22, 0, 0, 0, 0, 0 };
             ParserAll parser = new ParserAll();
             int count = 0;
-            var t = parser.AddMassive("22;22;22");
+            var t = parser.AddMassiveByte("22;22;22");
             for (int i = 0; i < test.Length; i++)
             {
                 if (t[i] == test[i])
@@ -83,7 +83,7 @@ namespace UnitTest
             int[] test = new int[8] { 22, 0, 0, 0, 0, 0, 0, 0 };
             ParserAll parser = new ParserAll();
             int count = 0;
-            var t = parser.AddMassive("22");
+            var t = parser.AddMassiveByte("22");
             for (int i = 0; i < test.Length; i++)
             {
                 if (t[i] == test[i])
@@ -101,7 +101,7 @@ namespace UnitTest
             int[] test = new int[8] { 22, 22, 20, 20, 20, 20, 20, 20 };
             ParserAll parser = new ParserAll();
             int count = 0;
-            var t = parser.AddMassive("22;22;20;20;20;20;20;20");
+            var t = parser.AddMassiveByte("22;22;20;20;20;20;20;20");
             for (int i = 0; i < test.Length; i++)
             {
                 if (t[i] == test[i])
@@ -117,7 +117,7 @@ namespace UnitTest
             byte[] test = new byte[] { 0x01, 0x03, 0x00, 0x00, 0x00, 0x5A, 0xC5, 0xF1 };  // правильный массив
               ParserAll parser = new ParserAll();
             int count = 0;
-            var t = parser.AddMassive("1;3;0;0;0;90;197;241");
+            var t = parser.AddMassiveByte("1;3;0;0;0;90;197;241");
             for (int i = 0; i < test.Length; i++)
             {
                 if (t[i] == test[i])

@@ -1,32 +1,14 @@
-﻿using AppARM.Parser;
-using AppARM.TestXML;
-using AppARM.Weather;
-using System;
-using System.Collections.Generic;
-using System.Drawing.Drawing2D;
-using System.Linq;
+﻿using System;
 using System.Net;
-using System.Runtime.Remoting.Messaging;
 using System.Text;
-using System.Threading;
-using System.Threading.Tasks;
 using System.Windows;
-using System.Windows.Controls;
-using System.Windows.Data;
-using System.Windows.Documents;
 using System.Windows.Input;
-using System.Windows.Media;
-using System.Windows.Media.Imaging;
-using System.Windows.Shapes;
-using AppARM.WeatherSokol;
-using AppARM.TestXML;
-using AppARM.Parser;
 using System.Net.Sockets;
-using System.Xml.Linq;
-using System.IO;
-using static System.Net.Mime.MediaTypeNames;
-using System.Reflection;
-using static Mono.Xml.MiniParser;
+
+using AppARM.Parser;
+using AppARM.FilesLogs;
+using AppARM.Weather;
+using AppARM.WeatherSokol;
 
 namespace AppARM.Scenario
 {
@@ -39,7 +21,7 @@ namespace AppARM.Scenario
         private string portServer;
 
 
-        byte[] tmp;
+        byte[] sendMassive;
         byte[] bytes = new byte[1024];
 
         private Socket tcpClient;
@@ -56,38 +38,38 @@ namespace AppARM.Scenario
 
         //отправка сообщения на устройства. (особая постановка байт)
         private void SendReceive(string _command)
-        {
-            int str = 150;
-            //  byte[] bytes = new byte[4086];
-           
-            byte[] t = Encoding.Default.GetBytes(_command);
-            byte[] t1 = new byte[t.Length +4];
+        {   
+            // перезапись 1-го массива установа первых 4-х байт
+            byte[] massive1 = Encoding.Default.GetBytes(_command);
+            byte[] massive2 = new byte[massive1.Length +4];
+            Int32 datasize = massive1.Length;
 
-                      // Console.WriteLine("byte array: " + BitConverter.ToString(t1));
-            Int32 datasize = t.Length;
-            Console.WriteLine(t.Length);
-         //   Console.WriteLine("byte array: " + BitConverter.ToString(t1));
+            Console.WriteLine(massive1.Length);
             for (int i = 3; i >= 0; i--)
             {
-                t1[i] = (byte)(datasize % 256);
+                massive2[i] = (byte)(datasize % 256);
                 datasize = datasize / 256;
             }
-            int l = 0;
-            Console.WriteLine("byte Array: " + BitConverter.ToString(t1));
-            for (int j = 4; j < t1.Length; j++)
+            Console.WriteLine("byte Array: " + BitConverter.ToString(massive2));
+            for (int j = 4; j < massive2.Length; j++)
             {
-                t1[j] = t[j - 4];
+                massive2[j] = massive1[j - 4];
             }
-            Console.WriteLine("byte Array: " + BitConverter.ToString(t1));
-           
-            tmp = t1;
-            Console.WriteLine("Жду чуда {0}", System.Text.Encoding.Default.GetString(tmp));
-            tcpClient.Send(tmp);
+            Console.WriteLine("byte Array: " + BitConverter.ToString(massive2));
+            sendMassive = massive2; 
+            tcpClient.Send(sendMassive);
             byte[] data = new byte[1024]; // изменить размерность после !!!!!!!!!!
+            
             int length = tcpClient.Receive(data);
             string message = Encoding.UTF8.GetString(data, 0, length);
             Console.WriteLine(message);
             Test.Text += "ответ \"Устройства\":\n" + message + '\n';
+        }
+
+        protected override void OnClosing(System.ComponentModel.CancelEventArgs e)
+        {
+            if (tcpClient == null) { MessageBox.Show("ыыы"); }
+            else { tcpClient.Dispose(); }
         }
 
         private void MouseClick_AddTextLable(object sender, MouseButtonEventArgs e)
@@ -96,7 +78,7 @@ namespace AppARM.Scenario
         }
 
         private void MouseClick_ClearLable(object sender, MouseButtonEventArgs e)
-        {
+        {                                                          
             Test.Text = string.Empty;
         }
 
@@ -112,6 +94,7 @@ namespace AppARM.Scenario
             B_Disconnect.IsEnabled = true;
             BT_Ping.IsEnabled = true;
             B_StartScenario.IsEnabled = true;
+
             Console.WriteLine(ipServer + " " + portServer);
             try
             {
@@ -123,7 +106,7 @@ namespace AppARM.Scenario
             }
             catch (Exception ex)
             {
-                files.ReadExeption(ex);
+                files.ReadException(ex);
                 Test.Text += "Подключение не удачное \n";
                 B_Connect.IsEnabled = true;
                 B_Disconnect.IsEnabled = false;
@@ -170,6 +153,8 @@ namespace AppARM.Scenario
             SendReceive(Convert.ToString(command));
         }
 
+
+
         private void BT_Stop_Click(object sender, RoutedEventArgs e)
         {
             var command = new StringBuilder();
@@ -181,6 +166,7 @@ namespace AppARM.Scenario
 
         private void BС_StartScenarios(object sender, RoutedEventArgs e)
         {
+            
             string type = null ;
             var command = new StringBuilder();
             string NumberCommand = TB_Command.Text;
@@ -207,15 +193,11 @@ namespace AppARM.Scenario
                                 "<consoles>{2}</consoles>\n<terminals>{3}</terminals>\n<p160command>{4}</p160command>\n" +
                                 "<sirenmode>{5} </sirenmode>\n</seance>\n</parameters>\n</command>", working_Launch, type,TB_IdAPU.Text ,TB_IdDevise.Text, NumberCommand, typeSiren);
 
+            Console.WriteLine("--->");
             Console.WriteLine(command);
+            Console.WriteLine("<---");
             SendReceive(Convert.ToString(command));
         }
-
-  
-
-
-
-
         //__________________________________________________________________________________________
     }
 }

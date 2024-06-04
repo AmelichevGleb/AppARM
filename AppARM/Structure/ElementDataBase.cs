@@ -1,13 +1,8 @@
 ﻿using System;
 using System.Collections.Generic;
-using System.Linq;
-using System.Reflection.Emit;
-using System.Runtime.CompilerServices;
-using System.Runtime.InteropServices;
-using System.Text;
-using System.Threading.Tasks;
-using AppARM.TestXML;
 using Newtonsoft.Json.Linq;
+
+using AppARM.FilesLogs;
 
 namespace AppARM.Structure
 {
@@ -71,7 +66,7 @@ namespace AppARM.Structure
         }
 
 
-        public class WorkElementDB
+        public class WorkElementDBMeteo
         {
             private Files files = new Files();
 
@@ -86,7 +81,7 @@ namespace AppARM.Structure
                 }
                 catch (Exception _ex)
                 {
-                    files.ReadExeption(_ex);
+                    files.ReadException(_ex);
                     return false;
                 }
             }

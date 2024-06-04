@@ -1,4 +1,4 @@
-﻿using AppARM.TestXML;
+﻿using AppARM.FilesLogs;
 using Microsoft.VisualStudio.TestTools.UnitTesting;
 using System;
 using System.Collections.Generic;
@@ -106,9 +106,11 @@ namespace UnitTest
             string nameFile = "logs.txt";
             files.DeleteFile(nameFile);
             files.CreateFile(nameFile);
-            files.ReadFile("sssss",true);
+            files.ReadFile("sssss",false);
             var str = files.ShowDatainFile(nameFile);
-            Assert.AreEqual("- " + DateTime.Now + " " +"sssss" +"\n", str);
+            var str2 = "- " + DateTime.Now + " " + "sssss" + "\n";
+            Assert.AreEqual(str2, str);
+            files.DeleteFile(nameFile);
         }
     }
 }
