@@ -22,7 +22,10 @@ using AppARM.FilesLogs;
 using System.IO;
 using System.Net;
 using System.Runtime.InteropServices;
+<<<<<<< HEAD
 using System.Net.Http;
+=======
+>>>>>>> 19377ed4ed662b43bcd00eaaaae1aa67e1138180
 
 namespace AppARM.Device_Database
 {
@@ -114,7 +117,12 @@ namespace AppARM.Device_Database
 
         //загрузка и заполнение базы данных (Метеостанций)
         private void LoadMeteoStation()
+<<<<<<< HEAD
         { 
+=======
+        {
+
+>>>>>>> 19377ed4ed662b43bcd00eaaaae1aa67e1138180
             var t = dbMeteostation.GetDataBaseShort(tableNameMeteo);
             try
             {
@@ -171,7 +179,11 @@ namespace AppARM.Device_Database
         private void MenuItem_Click_Add(object sender, RoutedEventArgs e)
         {
             files.ReadFile("Добавлена запись в таблицу Метеостанция", false);
+<<<<<<< HEAD
             dbMeteostation.InsertDataBase(tableNameMeteo, "'127.0.0.1'", "11000", "'Kaluga'", "54.5293", "36.2754", "'127.0.0.2'");
+=======
+            dbMeteostation.InsertDataBase(tableNameMeteo, "'127.0.0.1'", "11000", "'Kaluga'", "54.5293", "36.2754", "'127.0.0.2'", "'test'", "'test'", "'test'");
+>>>>>>> 19377ed4ed662b43bcd00eaaaae1aa67e1138180
             var id = dbMeteostation.GetLastID(tableNameMeteo);
             meteodeviceList.Add(new StructList(id, "127.0.0.1", "11000", "Kaluga", "54.5293", "36.2754", "127.0.0.2"));
             DG_MeteoStation.ItemsSource = meteodeviceList.ToList();
@@ -213,9 +225,15 @@ namespace AppARM.Device_Database
             StructList p = e.Row.Item as StructList;
             MessageBox.Show($"{p.Id} {p.IP_device} {p.Port} {p.Location} {p.Longitude} {p.Lagatitude} {p.Description}");
             //вызов обновления базы данных 
+<<<<<<< HEAD
             //GetWeather(p.IP_device, p.Port);
             dbMeteostation.UpdateElementDataBase(tableNameMeteo, Convert.ToString(p.Id), p.IP_device, Convert.ToString(p.Port), p.Location, p.Longitude, p.Lagatitude, p.Description);
             //dbMeteostation.UpdateElementDataBase(tableNameMeteo, Convert.ToString(p.Id), null, null, null, null, null, null, Convert.ToString(temperature), Convert.ToString(windSpeed), Convert.ToString(directionWind));
+=======
+            GetWeather(p.IP_device, p.Port);
+            dbMeteostation.UpdateElementDataBase(tableNameMeteo, Convert.ToString(p.Id), p.IP_device, Convert.ToString(p.Port), p.Location, p.Longitude, p.Lagatitude, p.Description, Convert.ToString(temperature), Convert.ToString(windSpeed), Convert.ToString(directionWind));
+            dbMeteostation.UpdateElementDataBase(tableNameMeteo, Convert.ToString(p.Id), null, null, null, null, null, null, Convert.ToString(temperature), Convert.ToString(windSpeed), Convert.ToString(directionWind));
+>>>>>>> 19377ed4ed662b43bcd00eaaaae1aa67e1138180
             files.ReadFile(p.Id + " " + p.IP_device + " " + p.Location + " "
                             + p.Longitude + " " + p.Lagatitude + " " + p.Description, false);
         }
@@ -516,10 +534,15 @@ namespace AppARM.Device_Database
                 tcpClient.Connect(IPAddress.Parse(ip), Convert.ToInt32(port));
                 NetworkStream tcpStream = tcpClient.GetStream();
                 //КИНУТЬ СЦЕНАРИЙ
+<<<<<<< HEAD
    
                 tcpStream.Write(IndividualScenario(type), 0, IndividualScenario(type).Length);
                 byte[] bytes = new byte[tcpClient.ReceiveBufferSize];
                 string returnData = Encoding.UTF8.GetString(bytes);
+=======
+                byte[] sendBytes = Encoding.UTF8.GetBytes(IndividualScenario(type));
+                tcpStream.Write(sendBytes, 0, sendBytes.Length);
+>>>>>>> 19377ed4ed662b43bcd00eaaaae1aa67e1138180
                 tcpClient.Close();
                 tcpStream.Close();
 
@@ -535,8 +558,13 @@ namespace AppARM.Device_Database
 
 
         //__________________________________________________________________________________________
+<<<<<<< HEAD
         byte[] sendMassive;
         private byte[] IndividualScenario(string _typeScenario)
+=======
+
+        private string IndividualScenario(string _typeScenario)
+>>>>>>> 19377ed4ed662b43bcd00eaaaae1aa67e1138180
         {
             bool _type = false;
             string soundCheck = "internal";
@@ -544,6 +572,7 @@ namespace AppARM.Device_Database
             var command = new StringBuilder();
             command.AppendFormat("<?xml version=\"1.0\" encoding=\"utf-8\" ?><command>\n<action>start</action>\n" +
                "<parameters>\n<scenario>{0}</scenario>\n<audio>{1}<audio/>\n</parameters>\n</command>", _typeScenario, soundCheck);
+<<<<<<< HEAD
 
             Console.WriteLine(command);
           
@@ -574,6 +603,11 @@ namespace AppARM.Device_Database
             
            
         }
+=======
+            return Convert.ToString(command);
+        }
+
+>>>>>>> 19377ed4ed662b43bcd00eaaaae1aa67e1138180
 
 
     }

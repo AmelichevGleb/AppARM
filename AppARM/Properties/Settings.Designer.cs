@@ -118,7 +118,11 @@ namespace AppARM.Properties {
         
         [global::System.Configuration.UserScopedSettingAttribute()]
         [global::System.Diagnostics.DebuggerNonUserCodeAttribute()]
+<<<<<<< HEAD
         [global::System.Configuration.DefaultSettingValueAttribute("127.0.0.1")]
+=======
+        [global::System.Configuration.DefaultSettingValueAttribute("")]
+>>>>>>> 19377ed4ed662b43bcd00eaaaae1aa67e1138180
         public string IP_Server_maps {
             get {
                 return ((string)(this["IP_Server_maps"]));
@@ -130,7 +134,11 @@ namespace AppARM.Properties {
         
         [global::System.Configuration.UserScopedSettingAttribute()]
         [global::System.Diagnostics.DebuggerNonUserCodeAttribute()]
+<<<<<<< HEAD
         [global::System.Configuration.DefaultSettingValueAttribute("6666")]
+=======
+        [global::System.Configuration.DefaultSettingValueAttribute("")]
+>>>>>>> 19377ed4ed662b43bcd00eaaaae1aa67e1138180
         public string Port_Server_maps {
             get {
                 return ((string)(this["Port_Server_maps"]));
@@ -142,7 +150,11 @@ namespace AppARM.Properties {
         
         [global::System.Configuration.UserScopedSettingAttribute()]
         [global::System.Diagnostics.DebuggerNonUserCodeAttribute()]
+<<<<<<< HEAD
         [global::System.Configuration.DefaultSettingValueAttribute("127.0.0.1")]
+=======
+        [global::System.Configuration.DefaultSettingValueAttribute("")]
+>>>>>>> 19377ed4ed662b43bcd00eaaaae1aa67e1138180
         public string Ip_Server_Device {
             get {
                 return ((string)(this["Ip_Server_Device"]));
@@ -154,7 +166,11 @@ namespace AppARM.Properties {
         
         [global::System.Configuration.UserScopedSettingAttribute()]
         [global::System.Diagnostics.DebuggerNonUserCodeAttribute()]
+<<<<<<< HEAD
         [global::System.Configuration.DefaultSettingValueAttribute("6666")]
+=======
+        [global::System.Configuration.DefaultSettingValueAttribute("")]
+>>>>>>> 19377ed4ed662b43bcd00eaaaae1aa67e1138180
         public string Port_Server_Device {
             get {
                 return ((string)(this["Port_Server_Device"]));

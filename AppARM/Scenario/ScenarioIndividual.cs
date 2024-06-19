@@ -1,8 +1,11 @@
 ﻿using System;
 using System.Collections.Generic;
 using System.Linq;
+<<<<<<< HEAD
 using System.Net.Http;
 using System.Net.Sockets;
+=======
+>>>>>>> 19377ed4ed662b43bcd00eaaaae1aa67e1138180
 using System.Text;
 using System.Threading.Tasks;
 
@@ -10,9 +13,15 @@ namespace AppARM.Scenario
 {
     internal class ScenarioIndividual
     {
+<<<<<<< HEAD
         byte[] sendMassive;
         public byte[] CommandGroup(bool _type, string _typeScenario)
         {
+=======
+        public string CommandGroup(bool _type, string _typeScenario)
+        {
+
+>>>>>>> 19377ed4ed662b43bcd00eaaaae1aa67e1138180
             string soundCheck = "internal";
             if (_type == true) { soundCheck = "external"; }
             var command = new StringBuilder();
@@ -20,6 +29,7 @@ namespace AppARM.Scenario
                "<parameters>\n<scenario>{0}</scenario>\n<audio>{1}<audio/>\n</parameters>\n</command>", _typeScenario, soundCheck);
 
             Console.WriteLine(command.ToString());
+<<<<<<< HEAD
 
 
 
@@ -48,6 +58,9 @@ namespace AppARM.Scenario
             return sendMassive;
 
 
+=======
+            return Convert.ToString(command);
+>>>>>>> 19377ed4ed662b43bcd00eaaaae1aa67e1138180
         }
     }
 }

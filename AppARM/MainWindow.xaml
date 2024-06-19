@@ -6,7 +6,11 @@
         xmlns:local="clr-namespace:AppARM"
         mc:Ignorable="d"
         ResizeMode="NoResize"
+<<<<<<< HEAD
         Title="AppArm"  Height="489" Width="720"  MinHeight="480" MinWidth="720" >
+=======
+        Title="MainWindow"  Height="489" Width="720"  MinHeight="480" MinWidth="720" >
+>>>>>>> 19377ed4ed662b43bcd00eaaaae1aa67e1138180
     <!--#376B75
 
 #5990AF
@@ -70,12 +74,20 @@
                     </StackPanel>
                 </Button>
 
+<<<<<<< HEAD
                 <Button x:Name="BT_TestStop"  Grid.Row="7"  Background="#0C5DA5"   HorizontalAlignment="Left" Width="50"  Height="50" VerticalAlignment="Center" Click="BT_TestStop_Click">
+=======
+                <Button x:Name="BT_TestStop"  Grid.Row="7"  Background="#0C5DA5"   HorizontalAlignment="Center" Width="50"  Height="50" VerticalAlignment="Top" Click="BT_TestStop_Click">
+>>>>>>> 19377ed4ed662b43bcd00eaaaae1aa67e1138180
                     <StackPanel Margin="5,5,5,5">
                         <Image  Source="Images/server.png"></Image>
                     </StackPanel>
                 </Button>
+<<<<<<< HEAD
                 <Button x:Name="BT_TestStop1"  Grid.Row="8"  Background="#0C5DA5"   HorizontalAlignment="Right" Width="50"  Height="50" VerticalAlignment="Center" Click="BT_TestStop1_Click" >
+=======
+                <Button x:Name="BT_TestStop1"  Grid.Row="8"  Background="#0C5DA5"   HorizontalAlignment="Center" Width="50"  Height="50" VerticalAlignment="Top" Click="BT_TestStop1_Click" >
+>>>>>>> 19377ed4ed662b43bcd00eaaaae1aa67e1138180
                     <StackPanel Margin="5,5,5,5">
                         <Image  Source="Images/logIcon.png"></Image>
                     </StackPanel>

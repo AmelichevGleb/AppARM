@@ -9,7 +9,11 @@
     <Grid Background="#659DBD">
         <Grid.RowDefinitions>
             <RowDefinition></RowDefinition>
+<<<<<<< HEAD
             <RowDefinition Height="35"></RowDefinition>
+=======
+            <RowDefinition Height="auto"></RowDefinition>
+>>>>>>> 19377ed4ed662b43bcd00eaaaae1aa67e1138180
         </Grid.RowDefinitions>
         
                 <ScrollViewer>
@@ -74,9 +78,15 @@
                                 <Label  Margin="0,5,0,5" FontWeight ="Bold" FontSize="12" HorizontalContentAlignment="Center" Width="329" >Настройка сервера прослушки</Label>
                             </Border>
                         </Grid>
+<<<<<<< HEAD
                         <Label Margin="5,5,5,5" Grid.Row="1" Grid.Column="0">IP сервера прослушивания</Label>
                         <TextBox x:Name="TB_IP_for_device" Margin="5,5,5,8" Grid.Row="1" Grid.Column="1" ></TextBox>
                         <Label Margin="5,5,5,5" Grid.Row="2" Grid.Column="0">Port для сервера прослушивания</Label>
+=======
+                        <Label Margin="5,5,5,5" Grid.Row="1" Grid.Column="0">IP для сервера</Label>
+                        <TextBox x:Name="TB_IP_for_device" Margin="5,5,5,8" Grid.Row="1" Grid.Column="1" ></TextBox>
+                        <Label Margin="5,5,5,5" Grid.Row="2" Grid.Column="0">Port для датчиков</Label>
+>>>>>>> 19377ed4ed662b43bcd00eaaaae1aa67e1138180
                         <TextBox x:Name="TB_Port_for_device" Margin="5,5,5,8" Grid.Row="2" Grid.Column="1" ></TextBox>
                     </Grid>
                 </Border>
@@ -134,8 +144,13 @@
           
         <Grid Grid.Row="1">
             <StackPanel Grid.Row="1" Orientation="Horizontal" HorizontalAlignment="Right">
+<<<<<<< HEAD
             <Button x:Name="B_OK" Background="#0C5DA5" Margin="5,5,5,5" Padding="5" Click="BC_Ok">OK</Button>
             <Button x:Name="B_Cancel"  Background="#0C5DA5" Margin="5,5,5,5" Padding="5" Click="BC_Cancel">Cancel</Button>
+=======
+            <Button x:Name="B_OK" Background="#0C5DA5" Margin="0,0,0,5" Padding="5" Click="BC_Ok">OK</Button>
+            <Button x:Name="B_Cancel"  Background="#0C5DA5" Margin="5,0,5,5" Padding="5" Click="BC_Cancel">Cancel</Button>
+>>>>>>> 19377ed4ed662b43bcd00eaaaae1aa67e1138180
         </StackPanel>
         </Grid>
     </Grid>

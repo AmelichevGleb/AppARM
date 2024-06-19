@@ -128,8 +128,13 @@ namespace UnitTest
             DataBaseMeteostation db = new DataBaseMeteostation(serverBD, portBD, userBD, passwordBD);
             List<ElementDataBase> element = new List<ElementDataBase>();
             db.CreateTable("Test_2");
+<<<<<<< HEAD
             db.InsertDataBase("Test_2", "'192.168.1.1'", "8080", "'kaluga'", "15.12", "26.12" , "'null'");
             db.InsertDataBase("Test_2", "'192.168.1.1'", "8080", "'kaluga'", "15.12", "26.12", "'null'");
+=======
+            db.InsertDataBase("Test_2", "'192.168.1.1'", "8080", "'kaluga'", "15.12", "26.12" , "'null'", "'null'","'null'", "'null'");
+            db.InsertDataBase("Test_2", "'192.168.1.1'", "8080", "'kaluga'", "15.12", "26.12", "'null'", "'null'", "'null'", "'null'");
+>>>>>>> 19377ed4ed662b43bcd00eaaaae1aa67e1138180
             var t = db.GetDataBaseShort("Test_2");
             while (t.Read())
             {
@@ -168,7 +173,11 @@ namespace UnitTest
             DataBaseMeteostation db = new DataBaseMeteostation(serverBD, portBD, userBD, passwordBD);
             List<ElementDataBase> element = new List<ElementDataBase>();
             db.CreateTable("Test5");
+<<<<<<< HEAD
             db.InsertDataBase("Test5", "'192.168.1.1'", "'8080'", "'kaluga'", "15.12", "26.12", "'null'");
+=======
+            db.InsertDataBase("Test5", "'192.168.1.1'", "'8080'", "'kaluga'", "15.12", "26.12", "'null'", "'null'", "'null'", "'null'");
+>>>>>>> 19377ed4ed662b43bcd00eaaaae1aa67e1138180
             var t = db.GetDataBaseShort("Test5");
             while (t.Read())
             {
@@ -186,7 +195,11 @@ namespace UnitTest
             DataBaseMeteostation db = new DataBaseMeteostation(serverBD, portBD, userBD, passwordBD);
             List<ElementDataBase> element = new List<ElementDataBase>();
             db.CreateTable("Test12");
+<<<<<<< HEAD
             db.InsertDataBase("Test12", "'192.168.1.1'", "8080", "'kaluga'", "15.12", "26.12", "'null'"); 
+=======
+            db.InsertDataBase("Test12", "'192.168.1.1'", "8080", "'kaluga'", "15.12", "26.12", "'null'", "'null'", "'null'", "'null'"); 
+>>>>>>> 19377ed4ed662b43bcd00eaaaae1aa67e1138180
             Assert.AreEqual(true, db.ClearTable("Test12"));
             var t = db.GetDataBaseShort("Test12");
             while (t.Read())
@@ -207,8 +220,13 @@ namespace UnitTest
             List<ElementDataBase> element = new List<ElementDataBase>();
             db.DeleteTable("Test124");
             db.CreateTable("Test124");
+<<<<<<< HEAD
             db.InsertDataBase("Test124", "'192.168.1.1'", "8080", "'kaluga'", "15.12", "26.12", "'null'");
             db.InsertDataBase("Test124", "'192.168.1.1'", "8080", "'kaluga'", "15.12", "26.12", "'null'");
+=======
+            db.InsertDataBase("Test124", "'192.168.1.1'", "8080", "'kaluga'", "15.12", "26.12", "'null'", "'null'", "'null'", "'null'");
+            db.InsertDataBase("Test124", "'192.168.1.1'", "8080", "'kaluga'", "15.12", "26.12", "'null'", "'null'", "'null'", "'null'");
+>>>>>>> 19377ed4ed662b43bcd00eaaaae1aa67e1138180
             db.DeleteValueDB("Test124", 1);
             var t = db.GetDataBaseShort("Test124");
             while (t.Read())
@@ -227,8 +245,13 @@ namespace UnitTest
             DataBaseMeteostation db = new DataBaseMeteostation(serverBD, portBD, userBD, passwordBD);
             db.DeleteTable("Test1234");
             db.CreateTable("Test1234");
+<<<<<<< HEAD
             db.InsertDataBase("Test124", "'192.168.1.1'", "8080", "'kaluga'", "15.12", "26.12", "'null'");
             Assert.IsFalse(db.UpdateElementDataBase("Test1234", "1", null, null,null,null,null,null));
+=======
+            db.InsertDataBase("Test124", "'192.168.1.1'", "8080", "'kaluga'", "15.12", "26.12", "'null'", "'null'", "'null'", "'null'");
+            Assert.IsFalse(db.UpdateElementDataBase("Test1234", "1", null, null,null,null,null,null, null, null,null));
+>>>>>>> 19377ed4ed662b43bcd00eaaaae1aa67e1138180
             db.DeleteTable("Test1234");
         }
         
@@ -243,8 +266,13 @@ namespace UnitTest
             DataBaseMeteostation db = new DataBaseMeteostation(serverBD, portBD, userBD, passwordBD);
             db.DeleteTable("Test1234");
             db.CreateTable("Test1234");
+<<<<<<< HEAD
             db.InsertDataBase("Test1234", "'192.168.1.1'", "8080", "'kaluga'", "15.12", "26.12", "'null'");
             Assert.IsTrue(db.UpdateElementDataBase("Test1234", "1" ,"192.168.1.2", "8080", "kaluga", "15.12", "26.12", "null"));
+=======
+            db.InsertDataBase("Test1234", "'192.168.1.1'", "8080", "'kaluga'", "15.12", "26.12", "'null'", "'null'", "'null'", "'null'");
+            Assert.IsTrue(db.UpdateElementDataBase("Test1234", "1" ,"192.168.1.2", "8080", "kaluga", "15.12", "26.12", "null", "null", "null", "null"));
+>>>>>>> 19377ed4ed662b43bcd00eaaaae1aa67e1138180
             var t = db.GetDataBaseShort("Test1234");
             while (t.Read())
             {
@@ -264,8 +292,13 @@ namespace UnitTest
             List<ElementDataBase> element = new List<ElementDataBase>();
             DataBaseMeteostation db = new DataBaseMeteostation(serverBD, portBD, userBD, passwordBD);
             db.CreateTable("Test1234");
+<<<<<<< HEAD
             db.InsertDataBase("Test1234", "'192.168.1.1'", "8080", "'kaluga'", "15.12", "26.12", "'null'");
             Assert.IsTrue(db.UpdateElementDataBase("Test1234", "1", "192.168.1.1", "8081", "kaluga", "15.12", "26.12", "null"));
+=======
+            db.InsertDataBase("Test1234", "'192.168.1.1'", "8080", "'kaluga'", "15.12", "26.12", "'null'", "'null'", "'null'", "'null'");
+            Assert.IsTrue(db.UpdateElementDataBase("Test1234", "1", "192.168.1.1", "8081", "kaluga", "15.12", "26.12", "null", "null", "null", "null"));
+>>>>>>> 19377ed4ed662b43bcd00eaaaae1aa67e1138180
             var t = db.GetDataBaseShort("Test1234");
             while (t.Read())
             {
@@ -285,8 +318,13 @@ namespace UnitTest
             List<ElementDataBase> element = new List<ElementDataBase>();
             DataBaseMeteostation db = new DataBaseMeteostation(serverBD, portBD, userBD, passwordBD);
             db.CreateTable("Test1234");
+<<<<<<< HEAD
             db.InsertDataBase("Test1234", "'192.168.1.1'", "8080", "'kaluga'", "15.12", "26.12", "'null'");
             Assert.IsTrue(db.UpdateElementDataBase("Test1234", "1", "192.168.1.4", "8082", "kaluga", "15.12", "26.12", "null"));
+=======
+            db.InsertDataBase("Test1234", "'192.168.1.1'", "8080", "'kaluga'", "15.12", "26.12", "'null'", "'null'", "'null'", "'null'");
+            Assert.IsTrue(db.UpdateElementDataBase("Test1234", "1", "192.168.1.4", "8082", "kaluga", "15.12", "26.12", "null", "null", "null", "null"));
+>>>>>>> 19377ed4ed662b43bcd00eaaaae1aa67e1138180
             var t = db.GetDataBaseShort("Test1234");
             while (t.Read())
             {
@@ -307,8 +345,13 @@ namespace UnitTest
             List<ElementDataBase> element = new List<ElementDataBase>();
             DataBaseMeteostation db = new DataBaseMeteostation(serverBD, portBD, userBD, passwordBD);
             db.CreateTable("LastID");
+<<<<<<< HEAD
             db.InsertDataBase("LastID", "'192.168.1.1'", "8080", "'kaluga'", "15.12", "26.12", "'null'");
             db.InsertDataBase("LastID", "'192.168.1.1'", "8080", "'kaluga'", "15.12", "26.12", "'null'");
+=======
+            db.InsertDataBase("LastID", "'192.168.1.1'", "8080", "'kaluga'", "15.12", "26.12", "'null'", "'null'", "'null'", "'null'");
+            db.InsertDataBase("LastID", "'192.168.1.1'", "8080", "'kaluga'", "15.12", "26.12", "'null'", "'null'", "'null'", "'null'");
+>>>>>>> 19377ed4ed662b43bcd00eaaaae1aa67e1138180
             int id = db.GetLastID("LastID");
             Assert.AreEqual(id, 2);
             db.DeleteTable("LastID");
@@ -363,6 +406,7 @@ namespace UnitTest
 
         }
 
+<<<<<<< HEAD
         [TestMethod]
         public void TestReturnLongitude()
         {
@@ -372,6 +416,8 @@ namespace UnitTest
             Assert.AreEqual(t, "69.0000");
         }
 
+=======
+>>>>>>> 19377ed4ed662b43bcd00eaaaae1aa67e1138180
         //returnIp4CDevice
     }
 }

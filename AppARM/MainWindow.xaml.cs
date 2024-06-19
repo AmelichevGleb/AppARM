@@ -23,6 +23,7 @@ using System.Diagnostics;
 using System.Windows.Media.Imaging;
 using System.Net.Http;
 using System.Text.Json;
+<<<<<<< HEAD
 using System.Collections.Specialized;
 using System.Net;
 using System.Security.Policy;
@@ -30,6 +31,8 @@ using System.Drawing;
 using System.Collections.Generic;
 using System.Threading.Tasks;
 using System.IO;
+=======
+>>>>>>> 19377ed4ed662b43bcd00eaaaae1aa67e1138180
 
 
 namespace AppARM
@@ -127,6 +130,7 @@ namespace AppARM
         ServerForListen serverForListner;
         private void BT_TestStop_Click(object sender, RoutedEventArgs e)
         {
+<<<<<<< HEAD
             try
             {
                 if (active)
@@ -167,6 +171,30 @@ namespace AppARM
             catch (Exception _ex)
             {
                 files.ReadException(_ex);
+=======
+            if (active)
+            {  
+                serverReceiver = new ServerReceiv();
+                serverForListner = new ServerForListen();
+                active = false;
+   
+                MessageBox.Show("Сервер запущен");
+                serverReceiver.StartServerReceiver(1 , this);
+                serverForListner.StartServerListen(1 , this);
+                Uri resourceUri = new Uri("Images/rupor-on.png", UriKind.Relative);
+                ImageRupor.Source = new BitmapImage(resourceUri);
+                //Convert.ToString("Images/rupor-off.png");
+            }
+            else
+            {
+
+                active = true;
+                MessageBox.Show("Сервер остановлен");
+                serverReceiver.StartServerReceiver(2, this);
+                serverForListner.StartServerListen(2,this);
+                Uri resourceUri = new Uri("Images/rupor-off.png", UriKind.Relative);
+                ImageRupor.Source = new BitmapImage(resourceUri);
+>>>>>>> 19377ed4ed662b43bcd00eaaaae1aa67e1138180
             }
         }
 
@@ -175,6 +203,8 @@ namespace AppARM
         //_____________________________СТАРЫЙ_КОД___________________________________________________
 
         private async void BC_Script(object sender, RoutedEventArgs e)
+<<<<<<< HEAD
+=======
         {
             Scenarios scenario = new Scenarios();
             scenario.Show();
@@ -186,6 +216,99 @@ namespace AppARM
             Scenarios scenario = new Scenarios();
             scenario.Show();
         }
+
+        private void SendFile()
+>>>>>>> 19377ed4ed662b43bcd00eaaaae1aa67e1138180
+        {
+            Scenarios scenario = new Scenarios();
+            scenario.Show();
+        }
+<<<<<<< HEAD
+
+        //Для тестовых проверок 
+        private void Button_Click_2(object sender, RoutedEventArgs e)
+        {
+            Scenarios scenario = new Scenarios();
+            scenario.Show();
+        }
+=======
+        //  private async void BC_Script(object sender, RoutedEventArgs e)
+        //  {
+
+        /*
+        string serverBD = Convert.ToString(Properties.Settings.Default.IP_adress);
+        string portBD = Convert.ToString(Properties.Settings.Default.Port);
+        string userBD = Convert.ToString(Properties.Settings.Default.Login_BD);
+        string passwordBD = Convert.ToString(Properties.Settings.Default.Password_BD);
+
+        DataBaseMeteostation dataBase = new DataBaseMeteostation(serverBD, portBD, userBD, passwordBD);
+
+        string t = "[";
+        var ts = dataBase.GetDataBaseLong(tableName);
+
+        try
+        {
+            int count = Convert.ToInt32(dataBase.CountDataInBD(tableName));
+            if (ts != null)
+            {
+                while (ts.Read())
+                {
+                    Console.WriteLine("{0} {1} {2} {3} {4} {5} {6} {7} ", ts.GetInt32(0), ts.GetString(1), ts.GetString(2), ts.GetString(3), ts.GetString(4), ts.GetString(5), ts.GetString(6), ts.GetString(7));
+
+                    Console.WriteLine(t);
+                    t += create.CreatJSON(ts.GetString(3), ts.GetString(1), ts.GetString(4), ts.GetString(5), ts.GetString(7), ts.GetString(8), ts.GetString(9), ts.GetString(6));
+
+                    if (count != 1)
+                    {
+                        t += ",";
+                    }
+                    count--;
+                    Console.WriteLine(t);
+                }
+            }
+
+            else
+            {
+
+                dataBase.CreateTable(tableName);
+            }
+        }
+        catch (Exception ex)
+        {
+            Console.WriteLine(ex.ToString());
+        }
+
+        //var t ="[" +create.CreatJSON("12", "232", 123, "22", "22.24", "45.24", "22", "22", "22", "22");
+        // t = t + "," + create.CreatJSON("12", "232", 123, "22", "25.24", "35.24", "22", "22", "22", "22") + "]";
+        Console.WriteLine(t);
+        t += "]";
+        Console.WriteLine(t);
+        var url = "http://" + "172.28.144.12" + ":" + Convert.ToString(8000) + "/set_stations/";
+        var httpRequest = (HttpWebRequest)WebRequest.Create(url);
+        httpRequest.Method = "POST";
+        httpRequest.Accept = "application/json";
+        httpRequest.ContentType = "application/json";
+        using (var streamWriter = new StreamWriter(httpRequest.GetRequestStream()))
+        {
+            streamWriter.Write(t);
+        }
+        var httpResponse = (HttpWebResponse)httpRequest.GetResponse();
+        using (var streamReader = new StreamReader(httpResponse.GetResponseStream()))
+        {
+            var result = streamReader.ReadToEnd();
+        }
+        var status = httpResponse.StatusCode.ToString();
+        if (status == "OK")
+        {
+            //сообщение
+
+        }
+        */
+        //  }
+
+
+
+>>>>>>> 19377ed4ed662b43bcd00eaaaae1aa67e1138180
 
         //__________________________________________________________________________________________
 
@@ -255,15 +378,33 @@ namespace AppARM
             string userBD = Convert.ToString(Properties.Settings.Default.Login_BD);
             string passwordBD = Convert.ToString(Properties.Settings.Default.Password_BD);
 
+<<<<<<< HEAD
             DataBaseMeteostation dataBase = new DataBaseMeteostation(serverBD, portBD, userBD, passwordBD);
             int port = 64700;
+=======
+
+            DataBaseMeteostation dataBase = new DataBaseMeteostation(serverBD, portBD, userBD, passwordBD);
+            //string server = "194.154.83.11";
+            int port = 64700;
+            //string ipSend = "127.0.0.1";
+            //int portSend = 8000;
+            //getWeather.ConnectMeteo(server, port, Properties.Settings.Default.IP_adress, Properties.Settings.Default.Port);
+            //// вывести все ip из бд
+
+>>>>>>> 19377ed4ed662b43bcd00eaaaae1aa67e1138180
             var t = dataBase.GetDataBaseShort("Arm");
             if (t != null)
             {
                 while (t.Read())
                 {
                     Console.WriteLine("{0} {1} {2} {3} {4} {5}", t.GetInt32(0), t.GetString(1), t.GetString(2), t.GetString(3), t.GetString(4), t.GetString(5));
+<<<<<<< HEAD
                     getWeather.ConnectMeteo(t.GetString(1), port, t.GetString(2), t.GetString(3), t.GetString(4), Properties.Settings.Default.IP_adress, Properties.Settings.Default.Port);
+=======
+
+                    getWeather.ConnectMeteo(t.GetString(1), port, t.GetString(2), t.GetString(3), t.GetString(4), Properties.Settings.Default.IP_adress, Properties.Settings.Default.Port);
+
+>>>>>>> 19377ed4ed662b43bcd00eaaaae1aa67e1138180
                 }
             }
 
@@ -304,6 +445,8 @@ namespace AppARM
             ParserAll parserAll = new ParserAll();
             var l = parserAll.AddMassiveStringIP(t);
             Console.WriteLine("п = {0} , t = {1}",l.Item1 ,l.Item2 );   
+<<<<<<< HEAD
+=======
         }
 
         private void Button_Click(object sender, RoutedEventArgs e)
@@ -311,6 +454,44 @@ namespace AppARM
          //   allAPU2.Show();
         }
 
+        private void Button_Click_1(object sender, RoutedEventArgs e)
+        {
+            //UserControlSetting userControlSetting = new UserControlSetting();
+            //LogServerPython.Children.Add(userControlSetting);   
+        }
+
+        private void Button_Click_3(object sender, RoutedEventArgs e)
+        {
+
+        }
+
+        private void BT_Browser_Click(object sender, RoutedEventArgs e)
+        {
+            string IpMap = Properties.Settings.Default.IP_Server_maps;
+            string PortMap = Properties.Settings.Default.Port_Server_maps;
+            Process.Start(new ProcessStartInfo("http://" + IpMap + ":" +PortMap));
+
+
+
+        }
+        class PostData
+        {
+            public string State { get; set; }
+            
+        }
+
+        class PostResponse
+        {
+            public int Id { get; set; }
+>>>>>>> 19377ed4ed662b43bcd00eaaaae1aa67e1138180
+        }
+
+        private void Button_Click(object sender, RoutedEventArgs e)
+        {
+         //   allAPU2.Show();
+        }
+
+<<<<<<< HEAD
         private void Button_Click_1(object sender, RoutedEventArgs e)
         {
             //UserControlSetting userControlSetting = new UserControlSetting();
@@ -349,6 +530,11 @@ namespace AppARM
             //process.Kill();
 
             /*
+=======
+        private void BT_TestStop1_Click(object sender, RoutedEventArgs e)
+        {
+
+>>>>>>> 19377ed4ed662b43bcd00eaaaae1aa67e1138180
             string IpMap = Properties.Settings.Default.IP_Server_maps;
             string PortMap = Properties.Settings.Default.Port_Server_maps;
           
@@ -382,7 +568,11 @@ namespace AppARM
             {
                 MessageBox.Show("Error: " + response.StatusCode);
             }
+<<<<<<< HEAD
             */
+=======
+
+>>>>>>> 19377ed4ed662b43bcd00eaaaae1aa67e1138180
         }
 
         //__________________________________________________________________________________________

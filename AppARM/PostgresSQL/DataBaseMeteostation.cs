@@ -46,7 +46,14 @@ namespace AppARM.PostgresSQL
                  "location   text,\r\n" +
                  "longitude   text,\r\n" +
                  "lagatitude   text,\r\n" +
+<<<<<<< HEAD
                  "description  text\r\n)";
+=======
+                 "description  text,\r\n" +
+                 "temperature text,\r\n" +
+                 "windSpeed text,\r\n" +
+                 "directionWind text \r\n)";
+>>>>>>> 19377ed4ed662b43bcd00eaaaae1aa67e1138180
              
             try
             {
@@ -135,6 +142,7 @@ namespace AppARM.PostgresSQL
             }
         }
 
+<<<<<<< HEAD
         //поиск долготы по ip адресу 
         //select longitude from meteostation
         //where ip_device = '127.0.0.1'
@@ -171,11 +179,21 @@ namespace AppARM.PostgresSQL
         public bool InsertDataBase(string _nametable, string _ipDevice, string _port, string _location, string _longitude, string _lagatitude, string _description)
         {
             string sqlStr = "INSERT INTO " + _nametable + " (ip_device ,port,location ,longitude ,lagatitude,description) " +
+=======
+        //Добавление данных в таблицу
+        public bool InsertDataBase(string _nametable, string _ipDevice, string _port, string _location, string _longitude, string _lagatitude, string _description, string _temperature, string _windspeed, string _directionwind)
+        {
+            string sqlStr = "INSERT INTO " + _nametable + " (ip_device ,port,location ,longitude ,lagatitude,description,temperature, windspeed,directionwind) " +
+>>>>>>> 19377ed4ed662b43bcd00eaaaae1aa67e1138180
                 "VALUES(";
             try
             {
                 connect.Open();
+<<<<<<< HEAD
                 sqlStr = sqlStr + _ipDevice + "," + _port + "," + _location + "," + _longitude + "," + _lagatitude + "," + _description +  ")";
+=======
+                sqlStr = sqlStr + _ipDevice + "," + _port + "," + _location + "," + _longitude + "," + _lagatitude + "," + _description + "," + _temperature + "," + _windspeed + "," + _directionwind + ")";
+>>>>>>> 19377ed4ed662b43bcd00eaaaae1aa67e1138180
                 NpgsqlCommand sqlCommand = new NpgsqlCommand(sqlStr, connect);
                 Console.WriteLine(sqlStr);
                 sqlCommand.ExecuteNonQuery();
@@ -361,7 +379,11 @@ namespace AppARM.PostgresSQL
         }
 
         //Обновление элемента в таблице
+<<<<<<< HEAD
         public bool UpdateElementDataBase(string _nametable, string _id, string _ipDevice, string _port, string _location, string _longitude, string _lagatitude, string _description)
+=======
+        public bool UpdateElementDataBase(string _nametable, string _id, string _ipDevice, string _port, string _location, string _longitude, string _lagatitude, string _description, string _temperature, string _windspeed, string _directionwind)
+>>>>>>> 19377ed4ed662b43bcd00eaaaae1aa67e1138180
         {
             /*
                 * update test2 
@@ -370,46 +392,85 @@ namespace AppARM.PostgresSQL
             */
 
             System.Threading.Thread.CurrentThread.CurrentCulture = new System.Globalization.CultureInfo("en-US");
+<<<<<<< HEAD
            
             string sqlStr = "Update " + _nametable + " set ";
             string sqlStrWhere = " where id = " + _id;
             if ((_ipDevice == null) && (_port == null) && (_location == null) && (_longitude == null) && (_lagatitude == null) && (_description == null))
+=======
+            Console.WriteLine(_temperature);
+            string sqlStr = "Update " + _nametable + " set ";
+            string sqlStrWhere = " where id = " + _id;
+            if ((_ipDevice == null) && (_port == null) && (_location == null) && (_longitude == null) && (_lagatitude == null) && (_description == null) & (_temperature == null) && (_windspeed == null) && (_directionwind == null))
+>>>>>>> 19377ed4ed662b43bcd00eaaaae1aa67e1138180
             {
                 Console.WriteLine("1");
                 return false;
             }
+<<<<<<< HEAD
             if ((_ipDevice != null) && (_port == null) && (_location == null) && (_longitude == null) && (_lagatitude == null) && (_description == null))
+=======
+            if ((_ipDevice != null) && (_port == null) && (_location == null) && (_longitude == null) && (_lagatitude == null) && (_description == null) & (_temperature == null) && (_windspeed == null) && (_directionwind == null))
+>>>>>>> 19377ed4ed662b43bcd00eaaaae1aa67e1138180
             {
                 Console.WriteLine("2");
                 sqlStr = sqlStr + "ip_device = " + _ipDevice + sqlStrWhere;
             }
+<<<<<<< HEAD
             if ((_ipDevice == null) && (_port != null) && (_location == null) && (_longitude == null) && (_lagatitude == null) && (_description == null))
+=======
+            if ((_ipDevice == null) && (_port != null) && (_location == null) && (_longitude == null) && (_lagatitude == null) && (_description == null) & (_temperature == null) && (_windspeed == null) && (_directionwind == null))
+>>>>>>> 19377ed4ed662b43bcd00eaaaae1aa67e1138180
             {
                 Console.WriteLine();
                 sqlStr = sqlStr + "port = " + _port + sqlStrWhere;
             }
+<<<<<<< HEAD
             if ((_ipDevice == null) && (_port == null) && (_location != null) && (_longitude == null) && (_lagatitude == null) && (_description == null))
+=======
+            if ((_ipDevice == null) && (_port == null) && (_location != null) && (_longitude == null) && (_lagatitude == null) && (_description == null) & (_temperature == null) && (_windspeed == null) && (_directionwind == null))
+>>>>>>> 19377ed4ed662b43bcd00eaaaae1aa67e1138180
             {
                 Console.WriteLine("3");
                 sqlStr = sqlStr + "location = " + _location + sqlStrWhere;
             }
+<<<<<<< HEAD
             if ((_ipDevice == null) && (_port == null) && (_location == null) && (_longitude != null) && (_lagatitude == null) && (_description == null))
+=======
+            if ((_ipDevice == null) && (_port == null) && (_location == null) && (_longitude != null) && (_lagatitude == null) && (_description == null) & (_temperature == null) && (_windspeed == null) && (_directionwind == null))
+>>>>>>> 19377ed4ed662b43bcd00eaaaae1aa67e1138180
             {
                 Console.WriteLine("4");
                 sqlStr = sqlStr + "longitude = " + _longitude + sqlStrWhere;
             }
+<<<<<<< HEAD
             if ((_ipDevice == null) && (_port == null) && (_location == null) && (_longitude == null) && (_lagatitude != null) && (_description == null))
+=======
+            if ((_ipDevice == null) && (_port == null) && (_location == null) && (_longitude == null) && (_lagatitude != null) && (_description == null) & (_temperature == null) && (_windspeed == null) && (_directionwind == null))
+>>>>>>> 19377ed4ed662b43bcd00eaaaae1aa67e1138180
             {
                 Console.WriteLine("5");
                 sqlStr = sqlStr + "lagatitude = " + _lagatitude + sqlStrWhere;
             }
+<<<<<<< HEAD
             if ((_ipDevice == null) && (_port == null) && (_location == null) && (_longitude == null) && (_lagatitude == null) && (_description != null))
+=======
+            if ((_ipDevice == null) && (_port == null) && (_location == null) && (_longitude == null) && (_lagatitude == null) && (_description != null) & (_temperature == null) && (_windspeed == null) && (_directionwind == null))
+>>>>>>> 19377ed4ed662b43bcd00eaaaae1aa67e1138180
             {
                 Console.WriteLine("6");
                 sqlStr = sqlStr + "description = " + _description + sqlStrWhere;
             }
+<<<<<<< HEAD
 
             if ((_ipDevice != null) && (_port != null) && (_location != null) && (_longitude != null) && (_lagatitude != null) && (_description != null))
+=======
+            if ((_ipDevice == null) && (_port == null) && (_location == null) && (_longitude == null) && (_lagatitude == null) && (_description == null) & (_temperature != null) && (_windspeed != null) && (_directionwind != null))
+            {
+                sqlStr = sqlStr + "temperature = " + "'" + _temperature + "'," + " " + "windspeed = " + "'" + _windspeed + "'," + " " + "directionwind = " + "'" + _directionwind + "'" + " " + sqlStrWhere;
+            }
+            if ((_ipDevice != null) && (_port != null) && (_location != null) && (_longitude != null) && (_lagatitude != null) && (_description != null) & (_temperature != null) && (_windspeed != null) && (_directionwind != null))
+>>>>>>> 19377ed4ed662b43bcd00eaaaae1aa67e1138180
             {
                 sqlStr = sqlStr +
                     "ip_device = " + "'" + _ipDevice + "'" + ',' +

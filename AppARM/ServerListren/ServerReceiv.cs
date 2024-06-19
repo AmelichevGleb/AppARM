@@ -4,7 +4,11 @@ using System.Net;
 using System.Text;
 using System.Threading;
 using System.Windows;
+<<<<<<< HEAD
 using System.Text.Json;
+=======
+
+>>>>>>> 19377ed4ed662b43bcd00eaaaae1aa67e1138180
 using AppARM.WeatherSokol;
 using AppARM.Parser;
 using AppARM.PostgresSQL;
@@ -22,9 +26,12 @@ using System.Collections.Generic;
 using AppARM.Weather;
 using Newtonsoft.Json.Linq;
 using System.Windows.Controls;
+<<<<<<< HEAD
 using System.Linq;
 using static AppARM.SettingApp.ServerReceiv.ClientObject;
 using Mono.Security.Interface;
+=======
+>>>>>>> 19377ed4ed662b43bcd00eaaaae1aa67e1138180
 
 
 namespace AppARM.SettingApp
@@ -37,7 +44,11 @@ namespace AppARM.SettingApp
     {
         private static MainWindow mainWindow;
         private static ParserAll parser = new ParserAll();
+<<<<<<< HEAD
         public static List<meteo> sList = new List<meteo>();
+=======
+
+>>>>>>> 19377ed4ed662b43bcd00eaaaae1aa67e1138180
 
         public class ClientObject
         {
@@ -58,6 +69,7 @@ namespace AppARM.SettingApp
             private string needIP = "";
             private string needPort = "";
 
+<<<<<<< HEAD
             public struct meteo
             {
                 public string ip { get; set; }
@@ -66,19 +78,26 @@ namespace AppARM.SettingApp
 
             }
 
+=======
+>>>>>>> 19377ed4ed662b43bcd00eaaaae1aa67e1138180
             public ClientObject(TcpClient tcpClient)
             {
                 client = tcpClient;
             }
             static public string answer = "";
 
+<<<<<<< HEAD
 
             public async Task PostTextAsync(bool type,string ip4C)
+=======
+            public async Task EmergencyCheckAddTextAsync(TcpClient _client)
+>>>>>>> 19377ed4ed662b43bcd00eaaaae1aa67e1138180
             {
                 await Task.Run(() =>
                 {
                     Application.Current.Dispatcher.Invoke((Action)(() =>
                     {
+<<<<<<< HEAD
                         string area = "";
 
                            // var t = Post("1", _dataBase.returnLongitudeMeteostation(ip4C));
@@ -123,6 +142,14 @@ namespace AppARM.SettingApp
                             files.ReadFile(Convert.ToString(message), false);
                             mainWindow.Dispatcher.Invoke((Action)(() => mainWindow.MessageServer.Text += Convert.ToString(DateTime.Now) + " - " + Convert.ToString(message) + '\n'));
                         }
+=======
+                        var message = new StringBuilder();
+                        message.AppendFormat("Пришел сигнал ЧС с устройства с IP {0}", Convert.ToString(_client.Client.RemoteEndPoint));
+                        files.ReadFile(Convert.ToString(message), false);
+                        Console.WriteLine("ЧС");
+
+                        mainWindow.Dispatcher.Invoke((Action)(() => mainWindow.MessageServer.Text += Convert.ToString(DateTime.Now) + " - " + Convert.ToString(message) + '\n'));
+>>>>>>> 19377ed4ed662b43bcd00eaaaae1aa67e1138180
                     }));
 
                     Thread.Sleep(100);
@@ -133,7 +160,10 @@ namespace AppARM.SettingApp
              
                        try
                         {
+<<<<<<< HEAD
                            
+=======
+>>>>>>> 19377ed4ed662b43bcd00eaaaae1aa67e1138180
                             TcpClient tcpClient = new TcpClient();
                             tcpClient.Connect(_ip, Convert.ToInt32(_port));
                             NetworkStream stream = tcpClient.GetStream();
@@ -144,6 +174,7 @@ namespace AppARM.SettingApp
                         }
                         catch (Exception ex)
                         {
+<<<<<<< HEAD
                             string msg = "Не удалось оповестить " + _ip + "\n";
                             mainWindow.MessageServer.Text += Convert.ToString(DateTime.Now) + " - " +  msg;
                             files.ReadFile("Не удалось оповестить " + _ip, false);
@@ -151,6 +182,15 @@ namespace AppARM.SettingApp
                         }
             }
             public async Task NeedInfo(string[] _allIP4C, string[] _allPort4C, byte[] _message)
+=======
+                            string msg = "Неудалось оповестить " + _ip + "\n";
+                            mainWindow.MessageServer.Text += msg;
+                            files.ReadFile("Неудалось оповестить " + _ip, false);
+                            files.ReadFile(Convert.ToString(ex), true);
+                        }
+            }
+            public async Task NeedInfo(string[] _allIP4C, string[] _allPort4C, string _message)
+>>>>>>> 19377ed4ed662b43bcd00eaaaae1aa67e1138180
             {
                 await Task.Run(() =>
                 {
@@ -159,6 +199,7 @@ namespace AppARM.SettingApp
                         string value = "";
                         try
                         {
+<<<<<<< HEAD
                            // for (int i = 0; i < _allIP4C.Length - 1; i++)
                                 for (int i = 0; i < _allIP4C.Length ; i++)
                                 {
@@ -167,11 +208,21 @@ namespace AppARM.SettingApp
                                 message.AppendFormat("Надо оповестить {0} {1}", _allIP4C[i], _allPort4C[i]);
                                 files.ReadFile(Convert.ToString(message), false);
                                 mainWindow.MessageServer.Text += Convert.ToString(DateTime.Now) + " - " + message + "\n";
+=======
+                            for (int i = 0; i < _allIP4C.Length - 1; i++)
+                            {
+                                value = _allIP4C[i];
+                                var message = new StringBuilder();
+                                message.AppendFormat("надо оповестить {0} {1}", _allIP4C[i], _allPort4C[i]);
+                                files.ReadFile(Convert.ToString(message), false);
+                                mainWindow.MessageServer.Text += message+ "\n";
+>>>>>>> 19377ed4ed662b43bcd00eaaaae1aa67e1138180
                                 await Task.Run(async () =>
                                 {
                                 try
                                 {
   
+<<<<<<< HEAD
                                     TcpClient tcpClient = new TcpClient();
                                     tcpClient.Connect(_allIP4C[i], Convert.ToInt32(_allPort4C[i]));
                                     NetworkStream stream = tcpClient.GetStream();
@@ -181,6 +232,16 @@ namespace AppARM.SettingApp
                                     tcpClient.Close();
                                     files.ReadFile("оповещение дошло " + _allIP4C[i], false);
                                    await GoodMessagAddTextAsync(_allIP4C[i]);
+=======
+                                        TcpClient tcpClient = new TcpClient();
+                                    tcpClient.Connect(_allIP4C[i], Convert.ToInt32(_allPort4C[i]));
+                                    NetworkStream stream = tcpClient.GetStream();
+                                    var requestData = Encoding.UTF8.GetBytes(_message);
+                                    stream.Write(requestData, 0, requestData.Length);
+                                    stream.Close();
+                                    tcpClient.Close();
+                                        files.ReadFile("оповещение дошло " + _allIP4C[i], false);
+>>>>>>> 19377ed4ed662b43bcd00eaaaae1aa67e1138180
                                     }
                                 catch (Exception ex)
                                 {
@@ -191,11 +252,19 @@ namespace AppARM.SettingApp
                         }
                         catch (Exception ex)
                         {
+<<<<<<< HEAD
                             files.ReadFile("Не удалось оповестить " + value, false);
                             files.ReadFile(Convert.ToString(ex), true);
                         }
                     }));
                     Thread.Sleep(1000);
+=======
+                            files.ReadFile("Неудалось оповестить " + value, false);
+                            files.ReadFile(Convert.ToString(ex), true);
+                        }
+                    }));
+                    Thread.Sleep(100);
+>>>>>>> 19377ed4ed662b43bcd00eaaaae1aa67e1138180
                 });
             }
 
@@ -206,6 +275,7 @@ namespace AppARM.SettingApp
                     Application.Current.Dispatcher.Invoke((Action)(() =>
                     {
                         var message = new StringBuilder();
+<<<<<<< HEAD
                         message.AppendFormat("Не удалось оповестить {0}", _ip);
                         files.ReadFile("Не удалось оповестить " + _ip, false);
                         files.ReadFile(Convert.ToString(ex), true);
@@ -224,6 +294,11 @@ namespace AppARM.SettingApp
                         message.AppendFormat("Удалось оповестить {0}", _ip);
                         files.ReadFile("Удалось оповестить " + _ip, false);
                        
+=======
+                        message.AppendFormat("Неудалось оповестить {0}", _ip);
+                        files.ReadFile("Неудалось оповестить " + _ip, false);
+                        files.ReadFile(Convert.ToString(ex), true);
+>>>>>>> 19377ed4ed662b43bcd00eaaaae1aa67e1138180
                         mainWindow.MessageServer.Text += message + "\n";
                     }));
                     Thread.Sleep(100);
@@ -244,7 +319,10 @@ namespace AppARM.SettingApp
                     Thread.Sleep(100);
                 });
             }
+<<<<<<< HEAD
 
+=======
+>>>>>>> 19377ed4ed662b43bcd00eaaaae1aa67e1138180
             public async void Process()
             {
                 string imei = String.Empty;
@@ -263,12 +341,16 @@ namespace AppARM.SettingApp
                     byte[] data = new byte[128]; // буфер для получаемых данных
                     while ((i = stream.Read(bytes, 0, bytes.Length)) != 0)
                     {
+<<<<<<< HEAD
                        
+=======
+>>>>>>> 19377ed4ed662b43bcd00eaaaae1aa67e1138180
                         string requests = Encoding.UTF8.GetString(bytes, 0, bytes.Length);
                         byte[] B4c = new byte[] { 0x00, 0x02, 0x01, 0xE2 };
 
                         if (BitConverter.ToString(bytes) == BitConverter.ToString(B4c))  //Проверка пришел сигнал ЧС
                         {
+<<<<<<< HEAD
                             
                             //
                           
@@ -366,6 +448,91 @@ namespace AppARM.SettingApp
                             await NeedInfo(ts.Item1, ts.Item2, strscenario);
                             Console.WriteLine(strscenario);
                             }
+=======
+                            await  EmergencyCheckAddTextAsync(client);
+                            ip4C = parser.AddMassiveStringIP(Convert.ToString(client.Client.RemoteEndPoint), "1");
+                            var t = _dataBase.returnIp4CDevice("meteostation", ip4C);
+                            needIP = t.Item1;
+                            needPort = t.Item2;
+                            Console.WriteLine(needPort);
+                            try
+                            {
+                                newClientMeteo = new TcpClient();
+                                newClientMeteo.Connect(needIP, Convert.ToInt32(needPort));
+                                NetworkStream tcpStream = newClientMeteo.GetStream();
+                                tcpStream.Write(Message, 0, Message.Length);
+                                byte[] msg = new byte[8096];
+                                int count = tcpStream.Read(msg, 0, msg.Length);
+                                ByteWeather byteWeather = new ByteWeather(msg);
+                                var temp = byteWeather.ReturnPartWeater();
+
+                                temperature = temp.Item1;
+                                windSpeed = temp.Item2;
+                                directionWind = temp.Item3;
+
+                                await  WeatherAddTextAsync(temperature, windSpeed, directionWind);
+                                Console.WriteLine("1: {0} , 2: {1} , 3: {2}", temp.Item1, temp.Item2, temp.Item3);
+
+                                //_____________________________
+
+                                /*
+                                //createJsonRequest.CreatJSON(needIP, "xxx", "xxx", "xxx", temperature, windSpeed, directionWind, "null");
+
+                                //                                var url = "http://" + Properties.Settings.Default.IP_Server_maps + ":" + Convert.ToInt32(Properties.Settings.Default.Port_Server_maps) + "/set_stations/";
+                                //                              var httpRequest = (HttpWebRequest)WebRequest.Create(url);
+                                //                            httpRequest.Method = "POST";
+                                //                          httpRequest.Accept = "application/json";
+                                //                        httpRequest.ContentType = "application/json";
+                                //                      using (var streamWriter = new StreamWriter(httpRequest.GetRequestStream()))
+                                //                    {
+                                //                      streamWriter.Write(json);
+                                //                }
+                                //              var httpResponse = (HttpWebResponse)httpRequest.GetResponse();
+                                //            using (var streamReader = new StreamReader(httpResponse.GetResponseStream()))
+                                //          {
+                                //            var result = streamReader.ReadToEnd();
+                                //      }
+                                //    var status = httpResponse.StatusCode.ToString();
+                                //  if (status == "OK")
+                                //{
+                                //сообщение
+                                //}
+                                */
+                            }
+                            catch (Exception e)
+                            {
+                                await Task.Run(() =>
+                                {
+                                    Application.Current.Dispatcher.Invoke((Action)(() =>
+                                    {
+                                        if (needIP == "")
+                                        {
+                                            var message = new StringBuilder();
+                                            message.AppendFormat("нет таких метеостанций \n");
+                                            files.ReadFile(Convert.ToString(message), false);
+                                            mainWindow.MessageServer.Text += message;
+                                        }
+                                        else
+                                        {
+                                            var message = new StringBuilder();
+                                            message.AppendFormat("не отвечает метеостанция \n");
+                                            files.ReadFile("не отвечает метеостанция", false);
+                                            mainWindow.MessageServer.Text += message;
+                                        }
+                                    }));
+
+                                    Thread.Sleep(100);
+                                });
+
+                            }
+
+                            var strIP = _alarmDataBase.GettingListOfDevices("alarmdb", ip4C);
+                            var ts = parser.MassiveIPDanger(strIP.Item1);
+                            var strscenario = scenarioIndividual.CommandGroup(true, strIP.Item2);
+                            await NeedInfo(ts.Item1, ts.Item2, strscenario);
+                            Console.WriteLine(strscenario);
+
+>>>>>>> 19377ed4ed662b43bcd00eaaaae1aa67e1138180
 
                         }
 
@@ -390,6 +557,7 @@ namespace AppARM.SettingApp
             }
         }
 
+<<<<<<< HEAD
         private static Files files = new Files();
         public List<TcpClient> listConnectedClients = new List<TcpClient>();
         public bool active = true;
@@ -534,6 +702,15 @@ namespace AppARM.SettingApp
 
             }
         }
+=======
+
+
+        private Files files = new Files();
+        public List<TcpClient> listConnectedClients = new List<TcpClient>();
+        public bool active = true;
+        TcpListener listener = new TcpListener(IPAddress.Parse(Properties.Settings.Default.Ip_Server_Device), Convert.ToInt32(Properties.Settings.Default.Port_Server_Device));
+
+>>>>>>> 19377ed4ed662b43bcd00eaaaae1aa67e1138180
 
         public  void StartServerReceiver(int _a, MainWindow _mainWindow)
         {
@@ -573,14 +750,20 @@ namespace AppARM.SettingApp
               
                 while (active)
                 {
+<<<<<<< HEAD
                
+=======
+>>>>>>> 19377ed4ed662b43bcd00eaaaae1aa67e1138180
                     TcpClient client = listener.AcceptTcpClient();
                     listConnectedClients.Add(client);
                     ClientObject clientObject = new ClientObject(client);
                     Thread clientThread = new Thread(new ThreadStart(clientObject.Process));
                     clientThread.Start();
+<<<<<<< HEAD
                     Thread threadDelete = new Thread(() => DeleteForTime(sList));
                     threadDelete.Start();
+=======
+>>>>>>> 19377ed4ed662b43bcd00eaaaae1aa67e1138180
                 }
             }
             catch //(Exception ex)
@@ -593,10 +776,13 @@ namespace AppARM.SettingApp
                     listener.Stop();
             }
         }
+<<<<<<< HEAD
 
 
        
 
+=======
+>>>>>>> 19377ed4ed662b43bcd00eaaaae1aa67e1138180
     }
 }
 

@@ -50,7 +50,11 @@
                     <DataGridTextColumn Binding="{Binding IP_device, UpdateSourceTrigger=PropertyChanged}"  Header="IP датчика"/>
                     <DataGridTextColumn Binding="{Binding Script, UpdateSourceTrigger=PropertyChanged}"  Header="Номер Сценария"/>
                     <DataGridTextColumn Binding="{Binding Path, UpdateSourceTrigger=PropertyChanged}"  Header="Путь"/>
+<<<<<<< HEAD
                     <DataGridTextColumn Binding="{Binding Notify, UpdateSourceTrigger=PropertyChanged}"   Width="390" Header="Терминалы оповещения">
+=======
+                    <DataGridTextColumn Binding="{Binding Notify, UpdateSourceTrigger=PropertyChanged}"   Width="390" Header="Устройства">
+>>>>>>> 19377ed4ed662b43bcd00eaaaae1aa67e1138180
                         <DataGridTextColumn.ElementStyle>
                             <Style TargetType="TextBlock">
                                 <Setter Property="TextWrapping" Value="Wrap"></Setter>
@@ -79,7 +83,11 @@
                     <DataGridTemplateColumn Header="Запуск сценария">
                         <DataGridTemplateColumn.CellTemplate>
                             <DataTemplate>
+<<<<<<< HEAD
                                 <Button x:Name="bnt_Send" Content="Запуск" Click="bt_send_Click" />
+=======
+                                <Button x:Name="bnt_Send" Content="view" Click="bt_send_Click" />
+>>>>>>> 19377ed4ed662b43bcd00eaaaae1aa67e1138180
                             </DataTemplate>
                         </DataGridTemplateColumn.CellTemplate>
                     </DataGridTemplateColumn>

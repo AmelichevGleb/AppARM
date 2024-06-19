@@ -68,7 +68,11 @@ namespace AppARM.PostgresSQL
             }
             catch (Exception ex)
             {
+<<<<<<< HEAD
                 MessageBox.Show("Ошибка подключения к базе данных 'Датчики ЧС'");
+=======
+                MessageBox.Show("Ошибка подключения к базе данных 'Оповещения'");
+>>>>>>> 19377ed4ed662b43bcd00eaaaae1aa67e1138180
                 files.ReadException(ex);
                 connect.Close();
                 return false;

@@ -62,7 +62,11 @@ namespace AppARM.PostgresSQL
             }
             catch (Exception ex)
             {
+<<<<<<< HEAD
                 MessageBox.Show("Ошибка подключения к базе данных 'Сценарии'");
+=======
+                MessageBox.Show("Ошибка подключения к базе данных 'Дополнительные Устройства'");
+>>>>>>> 19377ed4ed662b43bcd00eaaaae1aa67e1138180
                 files.ReadException(ex);
                 connect.Close();
                 return false;

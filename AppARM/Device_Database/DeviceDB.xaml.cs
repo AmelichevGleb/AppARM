@@ -228,8 +228,14 @@ namespace AppARM.Device_Database
             MessageBox.Show($"{p.Id} {p.IP_device} {p.Port} {p.Location} {p.Longitude} {p.Lagatitude} {p.Description}");
             //вызов обновления базы данных 
             GetWeather(p.IP_device, p.Port);
+<<<<<<< HEAD
             db.UpdateElementDataBase(tableNameMeteo, Convert.ToString(p.Id), p.IP_device, Convert.ToString(p.Port), p.Location, p.Longitude, p.Lagatitude, p.Description);
                 }
+=======
+            db.UpdateElementDataBase(tableNameMeteo, Convert.ToString(p.Id), p.IP_device, Convert.ToString(p.Port), p.Location, p.Longitude, p.Lagatitude, p.Description, Convert.ToString(temperature), Convert.ToString(windSpeed), Convert.ToString(directionWind));
+            db.UpdateElementDataBase(tableNameMeteo, Convert.ToString(p.Id), null, null, null, null, null, null, Convert.ToString(temperature), Convert.ToString(windSpeed), Convert.ToString(directionWind));
+        }
+>>>>>>> 19377ed4ed662b43bcd00eaaaae1aa67e1138180
 
         //Получаем данные из таблицы
         private void grid_MouseUp(object sender, MouseButtonEventArgs e)
@@ -258,7 +264,11 @@ namespace AppARM.Device_Database
         //вывод информации о записи
         private void MenuItem_Click_Add(object sender, RoutedEventArgs e)
         {
+<<<<<<< HEAD
             db.InsertDataBase(tableNameMeteo, "'127.0.0.1'", "11000", "'Kaluga'", "54.5293", "36.2754", "'127.0.0.2'");
+=======
+            db.InsertDataBase(tableNameMeteo, "'127.0.0.1'", "11000", "'Kaluga'", "54.5293", "36.2754", "'127.0.0.2'", "'test'", "'test'", "'test'");
+>>>>>>> 19377ed4ed662b43bcd00eaaaae1aa67e1138180
             var id = db.GetLastID(tableNameMeteo);
             deviceList.Add(new StructList(id, "127.0.0.1", "11000", "Kaluga", "54.5293", "36.2754", "127.0.0.2"));
             DG_MeteoStation.ItemsSource = deviceList.ToList();

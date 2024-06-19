@@ -27,6 +27,7 @@
       <Value Profile="(Default)">6666</Value>
     </Setting>
     <Setting Name="IP_Server_maps" Type="System.String" Scope="User">
+<<<<<<< HEAD
       <Value Profile="(Default)">127.0.0.1</Value>
     </Setting>
     <Setting Name="Port_Server_maps" Type="System.String" Scope="User">
@@ -37,6 +38,18 @@
     </Setting>
     <Setting Name="Port_Server_Device" Type="System.String" Scope="User">
       <Value Profile="(Default)">6666</Value>
+=======
+      <Value Profile="(Default)" />
+    </Setting>
+    <Setting Name="Port_Server_maps" Type="System.String" Scope="User">
+      <Value Profile="(Default)" />
+    </Setting>
+    <Setting Name="Ip_Server_Device" Type="System.String" Scope="User">
+      <Value Profile="(Default)" />
+    </Setting>
+    <Setting Name="Port_Server_Device" Type="System.String" Scope="User">
+      <Value Profile="(Default)" />
+>>>>>>> 19377ed4ed662b43bcd00eaaaae1aa67e1138180
     </Setting>
   </Settings>
 </SettingsFile>

@@ -129,6 +129,7 @@ namespace AppARM.FilesLogs
         //если false идет запись в файл логовы
         public void ReadFile(string _text, bool state)
         {
+<<<<<<< HEAD
             try
             {
                 if (state == true)
@@ -143,6 +144,15 @@ namespace AppARM.FilesLogs
             catch (Exception ex)
             {
                 Console.WriteLine(Convert.ToString(ex));
+=======
+            if (state == true) 
+            { 
+                System.IO.File.AppendAllText(fileNameException, "-" + " " + Convert.ToString(DateTime.Now) + " " + _text + "\n"); 
+            }
+            else 
+            { 
+                System.IO.File.AppendAllText(fileNameLogs, "-" + " " + Convert.ToString(DateTime.Now) + " " + _text + "\n"); 
+>>>>>>> 19377ed4ed662b43bcd00eaaaae1aa67e1138180
             }
         }
 

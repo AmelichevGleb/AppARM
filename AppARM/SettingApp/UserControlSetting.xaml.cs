@@ -68,7 +68,11 @@ namespace AppARM
             Properties.Settings.Default.Port_Server_Device = Convert.ToString(TB_Port_Server_Device.Text);
             Properties.Settings.Default.Save();
             files.ReadFile("Внесение изменений в настройки", false);
+<<<<<<< HEAD
             MessageBox.Show("Внесение изменений в настройки\nПри необходимости перезапустите сервер");
+=======
+            MessageBox.Show("Необходимо перезагрузить приложение");
+>>>>>>> 19377ed4ed662b43bcd00eaaaae1aa67e1138180
             //this.Close();
         }
         //Кнопка Cancel закрывает окно
