@@ -50,7 +50,7 @@
                     <DataGridTextColumn Binding="{Binding IP_device, UpdateSourceTrigger=PropertyChanged}"  Header="IP датчика"/>
                     <DataGridTextColumn Binding="{Binding Script, UpdateSourceTrigger=PropertyChanged}"  Header="Номер Сценария"/>
                     <DataGridTextColumn Binding="{Binding Path, UpdateSourceTrigger=PropertyChanged}"  Header="Путь"/>
-                    <DataGridTextColumn Binding="{Binding Notify, UpdateSourceTrigger=PropertyChanged}"   Width="390" Header="Устройства">
+                    <DataGridTextColumn Binding="{Binding Notify, UpdateSourceTrigger=PropertyChanged}"   Width="390" Header="Терминалы оповещения">
                         <DataGridTextColumn.ElementStyle>
                             <Style TargetType="TextBlock">
                                 <Setter Property="TextWrapping" Value="Wrap"></Setter>

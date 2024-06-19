@@ -340,33 +340,11 @@ namespace AppARM
 
         private bool test2 = true; Process process;
         private static readonly HttpClient client = new HttpClient();
-        private async void Post()
-        {
-            string IpMap = Properties.Settings.Default.IP_Server_maps;
-            string url = "http://" + IpMap + "/index.html";
-
-            var httpWebRequest = (HttpWebRequest)WebRequest.Create(url);
-            httpWebRequest.ContentType = "application/json";
-            httpWebRequest.Method = "POST";
-
-            using (var streamWriter = new StreamWriter(httpWebRequest.GetRequestStream()))
-            {
-                string json = "{\"Type\":\"1\"," +
-                              "\"IP\":\"55.7374\"}";
-
-                streamWriter.Write(json);
-            }
-
-            var httpResponse = (HttpWebResponse)httpWebRequest.GetResponse();
-            using (var streamReader = new StreamReader(httpResponse.GetResponseStream()))
-            {
-                var result = streamReader.ReadToEnd();
-            }
-        }
+       
 
         private void BT_TestStop1_Click(object sender, RoutedEventArgs e)
         {
-            Post();
+            //Post();
 
             //process.Kill();
 

@@ -135,6 +135,38 @@ namespace AppARM.PostgresSQL
             }
         }
 
+        //поиск долготы по ip адресу 
+        //select longitude from meteostation
+        //where ip_device = '127.0.0.1'
+
+        public string  returnLongitudeMeteostation( string _ip)
+        {
+            string longitude = "";
+            try
+            {
+                string sqlStr = "select longitude from meteostation "  + " where ip_device = " + "'" + _ip + "'";
+                connect.Open();
+                using var cmd = new NpgsqlCommand(sqlStr, connect);
+                Console.WriteLine(sqlStr);
+                using NpgsqlDataReader rdr = cmd.ExecuteReader();
+                while (rdr.Read())
+                {
+                    Console.WriteLine("{0} -  longitude ", rdr.GetString(0));
+                    longitude = rdr.GetString(0);
+                   
+
+                }
+                connect.Close();
+                return longitude;
+            }
+            catch (Exception _ex)
+            {
+                connect.Close();
+                files.ReadException(_ex);
+                return "";
+            }
+        }
+
         //Добавление данных в таблицу
         public bool InsertDataBase(string _nametable, string _ipDevice, string _port, string _location, string _longitude, string _lagatitude, string _description)
         {

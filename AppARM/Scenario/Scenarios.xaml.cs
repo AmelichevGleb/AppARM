@@ -68,7 +68,7 @@ namespace AppARM.Scenario
 
         protected override void OnClosing(System.ComponentModel.CancelEventArgs e)
         {
-            if (tcpClient == null) { MessageBox.Show("ыыы"); }
+            if (tcpClient == null) {  }
             else { tcpClient.Dispose(); }
         }
 

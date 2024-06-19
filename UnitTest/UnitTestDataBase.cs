@@ -363,6 +363,15 @@ namespace UnitTest
 
         }
 
+        [TestMethod]
+        public void TestReturnLongitude()
+        {
+            //вернуть Ip метеостанции стоящей рядом с датчиком ЧС
+            DataBaseMeteostation db = new DataBaseMeteostation(serverBD, portBD, userBD, passwordBD);
+            var t = db.returnLongitudeMeteostation("meteostation", "195.124.51.12");
+            Assert.AreEqual(t, "69.0000");
+        }
+
         //returnIp4CDevice
     }
 }
