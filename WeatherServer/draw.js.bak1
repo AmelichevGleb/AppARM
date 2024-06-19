@@ -1,0 +1,12 @@
+m0 = new marker(55.7068, 37.6802, "blue", "<dl><dt><b>Name: </b>Kaluga</dt><dt> <b>X: </b>55.7068</dt><dt><b>Y: </b>37.6802</dt><dt><b>Temperature: </b>0</dt><dt><b>Wind Speed: </b>0</dt><dt><b>Direction: </b>0</dt></dl>");
+c0 = new circle([55.7068, 37.6802], 800, "#D6DF71");
+m1 = new marker(55.7668, 37.6130, "blue", "<dl><dt><b>Name: </b>Kaluga</dt><dt> <b>X: </b>55.7668</dt><dt><b>Y: </b>37.6130</dt><dt><b>Temperature: </b>0</dt><dt><b>Wind Speed: </b>0</dt><dt><b>Direction: </b>0</dt></dl>");
+c1 = new circle([55.7668, 37.6130], 800, "#D6DF71");
+m2 = new marker(55.6567, 37.6409, "black", "<dl><dt><b>Name: </b>Kaluga</dt><dt> <b>X: </b>55.6567</dt><dt><b>Y: </b>37.6409</dt><dt><b>Temperature: </b>0</dt><dt><b>Wind Speed: </b>0</dt><dt><b>Direction: </b>0</dt></dl>");
+c2 = new circle([55.6567, 37.6409], 800, "#D6DF71");
+m3 = new marker(55.7937, 37.6069, "blue", "<dl><dt><b>Name: </b>Kaluga</dt><dt> <b>X: </b>55.7937</dt><dt><b>Y: </b>37.6069</dt><dt><b>Temperature: </b>0</dt><dt><b>Wind Speed: </b>0</dt><dt><b>Direction: </b>0</dt></dl>");
+c3 = new circle([55.7937, 37.6069], 800, "#D6DF71");
+m4 = new marker(55.7374, 37.7102, "blue", "<dl><dt><b>Name: </b>Kaluga</dt><dt> <b>X: </b>55.7374</dt><dt><b>Y: </b>37.7102</dt><dt><b>Temperature: </b>0</dt><dt><b>Wind Speed: </b>0</dt><dt><b>Direction: </b>0</dt></dl>");
+c4 = new circle([55.7374, 37.7102], 800, "#D6DF71");
+m5 = new marker(55.7728, 37.5328, "blue", "<dl><dt><b>Name: </b>Kaluga</dt><dt> <b>X: </b>55.7728</dt><dt><b>Y: </b>37.5328</dt><dt><b>Temperature: </b>0</dt><dt><b>Wind Speed: </b>0</dt><dt><b>Direction: </b>0</dt></dl>");
+c5 = new circle([55.7728, 37.5328], 800, "#D6DF71");
